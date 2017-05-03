@@ -1,0 +1,526 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A37B00011EBA355900EB4776 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A37B00001EBA355900EB4776 /* Assets.xcassets */; };
+		A37B00041EBA355900EB4776 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A37B00021EBA355900EB4776 /* LaunchScreen.storyboard */; };
+		A37B000F1EBA355900EB4776 /* Fire_Means_WarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37B000E1EBA355900EB4776 /* Fire_Means_WarTests.swift */; };
+		A37B001A1EBA355900EB4776 /* Fire_Means_WarUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37B00191EBA355900EB4776 /* Fire_Means_WarUITests.swift */; };
+		A37BFFFA1EBA355900EB4776 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37BFFF91EBA355900EB4776 /* AppDelegate.swift */; };
+		A37BFFFC1EBA355900EB4776 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37BFFFB1EBA355900EB4776 /* ViewController.swift */; };
+		A37BFFFF1EBA355900EB4776 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A37BFFFD1EBA355900EB4776 /* Main.storyboard */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A37B000B1EBA355900EB4776 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A37BFFEE1EBA355900EB4776 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A37BFFF51EBA355900EB4776;
+			remoteInfo = "Fire Means War";
+		};
+		A37B00161EBA355900EB4776 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A37BFFEE1EBA355900EB4776 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A37BFFF51EBA355900EB4776;
+			remoteInfo = "Fire Means War";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		A37B00001EBA355900EB4776 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A37B00031EBA355900EB4776 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A37B00051EBA355900EB4776 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A37B000A1EBA355900EB4776 /* Fire Means WarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Fire Means WarTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A37B000E1EBA355900EB4776 /* Fire_Means_WarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fire_Means_WarTests.swift; sourceTree = "<group>"; };
+		A37B00101EBA355900EB4776 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A37B00151EBA355900EB4776 /* Fire Means WarUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Fire Means WarUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A37B00191EBA355900EB4776 /* Fire_Means_WarUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fire_Means_WarUITests.swift; sourceTree = "<group>"; };
+		A37B001B1EBA355900EB4776 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A37BFFF61EBA355900EB4776 /* Fire Means War.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Fire Means War.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A37BFFF91EBA355900EB4776 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A37BFFFB1EBA355900EB4776 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		A37BFFFE1EBA355900EB4776 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A37B00071EBA355900EB4776 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A37B00121EBA355900EB4776 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A37BFFF31EBA355900EB4776 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A37B000D1EBA355900EB4776 /* Fire Means WarTests */ = {
+			isa = PBXGroup;
+			children = (
+				A37B000E1EBA355900EB4776 /* Fire_Means_WarTests.swift */,
+				A37B00101EBA355900EB4776 /* Info.plist */,
+			);
+			path = "Fire Means WarTests";
+			sourceTree = "<group>";
+		};
+		A37B00181EBA355900EB4776 /* Fire Means WarUITests */ = {
+			isa = PBXGroup;
+			children = (
+				A37B00191EBA355900EB4776 /* Fire_Means_WarUITests.swift */,
+				A37B001B1EBA355900EB4776 /* Info.plist */,
+			);
+			path = "Fire Means WarUITests";
+			sourceTree = "<group>";
+		};
+		A37BFFED1EBA355900EB4776 = {
+			isa = PBXGroup;
+			children = (
+				A37BFFF81EBA355900EB4776 /* Fire Means War */,
+				A37B000D1EBA355900EB4776 /* Fire Means WarTests */,
+				A37B00181EBA355900EB4776 /* Fire Means WarUITests */,
+				A37BFFF71EBA355900EB4776 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A37BFFF71EBA355900EB4776 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A37BFFF61EBA355900EB4776 /* Fire Means War.app */,
+				A37B000A1EBA355900EB4776 /* Fire Means WarTests.xctest */,
+				A37B00151EBA355900EB4776 /* Fire Means WarUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A37BFFF81EBA355900EB4776 /* Fire Means War */ = {
+			isa = PBXGroup;
+			children = (
+				A37BFFF91EBA355900EB4776 /* AppDelegate.swift */,
+				A37BFFFB1EBA355900EB4776 /* ViewController.swift */,
+				A37BFFFD1EBA355900EB4776 /* Main.storyboard */,
+				A37B00001EBA355900EB4776 /* Assets.xcassets */,
+				A37B00021EBA355900EB4776 /* LaunchScreen.storyboard */,
+				A37B00051EBA355900EB4776 /* Info.plist */,
+			);
+			path = "Fire Means War";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A37B00091EBA355900EB4776 /* Fire Means WarTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A37B00211EBA355900EB4776 /* Build configuration list for PBXNativeTarget "Fire Means WarTests" */;
+			buildPhases = (
+				A37B00061EBA355900EB4776 /* Sources */,
+				A37B00071EBA355900EB4776 /* Frameworks */,
+				A37B00081EBA355900EB4776 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A37B000C1EBA355900EB4776 /* PBXTargetDependency */,
+			);
+			name = "Fire Means WarTests";
+			productName = "Fire Means WarTests";
+			productReference = A37B000A1EBA355900EB4776 /* Fire Means WarTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		A37B00141EBA355900EB4776 /* Fire Means WarUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A37B00241EBA355900EB4776 /* Build configuration list for PBXNativeTarget "Fire Means WarUITests" */;
+			buildPhases = (
+				A37B00111EBA355900EB4776 /* Sources */,
+				A37B00121EBA355900EB4776 /* Frameworks */,
+				A37B00131EBA355900EB4776 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A37B00171EBA355900EB4776 /* PBXTargetDependency */,
+			);
+			name = "Fire Means WarUITests";
+			productName = "Fire Means WarUITests";
+			productReference = A37B00151EBA355900EB4776 /* Fire Means WarUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		A37BFFF51EBA355900EB4776 /* Fire Means War */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A37B001E1EBA355900EB4776 /* Build configuration list for PBXNativeTarget "Fire Means War" */;
+			buildPhases = (
+				A37BFFF21EBA355900EB4776 /* Sources */,
+				A37BFFF31EBA355900EB4776 /* Frameworks */,
+				A37BFFF41EBA355900EB4776 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Fire Means War";
+			productName = "Fire Means War";
+			productReference = A37BFFF61EBA355900EB4776 /* Fire Means War.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A37BFFEE1EBA355900EB4776 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0820;
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = "Patrick Niepel";
+				TargetAttributes = {
+					A37B00091EBA355900EB4776 = {
+						CreatedOnToolsVersion = 8.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = A37BFFF51EBA355900EB4776;
+					};
+					A37B00141EBA355900EB4776 = {
+						CreatedOnToolsVersion = 8.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = A37BFFF51EBA355900EB4776;
+					};
+					A37BFFF51EBA355900EB4776 = {
+						CreatedOnToolsVersion = 8.2;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = A37BFFF11EBA355900EB4776 /* Build configuration list for PBXProject "Fire Means War" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A37BFFED1EBA355900EB4776;
+			productRefGroup = A37BFFF71EBA355900EB4776 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A37BFFF51EBA355900EB4776 /* Fire Means War */,
+				A37B00091EBA355900EB4776 /* Fire Means WarTests */,
+				A37B00141EBA355900EB4776 /* Fire Means WarUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A37B00081EBA355900EB4776 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A37B00131EBA355900EB4776 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A37BFFF41EBA355900EB4776 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A37B00041EBA355900EB4776 /* LaunchScreen.storyboard in Resources */,
+				A37B00011EBA355900EB4776 /* Assets.xcassets in Resources */,
+				A37BFFFF1EBA355900EB4776 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A37B00061EBA355900EB4776 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A37B000F1EBA355900EB4776 /* Fire_Means_WarTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A37B00111EBA355900EB4776 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A37B001A1EBA355900EB4776 /* Fire_Means_WarUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A37BFFF21EBA355900EB4776 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A37BFFFC1EBA355900EB4776 /* ViewController.swift in Sources */,
+				A37BFFFA1EBA355900EB4776 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A37B000C1EBA355900EB4776 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A37BFFF51EBA355900EB4776 /* Fire Means War */;
+			targetProxy = A37B000B1EBA355900EB4776 /* PBXContainerItemProxy */;
+		};
+		A37B00171EBA355900EB4776 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A37BFFF51EBA355900EB4776 /* Fire Means War */;
+			targetProxy = A37B00161EBA355900EB4776 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		A37B00021EBA355900EB4776 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A37B00031EBA355900EB4776 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		A37BFFFD1EBA355900EB4776 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A37BFFFE1EBA355900EB4776 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A37B001C1EBA355900EB4776 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A37B001D1EBA355900EB4776 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A37B001F1EBA355900EB4776 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "Fire Means War/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "de.patrickniepel.Fire-Means-War";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		A37B00201EBA355900EB4776 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "Fire Means War/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "de.patrickniepel.Fire-Means-War";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		A37B00221EBA355900EB4776 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "Fire Means WarTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "de.patrickniepel.Fire-Means-WarTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Fire Means War.app/Fire Means War";
+			};
+			name = Debug;
+		};
+		A37B00231EBA355900EB4776 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "Fire Means WarTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "de.patrickniepel.Fire-Means-WarTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Fire Means War.app/Fire Means War";
+			};
+			name = Release;
+		};
+		A37B00251EBA355900EB4776 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				INFOPLIST_FILE = "Fire Means WarUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "de.patrickniepel.Fire-Means-WarUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = "Fire Means War";
+			};
+			name = Debug;
+		};
+		A37B00261EBA355900EB4776 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				INFOPLIST_FILE = "Fire Means WarUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "de.patrickniepel.Fire-Means-WarUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = "Fire Means War";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A37B001E1EBA355900EB4776 /* Build configuration list for PBXNativeTarget "Fire Means War" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A37B001F1EBA355900EB4776 /* Debug */,
+				A37B00201EBA355900EB4776 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		A37B00211EBA355900EB4776 /* Build configuration list for PBXNativeTarget "Fire Means WarTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A37B00221EBA355900EB4776 /* Debug */,
+				A37B00231EBA355900EB4776 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		A37B00241EBA355900EB4776 /* Build configuration list for PBXNativeTarget "Fire Means WarUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A37B00251EBA355900EB4776 /* Debug */,
+				A37B00261EBA355900EB4776 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		A37BFFF11EBA355900EB4776 /* Build configuration list for PBXProject "Fire Means War" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A37B001C1EBA355900EB4776 /* Debug */,
+				A37B001D1EBA355900EB4776 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A37BFFEE1EBA355900EB4776 /* Project object */;
+}
