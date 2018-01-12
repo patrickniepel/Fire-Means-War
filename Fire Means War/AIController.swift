@@ -47,10 +47,10 @@ class AIController: NSObject {
         
         ai.difficulty = difficulty
         
-        let positions = aiCalc.calculateShipPositions(ai: ai)
-        ai.shipPosKeys = positions
-        shipPositionsTMP = positions
-        print(positions)
+        //let positions = aiCalc.calculateShipPositions(ai: ai)
+        //ai.shipPosKeys = positions
+        //shipPositionsTMP = positions
+        //print(positions)
     }
     
     fileprivate func startTimer() {
@@ -94,7 +94,7 @@ class AIController: NSObject {
         //Before every attack the chances to hit/not hit a ship will be calculated to provide variety
         setNewChanceValue()
         
-        let attackedKey = logicCtrl.getKeyToAttack(aiOpponent: ai, aLastAttackKey: lastAttackKey, firstAttackInTurn: firstAttackInTurn)
+        let attackedKey = ("", true) //logicCtrl.getKeyToAttack(aiOpponent: ai, aLastAttackKey: lastAttackKey, firstAttackInTurn: firstAttackInTurn)
         let key = attackedKey.0
         let isHit = attackedKey.1
         
@@ -118,8 +118,8 @@ class AIController: NSObject {
         //Remove key that did not lead to a hit
         else {
             //Wont attack anymore in this turn
-            attackingBegan = false
-            ai.removeAllKey(key: key)
+//            attackingBegan = false
+//            ai.removeAllKey(key: key)
         }
     }
     

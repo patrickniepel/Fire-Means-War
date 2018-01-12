@@ -46,7 +46,7 @@ class SPAttackViewController: UIViewController, OptionsDelegate, PauseSegueDeleg
     
     var delegate : SPAttackSegueDelegate? = nil
     
-    var aiCtrl : AIController!
+    var matchCtrl : SingleMatchController!
     
     var state : AttackState = .attack
 
@@ -117,8 +117,8 @@ class SPAttackViewController: UIViewController, OptionsDelegate, PauseSegueDeleg
         timerLabel.numberOfLines = 0
         infoLabel.numberOfLines = 0
         infoLabel.text = "Choose A Target!"
-        lifeLabel.text = "\(aiCtrl.ai.cellsLeft)"
-        shipsLeftLabel.text = "\(aiCtrl.ai.shipsLeft)"
+        lifeLabel.text = "\(matchCtrl.getAICellsLeft())"
+        shipsLeftLabel.text = "\(matchCtrl.getAIShipsLeft())"
         topIV.layer.borderWidth = 2
         topIV.layer.borderColor = UIColor.white.cgColor
     }
@@ -203,13 +203,14 @@ class SPAttackViewController: UIViewController, OptionsDelegate, PauseSegueDeleg
     
     fileprivate func attackAI(cellKey: String) {
         
-        let successfullAttack = aiCtrl.checkPlayerAttack(cellKey: cellKey)
+        let successfullAttack = matchCtrl.checkPlayerAttack(cellKey: cellKey)
         
         infoLabel.textColor = .white
         
         if successfullAttack {
             
-            lifeLabel.text = "\(Int(lifeLabel.text!)! - 1)"
+            //lifeLabel.text = "\(Int(lifeLabel.text!)! - 1)"
+            lifeLabel.text = "\(matchCtrl.getAICellsLeft())"
             
             // Plays sound for a successfully attacked cell
             audioPlayer.playFire()
@@ -231,7 +232,7 @@ class SPAttackViewController: UIViewController, OptionsDelegate, PauseSegueDeleg
             fieldCtrl.selectedCell = nil
             
             //After player attacks it will be checked if he wins
-            if aiCtrl.checkForPlayerWin() {
+            if matchCtrl.checkForPlayerWin() {
                 
                 mTimer.invalidate()
                 
@@ -262,7 +263,8 @@ class SPAttackViewController: UIViewController, OptionsDelegate, PauseSegueDeleg
     
     /** Gets called when the player attacks a ship cell of the ai */
     @objc func handleShipsLeft(notification: NSNotification) {
-        shipsLeftLabel.text = "\(Int(shipsLeftLabel.text!)! - 1)"
+        //shipsLeftLabel.text = "\(Int(shipsLeftLabel.text!)! - 1)"
+        shipsLeftLabel.text = "\(matchCtrl.getAIShipsLeft())"
     }
     
     fileprivate func startDelay2Place() {

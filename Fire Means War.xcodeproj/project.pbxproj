@@ -66,6 +66,7 @@
 		A3A7F0C41F6ADC0B008CACD2 /* AIController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A7F0C31F6ADC0B008CACD2 /* AIController.swift */; };
 		A3B34EE51F867EB60031A90F /* AttackLogicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B34EE41F867EB60031A90F /* AttackLogicController.swift */; };
 		A3B44E871F6C334C004DF619 /* AICalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B44E861F6C334C004DF619 /* AICalculator.swift */; };
+		A3B783CB200937D100D70631 /* ShipKeyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B783CA200937D100D70631 /* ShipKeyController.swift */; };
 		A3D48ABA1FA3BA0700A02558 /* TutorialDelegateFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D48AB91FA3BA0700A02558 /* TutorialDelegateFlowLayout.swift */; };
 		A3D48ABC1FA3BA1600A02558 /* TutorialDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D48ABB1FA3BA1600A02558 /* TutorialDataSource.swift */; };
 		A3D48ABE1FA3BA2900A02558 /* TutorialCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D48ABD1FA3BA2900A02558 /* TutorialCollectionViewCell.swift */; };
@@ -160,6 +161,7 @@
 		A3A7F0C31F6ADC0B008CACD2 /* AIController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AIController.swift; sourceTree = "<group>"; };
 		A3B34EE41F867EB60031A90F /* AttackLogicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackLogicController.swift; sourceTree = "<group>"; };
 		A3B44E861F6C334C004DF619 /* AICalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AICalculator.swift; sourceTree = "<group>"; };
+		A3B783CA200937D100D70631 /* ShipKeyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShipKeyController.swift; sourceTree = "<group>"; };
 		A3D48AB91FA3BA0700A02558 /* TutorialDelegateFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialDelegateFlowLayout.swift; sourceTree = "<group>"; };
 		A3D48ABB1FA3BA1600A02558 /* TutorialDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialDataSource.swift; sourceTree = "<group>"; };
 		A3D48ABD1FA3BA2900A02558 /* TutorialCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -207,24 +209,22 @@
 			name = View;
 			sourceTree = "<group>";
 		};
-		A318EF641F8403E3009D7AE4 /* Model */ = {
+		A318EF641F8403E3009D7AE4 /* Model/old */ = {
 			isa = PBXGroup;
 			children = (
 				A3A7F0C11F6ADBFB008CACD2 /* AI.swift */,
 				A347B54D1F6D5D1800A303BE /* SinglePlayer.swift */,
 			);
-			name = Model;
+			name = Model/old;
 			sourceTree = "<group>";
 		};
-		A318EF651F8403FB009D7AE4 /* Controller */ = {
+		A318EF651F8403FB009D7AE4 /* Controller/Old */ = {
 			isa = PBXGroup;
 			children = (
 				A347B54F1F6D5DC600A303BE /* PlayerController.swift */,
-				A3B44E861F6C334C004DF619 /* AICalculator.swift */,
 				A3A7F0C31F6ADC0B008CACD2 /* AIController.swift */,
-				A3B34EE41F867EB60031A90F /* AttackLogicController.swift */,
 			);
-			name = Controller;
+			name = Controller/Old;
 			sourceTree = "<group>";
 		};
 		A348998F1EDAD83A00A7E80A /* Resources */ = {
@@ -245,16 +245,17 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		A3721DAF20089F6D00E50DCD /* New Structure */ = {
+		A3721DAF20089F6D00E50DCD /*  Controller */ = {
 			isa = PBXGroup;
 			children = (
-				A3721DB020089F8000E50DCD /* AITest.swift */,
-				A3721DB220089F8A00E50DCD /* SingleplayerTest.swift */,
 				A3721DB420089F9400E50DCD /* AIControllerTest.swift */,
 				A3721DB620089FA700E50DCD /* SinglePlayerControllerTest.swift */,
 				A3721DB820089FB500E50DCD /* SingleMatchController.swift */,
+				A3B783CA200937D100D70631 /* ShipKeyController.swift */,
+				A3B34EE41F867EB60031A90F /* AttackLogicController.swift */,
+				A3B44E861F6C334C004DF619 /* AICalculator.swift */,
 			);
-			name = "New Structure";
+			name = " Controller";
 			sourceTree = "<group>";
 		};
 		A37B000D1EBA355900EB4776 /* Fire Means WarTests */ = {
@@ -536,12 +537,22 @@
 		A3A7F0BA1F6AC777008CACD2 /* Singleplayer */ = {
 			isa = PBXGroup;
 			children = (
-				A3721DAF20089F6D00E50DCD /* New Structure */,
+				A3721DAF20089F6D00E50DCD /*  Controller */,
+				A3B783CC20096ADF00D70631 /* Model */,
 				A318EF631F8403C6009D7AE4 /* View */,
-				A318EF651F8403FB009D7AE4 /* Controller */,
-				A318EF641F8403E3009D7AE4 /* Model */,
+				A318EF651F8403FB009D7AE4 /* Controller/Old */,
+				A318EF641F8403E3009D7AE4 /* Model/old */,
 			);
 			name = Singleplayer;
+			sourceTree = "<group>";
+		};
+		A3B783CC20096ADF00D70631 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A3721DB020089F8000E50DCD /* AITest.swift */,
+				A3721DB220089F8A00E50DCD /* SingleplayerTest.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 		A3D48AB61FA3B99600A02558 /* Tutorial */ = {
@@ -767,6 +778,7 @@
 				A399A6B41EBE211600569909 /* PlacingViewController.swift in Sources */,
 				A3D48ABE1FA3BA2900A02558 /* TutorialCollectionViewCell.swift in Sources */,
 				A3721DB720089FA700E50DCD /* SinglePlayerControllerTest.swift in Sources */,
+				A3B783CB200937D100D70631 /* ShipKeyController.swift in Sources */,
 				A3A7F0C41F6ADC0B008CACD2 /* AIController.swift in Sources */,
 				A374D8FD1EBB0C6600005C24 /* MPCBrowser.swift in Sources */,
 				A3A7F0C01F6ACA0B008CACD2 /* DifficultyViewController.swift in Sources */,

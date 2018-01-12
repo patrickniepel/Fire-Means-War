@@ -52,7 +52,7 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
     
     var changedCells = [(String, Bool)]()
     
-    var aiCtrl : AIController!
+    var matchCtrl : SingleMatchController!
     var counterForAttack : Int!
     
     var userLeavesApplication = false
@@ -274,8 +274,8 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
             
             mTimer.invalidate()
             
-            //AI will be created
-            setupAI()
+            //Match with AI will be created
+            createMatch()
             
             //Ships cant be dragged after the placing time
             shipCtrl.removeGestureRecognizer()
@@ -299,10 +299,11 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
         }
     }
     
-    /** Creates AI */
-    fileprivate func setupAI() {
+    /** Creates Match with AI */
+    fileprivate func createMatch() {
         let playerShips = shipPosCtrl.getcellShipKeys()
-        aiCtrl = AIController(difficulty: difficultyTitle, playerShips: playerShips)
+        matchCtrl = SingleMatchController(difficulty: difficultyTitle, playerShipKeys: playerShips)
+        matchCtrl.createMatch()
     }
     
     fileprivate func stopTimer() {
@@ -319,7 +320,7 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
         mTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(handleWaitingTimer), userInfo: nil, repeats: true)
         
         //Generate random number for starting the ai attack
-        counterForAttack = aiCtrl.getCounterForAttack()
+        counterForAttack = matchCtrl.getCounterForAttack()
     }
     
     /** Timer for waiting for opponent's attacks */
@@ -327,7 +328,7 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
         mTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(handleWaitingTimer), userInfo: nil, repeats: true)
         
         //Generate random number for starting the ai attack
-        counterForAttack = aiCtrl.getCounterForAttack()
+        counterForAttack = matchCtrl.getCounterForAttack()
     }
     
     @objc func handleWaitingTimer() {
@@ -335,9 +336,9 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
         waitingCounter -= 1
         
         if counterForAttack == waitingCounter {
-            //New turn -> first attack 
-            aiCtrl.firstAttackInTurn = true
-            aiCtrl.attackPlayer(wait: false)
+            //New turn -> first attack
+            matchCtrl.setFirstAttackInTurn(firstAttack: true)
+            matchCtrl.attackPlayer(wait: false)
         }
         
         if waitingCounter <= 5 {
@@ -363,13 +364,16 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
         print("AI trifft", cellKey)
         // Check if there is a ship upon the attacked cell
         let cell = fieldCtrl.cellGotAttacked(key: cellKey)
-        let isAttack = aiCtrl.checkAIAttack(cellKey: cellKey)
+        let isAttack = matchCtrl.checkAIAttack(cellKey: cellKey)
         
         // Ship got attacked
         if isAttack {
             
+            matchCtrl.removeAttackedKeyFromAIPlayerKeysArray(key: cellKey)
+            
             //Reduce lp
-            lifeLabel.text = "\(Int(lifeLabel.text!)! - 1)"
+            //lifeLabel.text = "\(Int(lifeLabel.text!)! - 1)"
+            lifeLabel.text = "\(matchCtrl.getPlayerCellsLeft())"
             
             audioPlayer.playFire()
             
@@ -394,7 +398,8 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
     
     /** Gets called when the ai attacks a ship cell of the player */
     @objc func handleShipsLeft(notification: NSNotification) {
-        shipsLeftLabel.text = "\(Int(shipsLeftLabel.text!)! - 1)"
+        //shipsLeftLabel.text = "\(Int(shipsLeftLabel.text!)! - 1)"
+        shipsLeftLabel.text = "\(matchCtrl.getPlayerShipsLeft())"
     }
     
     fileprivate func startDelay2Attack() {
@@ -419,7 +424,7 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
         audioPlayer.pauseResumeBattlePlayer(pause: true)
         
         if state == .waiting {
-            aiCtrl.pauseResumeAI(pause: true)
+            matchCtrl.pauseResumeAI(pause: true)
         }
     }
     
@@ -432,7 +437,7 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
         }
         if state == .waiting {
             resumeWaitingTimer()
-            aiCtrl.pauseResumeAI(pause: false)
+            matchCtrl.pauseResumeAI(pause: false)
         }
         if state == .delay {
             startDelay2Attack()
@@ -442,7 +447,7 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
     /** Checks if player lost the match */
     fileprivate func checkForMatchResult() {
         
-        if aiCtrl.checkForAIWin() {
+        if matchCtrl.checkForAIWin() {
             
             mTimer.invalidate()
             
@@ -454,8 +459,8 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
         // AI attacks again, because player has not lost yet and the last attack hit a ship
         else {
             //AI wont attack again if only 3 seconds or less left
-            aiCtrl.waitingCounterTVC = waitingCounter
-            aiCtrl.attackPlayer(wait: true)
+            matchCtrl.setWaitingCounter(counter: waitingCounter)
+            matchCtrl.attackPlayer(wait: true)
         }
     }
     
@@ -487,7 +492,7 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
             let destVC = segue.destination as! SPAttackViewController
             
             destVC.delegate = self
-            destVC.aiCtrl = aiCtrl
+            destVC.matchCtrl = matchCtrl
             destVC.changedCells = changedCells
             destVC.audioPlayer = audioPlayer
             destVC.difficultyTitle = difficultyTitle

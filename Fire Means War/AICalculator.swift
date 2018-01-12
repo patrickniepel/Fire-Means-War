@@ -29,7 +29,7 @@ class AICalculator: NSObject {
     // -TODO: Bug vorhanden, manchmal befinden sich mehrere Schiffe (bis jetzt 2) auf der gleichen Stelle
     
     /** Loops through every ship that has to be created */
-    func calculateShipPositions(ai: AI) -> [[String]] {
+    func calculateShipPositions(allKeys: [(Int, Int)]) -> [[String]] {
         
         var positions = [[String]]()
         
@@ -37,7 +37,7 @@ class AICalculator: NSObject {
         let shipCountLengths = [(1, 4), (3, 3), (4, 2)]
         
         //Array with used Keys, if once used cannot be used for other ships again
-        availableKeys = ai.allKeys
+        availableKeys = allKeys
         changeDataTypeAvailableKeys()
         
         for shipElement in shipCountLengths {

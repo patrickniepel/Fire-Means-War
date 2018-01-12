@@ -10,10 +10,13 @@ import UIKit
 
 class AITest: NSObject {
     
-    
-    
-    var shipKeys : [(Ship, [String])]!
+    var shipKeys : [[String]]!
     var noShipKeys : [String]!
+    
+    var allKeys : [String]!
+    
+    var shipKeysPlayerString : [String]!
+    var shipKeysPlayer : [(Ship, [String])]!
     
     var difficulty : String!
     

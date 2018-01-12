@@ -13,12 +13,6 @@ class SingleplayerTest: NSObject {
     var shipKeys : [(Ship, [String])]!
     var noShipKeys : [String]!
     
-    var difficulty : String!
-    
     var shipsLeft : Int = 0
     var cellsLeft : Int = 0
-    
-    override init() {
-        
-    }
 }
