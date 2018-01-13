@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="d4P-QM-PNp">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="d4P-QM-PNp">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -571,13 +571,13 @@
                                         <rect key="frame" x="30" y="8" width="315" height="51"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" restorationIdentifier="timerLabel" text="30 s" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="NLS-hg-XG4" userLabel="timerLabel">
-                                                <rect key="frame" x="124.5" y="0.0" width="66.5" height="25.5"/>
+                                                <rect key="frame" x="125" y="0.0" width="65.5" height="25.5"/>
                                                 <fontDescription key="fontDescription" name="Philosopher-Bold" family="Philosopher" pointSize="35"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="infoLabel" text="Place Your Ships, Captain!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="l6x-cs-oiZ" userLabel="infoLabel">
-                                                <rect key="frame" x="9.5" y="25.5" width="296.5" height="25.5"/>
+                                                <rect key="frame" x="14" y="25.5" width="287.5" height="25.5"/>
                                                 <fontDescription key="fontDescription" name="Philosopher-Bold" family="Philosopher" pointSize="25"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -735,13 +735,13 @@
                                         <rect key="frame" x="30" y="8" width="315" height="51"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" restorationIdentifier="timerLabel" text="20 s" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="zfA-rc-tTf" userLabel="timerLabel">
-                                                <rect key="frame" x="124.5" y="0.0" width="66.5" height="25.5"/>
+                                                <rect key="frame" x="125" y="0.0" width="65.5" height="25.5"/>
                                                 <fontDescription key="fontDescription" name="Philosopher-Bold" family="Philosopher" pointSize="35"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="infoLabel" text="Choose a Target" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="QuA-2W-Nf1" userLabel="infoLabel">
-                                                <rect key="frame" x="66.5" y="25.5" width="182.5" height="25.5"/>
+                                                <rect key="frame" x="68.5" y="25.5" width="178" height="25.5"/>
                                                 <fontDescription key="fontDescription" name="Philosopher-Bold" family="Philosopher" pointSize="25"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -910,8 +910,8 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="versionLabel" text="Version 1.2.1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rtz-B0-L2l" userLabel="versionLabel">
-                                <rect key="frame" x="140.5" y="166" width="93" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="versionLabel" text="Version 1.2.2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rtz-B0-L2l" userLabel="versionLabel">
+                                <rect key="frame" x="139.5" y="166" width="95" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="47H-d1-RrB"/>
                                 </constraints>
@@ -1132,13 +1132,13 @@
                                         <rect key="frame" x="30" y="8" width="315" height="51"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" restorationIdentifier="timerLabel" text="30 s" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.59999999999999998" translatesAutoresizingMaskIntoConstraints="NO" id="QWo-hD-ZwM" userLabel="timerLabel">
-                                                <rect key="frame" x="124.5" y="0.0" width="66.5" height="25.5"/>
+                                                <rect key="frame" x="125" y="0.0" width="65.5" height="25.5"/>
                                                 <fontDescription key="fontDescription" name="Philosopher-Bold" family="Philosopher" pointSize="35"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="infoLabel" text="Place Your Ships, Captain!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="haC-b9-k2K" userLabel="infoLabel">
-                                                <rect key="frame" x="9.5" y="25.5" width="296.5" height="25.5"/>
+                                                <rect key="frame" x="14" y="25.5" width="287.5" height="25.5"/>
                                                 <fontDescription key="fontDescription" name="Philosopher-Bold" family="Philosopher" pointSize="25"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -1321,13 +1321,13 @@
                                         <rect key="frame" x="30" y="8" width="315" height="51"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" restorationIdentifier="timerLabel" text="20 s" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="zhg-jS-xbh" userLabel="timerLabel">
-                                                <rect key="frame" x="124.5" y="0.0" width="66.5" height="25.5"/>
+                                                <rect key="frame" x="125" y="0.0" width="65.5" height="25.5"/>
                                                 <fontDescription key="fontDescription" name="Philosopher-Bold" family="Philosopher" pointSize="35"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="infoLabel" text="Choose a Target" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="n2E-gm-ATa" userLabel="infoLabel">
-                                                <rect key="frame" x="66.5" y="25.5" width="182.5" height="25.5"/>
+                                                <rect key="frame" x="68.5" y="25.5" width="178" height="25.5"/>
                                                 <fontDescription key="fontDescription" name="Philosopher-Bold" family="Philosopher" pointSize="25"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
