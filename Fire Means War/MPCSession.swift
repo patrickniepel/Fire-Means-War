@@ -42,7 +42,6 @@ class MPCSession: NSObject {
 
         guard let messageData = try? JSONSerialization.data(withJSONObject: dataDict, options: [])
             else {
-                print("Error1 in sendMessage")
                 return
         }
         
@@ -51,7 +50,6 @@ class MPCSession: NSObject {
 
         guard ((try? mSession.send(messageData, toPeers: peers, with: MCSessionSendDataMode.reliable)) != nil)
             else {
-                print("Error2 in sendMessage")
                 return
         }
     }

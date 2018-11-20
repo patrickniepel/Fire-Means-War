@@ -36,7 +36,7 @@ class Ship: UIImageView {
         // Player can touch and drag the ship
         self.isUserInteractionEnabled = true
         self.image = imageV
-        self.contentMode = UIViewContentMode.scaleAspectFill
+        self.contentMode = UIView.ContentMode.scaleAspectFill
         
         // Warning Color, only visible when borderWidth > 0
         // Warning gets set when ship is not placed correctly

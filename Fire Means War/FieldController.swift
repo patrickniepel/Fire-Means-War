@@ -105,7 +105,7 @@ class FieldController: NSObject {
         
         selectedCell = cell
         
-        fieldView.bringSubview(toFront: cell)
+        fieldView.bringSubviewToFront(cell)
         
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             

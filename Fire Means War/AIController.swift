@@ -38,9 +38,6 @@ class AIController: NSObject {
         setup(difficulty: difficulty)
         
         logicCtrl = AttackLogicController()
-        
-        print("AICellsLeftStart", ai.cellsLeft)
-        print("PlayerCellsLeftStart", playerCtrl.player.cellsLeft)
     }
     
     fileprivate func setup(difficulty: String) {
@@ -50,7 +47,6 @@ class AIController: NSObject {
         //let positions = aiCalc.calculateShipPositions(ai: ai)
         //ai.shipPosKeys = positions
         //shipPositionsTMP = positions
-        //print(positions)
     }
     
     fileprivate func startTimer() {
@@ -111,9 +107,6 @@ class AIController: NSObject {
         //Remove key that lead to a hit
         if isHit {
             ai.removePlayerKey(key: key)
-            print("PlayerKeysCount", ai.allPlayerKeys.count)
-            print("PlayerKeysÜbrig", ai.allPlayerKeys)
-            print("RemovedPlayerKey", key)
         }
         //Remove key that did not lead to a hit
         else {
@@ -159,7 +152,6 @@ class AIController: NSObject {
             if ship.contains(cellKey) {
                 ai.cellsLeft -= 1
                 removeKeyFromTMPPositions(key: cellKey)
-                print("AICellsLeft", ai.cellsLeft)
                 return true
             }
         }

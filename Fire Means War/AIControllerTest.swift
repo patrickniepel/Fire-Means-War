@@ -37,7 +37,7 @@ class AIControllerTest: NSObject {
         let positions = AICalculator().calculateShipPositions(allKeys: allKeysCoords)
         ai.shipKeys = positions
         //shipPositionsTMP = positions
-        print(positions)
+
     }
     
     private func setupShipKeys(allKeys: [String]) {
@@ -110,11 +110,6 @@ class AIControllerTest: NSObject {
             attackingBegan = false
         }
         //Remove key that lead to a hit
-        if isHit {
-            print("PlayerKeysCount", ai.shipKeysPlayer.count)
-            //print("PlayerKeysÜbrig", ai.shipKeysPlayer)
-            print("RemovedPlayerKey", key)
-        }
         //One key less to attack
         removeKeyFromAll(key: key)
     }

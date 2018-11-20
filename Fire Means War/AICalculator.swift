@@ -50,15 +50,9 @@ class AICalculator: NSObject {
                 
                 let randomKeyIndex = generateRandomKeyIndex(keysAvailable: availableKeysString.count)
                 
-                print("")
-                print("randomKeyIndex", randomKeyIndex)
-                
                 //Wenn schon benutzt muss anderer genommen werden
                 let startingPosition = availableKeys[randomKeyIndex]
                 let direction = generateRandomDirection()
-                
-                print("StartingPosition", startingPosition)
-                print("direction", direction)
                 
                 //Key values (Position)
                 let x = startingPosition.0
@@ -101,7 +95,6 @@ class AICalculator: NSObject {
                 
                 let shipKeys = calculateShipKeys(area: area)
                 keysAvailable = checkIfShipKeysAvailable(shipKeys: shipKeys)
-                print("KeysAvailable", keysAvailable)
                 
                 //If keys are not available, there is no need to proceed with the code below -> start next iteration
                 if !keysAvailable {
@@ -109,9 +102,7 @@ class AICalculator: NSObject {
                 }
                 
                 let overlappingKeys = calculateOverlappingKeys(area: area, shipKeys: shipKeys)
-                print("OverlappingKeys", overlappingKeys)
                 overlappingKeysAvailable = checkIfOverlappingKeysAvailable(overlappingKeys: overlappingKeys, positions: positions)
-                print("OverlappingAvailable", overlappingKeysAvailable)
                 
                 //If all calculated keys are available the next ship can be created
                 if keysAvailable && overlappingKeysAvailable {
@@ -174,7 +165,6 @@ class AICalculator: NSObject {
             }
         }
         
-        print("ShipKeys", shipKeys)
         return shipKeys
     }
     

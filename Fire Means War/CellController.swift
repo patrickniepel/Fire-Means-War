@@ -53,7 +53,7 @@ class CellController: NSObject {
             // Sets the occurence of the cell
             cell.shipOnCellAttackedDefender()
             
-            fieldView.bringSubview(toFront: cell)
+            fieldView.bringSubviewToFront(cell)
             
             // Sends a message to the opponent that the he attacked a cell on which one of the ships is placed
             mpcHandler.sendMessage(key: "hit", additionalData: "")

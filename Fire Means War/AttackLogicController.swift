@@ -21,7 +21,6 @@ class AttackLogicController: NSObject {
         
         var keyToAttack = ""
         let percentage = generatePercentageToAttack()
-        print("Percentage", percentage)
         
         //First attack
         if firstAttackInTurn {

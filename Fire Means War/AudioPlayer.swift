@@ -48,9 +48,7 @@ class AudioPlayer: NSObject {
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: URL.init(fileURLWithPath: Bundle.main.path(forResource: "fire", ofType: "mp3")!))
         }
-        catch {
-            print(error)
-        }
+        catch {}
         
         audioPlayer!.prepareToPlay()
         audioPlayer!.volume = volume
@@ -63,9 +61,7 @@ class AudioPlayer: NSObject {
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: URL.init(fileURLWithPath: Bundle.main.path(forResource: "missed", ofType: "mp3")!))
         }
-        catch {
-            print(error)
-        }
+        catch {}
         
         audioPlayer!.prepareToPlay()
         audioPlayer!.volume = volume
@@ -84,9 +80,7 @@ class AudioPlayer: NSObject {
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: URL.init(fileURLWithPath: Bundle.main.path(forResource: "main", ofType: "wav")!))
         }
-        catch {
-            print(error)
-        }
+        catch {}
         
         audioPlayer!.prepareToPlay()
         
@@ -104,9 +98,7 @@ class AudioPlayer: NSObject {
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: URL.init(fileURLWithPath: Bundle.main.path(forResource: "horn", ofType: "mp3")!))
         }
-        catch {
-            print(error)
-        }
+        catch {}
 
         audioPlayer!.prepareToPlay()
         audioPlayer!.volume = volume
@@ -119,9 +111,7 @@ class AudioPlayer: NSObject {
         do {
             battlePlayer = try AVAudioPlayer(contentsOf: URL.init(fileURLWithPath: Bundle.main.path(forResource: "battle", ofType: "wav")!))
         }
-        catch {
-            print(error)
-        }
+        catch {}
         
         battlePlayer!.prepareToPlay()
         battlePlayer!.volume = 0
@@ -137,9 +127,7 @@ class AudioPlayer: NSObject {
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: URL.init(fileURLWithPath: Bundle.main.path(forResource: "victory", ofType: "mp3")!))
         }
-        catch {
-            print(error)
-        }
+        catch {}
         
         audioPlayer!.prepareToPlay()
         audioPlayer!.volume = volume
@@ -152,9 +140,7 @@ class AudioPlayer: NSObject {
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: URL.init(fileURLWithPath: Bundle.main.path(forResource: "defeat", ofType: "mp3")!))
         }
-        catch {
-            print(error)
-        }
+        catch {}
         
         audioPlayer!.prepareToPlay()
         audioPlayer!.volume = volume

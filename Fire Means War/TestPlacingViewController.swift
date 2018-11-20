@@ -60,7 +60,6 @@ class TestPlacingViewController: UIViewController {
 //        let width = fieldView.frame.width / CGFloat(fieldsPerRow)
 //        let i = Int(location.x / width)
 //        let j = Int(location.y / width)
-//        print(i, j)
 //        
 //        let key = "\(i)|\(j)"
 //        guard let cellView = cells[key] else {return}

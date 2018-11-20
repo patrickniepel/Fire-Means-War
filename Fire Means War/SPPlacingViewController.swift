@@ -361,7 +361,6 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
         
         // Get the key of the attacked cell
         let cellKey = ExtractMessage().extractKey(notification: notification, keyword: "aiAttacked")
-        print("AI trifft", cellKey)
         // Check if there is a ship upon the attacked cell
         let cell = fieldCtrl.cellGotAttacked(key: cellKey)
         let isAttack = matchCtrl.checkAIAttack(cellKey: cellKey)

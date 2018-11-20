@@ -13,8 +13,8 @@ extension UIViewController {
     func setupNavigationBarTranslucent() {
         
         self.navigationController?.navigationBar.tintColor = UIColor.white
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white,
-                                                                        NSAttributedStringKey.font: UIFont.init(name: "Philosopher-Bold", size: 21)!]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white,
+                                                                        NSAttributedString.Key.font: UIFont.init(name: "Philosopher-Bold", size: 21)!]
         
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
@@ -24,7 +24,7 @@ extension UIViewController {
     func setupNavigationBarWhite() {
         
         self.navigationController?.navigationBar.tintColor = UIColor.black
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.black,
-                                                                        NSAttributedStringKey.font: UIFont.init(name: "Philosopher-Bold", size: 21)!]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black,
+                                                                        NSAttributedString.Key.font: UIFont.init(name: "Philosopher-Bold", size: 21)!]
     }
 }

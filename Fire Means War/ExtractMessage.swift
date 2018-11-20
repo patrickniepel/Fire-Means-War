@@ -19,7 +19,6 @@ class ExtractMessage: NSObject {
         
         guard let dataDict = try? JSONSerialization.jsonObject(with: data, options: []) as! [String : String]
             else {
-                print("Error in extractJSON")
                 return ["key" : "error"]
         }
         return dataDict

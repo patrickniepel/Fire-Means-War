@@ -171,17 +171,13 @@ class MainMenuViewController: UIViewController, PlacingDelegate, DifficultySegue
         switch(state) {
             
         case MCSessionState.connecting.rawValue:
-            print("Connecting")
             
             // When connecting with a peer, other peers that want to connect get kicked out
             if mpcHandler.session.mSession.connectedPeers.count == 1 {
                 mpcHandler.session.mSession.cancelConnectPeer(peer)
             }
-        
             
         case MCSessionState.connected.rawValue:
-            print(state)
-            print("Connected")
             
             // Stop main theme
             audioPlayer.volumeToZero()
@@ -202,7 +198,6 @@ class MainMenuViewController: UIViewController, PlacingDelegate, DifficultySegue
             
             
         case MCSessionState.notConnected.rawValue:
-            print("notConnected")
             
             if isPlaying {
                 
@@ -236,7 +231,7 @@ class MainMenuViewController: UIViewController, PlacingDelegate, DifficultySegue
             // Stop session
             mpcHandler.disconnect()
             
-        default: print("Default called in handlePeerChangedMethod")
+        default: break
             
         }
     }
@@ -264,7 +259,7 @@ class MainMenuViewController: UIViewController, PlacingDelegate, DifficultySegue
             case "concede":
                 alert = alertCtrl.showAlert(title: "Victory", message: "Your opponent concedes")
             
-            default: print("Default in handleReceivedData")
+            default: break
         }
         
         alertToShow = true
