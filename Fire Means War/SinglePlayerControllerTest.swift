@@ -22,23 +22,23 @@ class SinglePlayerControllerTest: NSObject {
     }
     
     private func setupNoShipKeys(allKeys: [String]) {
-        singleplayer.noShipKeys = ShipKeyController().generateNoHitKeys(shipKeys: singleplayer.shipKeys, allKeys: allKeys)
+        singleplayer.noShipKeys = ShipKeyController().generateNoHitKeys(shipKeys: singleplayer.shipKeys ?? [], allKeys: allKeys)
     }
     
     private func setupLife() {
-        singleplayer.shipsLeft = singleplayer.shipKeys.count
+        singleplayer.shipsLeft = singleplayer.shipKeys?.count ?? 0
         
-        for ship in singleplayer.shipKeys {
+        for ship in singleplayer.shipKeys ?? [] {
             singleplayer.cellsLeft += ship.1.count
         }
     }
     
     func getShipKeysPlayerStringForAI() -> [String] {
-        return ShipKeyController().convertShipTupelToArray(shipKeys: singleplayer.shipKeys)
+        return ShipKeyController().convertShipTupelToArray(shipKeys: singleplayer.shipKeys ?? [])
     }
     
     func getShipKeysPlayerForAI() -> [(Ship, [String])] {
-        return singleplayer.shipKeys
+        return singleplayer.shipKeys ?? []
     }
     
     func checkForAIWin() -> Bool {
@@ -51,15 +51,22 @@ class SinglePlayerControllerTest: NSObject {
         var cellIndex = 0
         var shipIndex = 0
         
-        for key in 0..<singleplayer.shipKeys.count {
+        let count = singleplayer.shipKeys?.count ?? 0
+        
+        for key in 0..<count {
             
             shipIndex = key
             
             //Player hits ship
-            if singleplayer.shipKeys[key].1.contains(cellKey) {
+            if singleplayer.shipKeys?[key].1.contains(cellKey) ?? false {
                 hit = true
                 singleplayer.cellsLeft -= 1
-                cellIndex = singleplayer.shipKeys[key].1.index(of: cellKey)!
+                
+                guard let index = singleplayer.shipKeys?[key].1.index(of: cellKey) else {
+                    return false
+                }
+                
+                cellIndex = index
                 break
             }
         }
@@ -72,9 +79,9 @@ class SinglePlayerControllerTest: NSObject {
     }
     
     private func removeShipKey(shipIndex: Int, cellIndex: Int) {
-        singleplayer.shipKeys[shipIndex].1.remove(at: cellIndex)
+        singleplayer.shipKeys?[shipIndex].1.remove(at: cellIndex)
         
-        if singleplayer.shipKeys[shipIndex].1.count == 0 {
+        if singleplayer.shipKeys?[shipIndex].1.count == 0 {
             singleplayer.shipsLeft -= 1
             NotificationCenter.default.post(name: NSNotification.Name("shipsLeftOwn"), object: nil)
         }

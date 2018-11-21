@@ -10,15 +10,15 @@ import UIKit
 
 class AIController: NSObject {
     
-    var ai : AI!
-    var aiCalc : AICalculator!
-    var playerCtrl : PlayerController!
-    var logicCtrl : AttackLogicController!
+    var ai : AI?
+    var aiCalc : AICalculator?
+    var playerCtrl : PlayerController?
+    var logicCtrl : AttackLogicController?
     var counter = 0
     var lastAttackKey = ""
     var firstAttackInTurn = true
     var waitingCounterTVC = 0
-    var mTimer : Timer!
+    var mTimer : Timer?
     var attackingBegan = false
     lazy var shipPositionsTMP = [[String]]()
     
@@ -30,10 +30,10 @@ class AIController: NSObject {
         ai = AI()
         playerCtrl = PlayerController()
         
-        ai.shipPosKeysPlayer = playerShips
-        ai.setup()
+        ai?.shipPosKeysPlayer = playerShips
+        ai?.setup()
         
-        playerCtrl.setup(shipPosKeys: playerShips)
+        playerCtrl?.setup(shipPosKeys: playerShips)
         
         setup(difficulty: difficulty)
         
@@ -42,7 +42,7 @@ class AIController: NSObject {
     
     fileprivate func setup(difficulty: String) {
         
-        ai.difficulty = difficulty
+        ai?.difficulty = difficulty
         
         //let positions = aiCalc.calculateShipPositions(ai: ai)
         //ai.shipPosKeys = positions
@@ -58,7 +58,7 @@ class AIController: NSObject {
         
         //Waits a few seconds to attack again
         if wait {
-            counter = aiCalc.generateTimerCounterForAttackAgain()
+            counter = aiCalc?.generateTimerCounterForAttackAgain() ?? -1
             
             //AI wont attack again when time to finish attack takes longer than turn 
             if counter >= waitingCounterTVC - 4 {
@@ -79,7 +79,7 @@ class AIController: NSObject {
         counter -= 1
         
         if counter == 0 {
-            mTimer.invalidate()
+            mTimer?.invalidate()
             attackPlayer()
         }
     }
@@ -106,7 +106,7 @@ class AIController: NSObject {
         
         //Remove key that lead to a hit
         if isHit {
-            ai.removePlayerKey(key: key)
+            ai?.removePlayerKey(key: key)
         }
         //Remove key that did not lead to a hit
         else {
@@ -120,7 +120,7 @@ class AIController: NSObject {
         
         if pause {
             if mTimer != nil  && attackingBegan {
-                mTimer.invalidate()
+                mTimer?.invalidate()
             }
         }
         else {
@@ -133,24 +133,29 @@ class AIController: NSObject {
     /** Sets the chances to hit a ship to a new value before every attack */
     fileprivate func setNewChanceValue() {
         
-        let newChanceValues = aiCalc.generateNewChanceValue(difficulty: ai.difficulty)
+        guard let ai = ai,
+                let difficulty = ai.difficulty,
+                let newChanceValues = aiCalc?.generateNewChanceValue(difficulty: difficulty) else {
+            return
+        }
+        
         ai.chanceToAttack = newChanceValues.0
         ai.chanceToAttackAgain = newChanceValues.1
     }
     
     /** Checks if player has won */
     func checkForPlayerWin() -> Bool {
-        return ai.cellsLeft == 0
+        return ai?.cellsLeft == 0
     }
     
     /** Checks the player's attack */
     func checkPlayerAttack(cellKey: String) -> Bool {
         
-        for ship in ai.shipPosKeys {
+        for ship in ai?.shipPosKeys ?? [] {
             
             //Player attack a cell which is contained in the ai ship cells
             if ship.contains(cellKey) {
-                ai.cellsLeft -= 1
+                ai?.cellsLeft -= 1
                 removeKeyFromTMPPositions(key: cellKey)
                 return true
             }
@@ -177,7 +182,7 @@ class AIController: NSObject {
         
         //If ship array is empty -> ship is completely destroyed -> reduce value of shipsLeft
         if shipPositionsTMP[shipIndex].isEmpty {
-            ai.shipsLeft -= 1
+            ai?.shipsLeft -= 1
             
             let nc = NotificationCenter.default
             nc.post(name: NSNotification.Name("shipsLeftOpponent"), object: nil, userInfo: nil)
@@ -185,16 +190,16 @@ class AIController: NSObject {
     }
     
     func getCounterForAttack() -> Int {
-        return aiCalc.generateTimerCounterForAttack()
+        return aiCalc?.generateTimerCounterForAttack() ?? -1
     }
     
 //____________________________________________________________________PlayerController
     
     func checkAIAttack(cellKey: String) -> Bool {
-        return playerCtrl.checkAIAttack(cellKey: cellKey)
+        return playerCtrl?.checkAIAttack(cellKey: cellKey) ?? false
     }
     
     func checkForAIWin() -> Bool {
-        return playerCtrl.checkForAIWin()
+        return playerCtrl?.checkForAIWin() ?? false
     }
 }

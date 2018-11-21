@@ -17,7 +17,7 @@ class AIControllerTest: NSObject {
     var counter = 0
     var lastAttackKey = ""
     
-    var mTimer : Timer!
+    var mTimer : Timer?
     
     
     init(difficulty: String) {
@@ -46,9 +46,9 @@ class AIControllerTest: NSObject {
     }
     
     private func setupLife() {
-        ai.shipsLeft = ai.shipKeys.count
+        ai.shipsLeft = ai.shipKeys?.count ?? -1
         
-        for ship in ai.shipKeys {
+        for ship in ai.shipKeys ?? [] {
             ai.cellsLeft += ship.count
         }
     }
@@ -56,7 +56,7 @@ class AIControllerTest: NSObject {
     /** Sets the chances to hit a ship to a new value before every attack */
     private func setNewChanceValue() {
         
-        let newChanceValues = AICalculator().generateNewChanceValue(difficulty: ai.difficulty)
+        let newChanceValues = AICalculator().generateNewChanceValue(difficulty: ai.difficulty ?? "")
         ai.chanceToAttack = newChanceValues.0
         ai.chanceToAttackAgain = newChanceValues.1
     }
@@ -124,7 +124,7 @@ class AIControllerTest: NSObject {
         counter -= 1
         
         if counter == 0 {
-            mTimer.invalidate()
+            mTimer?.invalidate()
             attack()
         }
     }
@@ -132,7 +132,7 @@ class AIControllerTest: NSObject {
     func pauseResume(pause: Bool) {
         if pause {
             if mTimer != nil  && attackingBegan {
-                mTimer.invalidate()
+                mTimer?.invalidate()
             }
         }
         else {
@@ -148,15 +148,21 @@ class AIControllerTest: NSObject {
         var cellIndex = 0
         var shipIndex = 0
         
-        for key in 0..<ai.shipKeys.count {
+        let count = ai.shipKeys?.count ?? 0
+        
+        for key in 0..<count {
             
             shipIndex = key
             
             //Player hits ship
-            if ai.shipKeys[key].contains(cellKey) {
+            if ai.shipKeys?[key].contains(cellKey) ?? false {
                 hit = true
                 ai.cellsLeft -= 1
-                cellIndex = ai.shipKeys[key].index(of: cellKey)!
+                
+                guard let index = ai.shipKeys?[key].index(of: cellKey) else {
+                    return false
+                }
+                cellIndex = index
                 break
             }
         }
@@ -169,35 +175,48 @@ class AIControllerTest: NSObject {
     }
     
     private func removeShipKey(shipIndex: Int, cellIndex: Int) {
-        ai.shipKeys[shipIndex].remove(at: cellIndex)
+        ai.shipKeys?[shipIndex].remove(at: cellIndex)
         
-        if ai.shipKeys[shipIndex].count == 0 {
+        if ai.shipKeys?[shipIndex].count == 0 {
             ai.shipsLeft -= 1
             NotificationCenter.default.post(name: NSNotification.Name("shipsLeftOpponent"), object: nil)
         }
     }
     
     func removePlayerKey(key: String) {
-        ai.shipKeysPlayerString.remove(at: ai.shipKeysPlayerString.index(of: key)!)
+        
+        guard let index = ai.shipKeysPlayerString?.index(of: key) else {
+            return
+        }
+        
+        ai.shipKeysPlayerString?.remove(at: index)
         
         var cellIndex = 0
         var shipIndex = 0
         
-        for ship in 0..<ai.shipKeysPlayer.count {
+        let count = ai.shipKeysPlayer?.count ?? 0
+        
+        for ship in 0..<count {
             
             shipIndex = ship
             
             //Player hits ship
-            if ai.shipKeysPlayer[ship].1.contains(key) {
-                cellIndex = ai.shipKeysPlayer[ship].1.index(of: key)!
-                break
+            if ai.shipKeysPlayer?[ship].1.contains(key) ?? false {
+                if let cellIndexSafe = ai.shipKeysPlayer?[ship].1.index(of: key) {
+                    cellIndex = cellIndexSafe
+                    break
+                }
+                
             }
         }
-        ai.shipKeysPlayer[shipIndex].1.remove(at: cellIndex)
+        ai.shipKeysPlayer?[shipIndex].1.remove(at: cellIndex)
     }
     
     func removeKeyFromAll(key: String) {
-        ai.allKeys.remove(at: ai.allKeys.index(of: key)!)
+        guard let index = ai.allKeys?.index(of: key) else {
+            return
+        }
+        ai.allKeys?.remove(at: index)
     }
     
     func getAICellsLeft() -> Int {

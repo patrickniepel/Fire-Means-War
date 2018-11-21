@@ -21,15 +21,15 @@ protocol SPPlacingSegueDelegate {
 
 class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDelegate, SPAttackSegueDelegate, PauseSegueDelegate {
     
-    var fieldCtrl : FieldController!
-    var shipCtrl : ShipController!
-    var cellCtrl : CellController!
-    var shipPosCtrl : ShipPositionController!
+    var fieldCtrl : FieldController?
+    var shipCtrl : ShipController?
+    var cellCtrl : CellController?
+    var shipPosCtrl : ShipPositionController?
     
     // Timer for waiting for opponent's attacks
     // Timer between the end of an opponent's attack the the transition to the attack screen
     // Timer for placing the ships
-    var mTimer : Timer!
+    var mTimer : Timer?
     var waitingCounter = 20
     var placingCounter = 30
     var delayCount = 3
@@ -42,18 +42,18 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
     
     var delegate : SPPlacingSegueDelegate? = nil
     
-    var audioPlayer : AudioPlayer!
+    var audioPlayer : AudioPlayer?
     
-    var optionsScreen : PopUpOptionsViewController!
-    var timerScreen : PopUpTimerViewController!
+    var optionsScreen : PopUpOptionsViewController?
+    var timerScreen : PopUpTimerViewController?
     
     var difficulty = 0
     var difficultyTitle = "Easy"
     
     var changedCells = [(String, Bool)]()
     
-    var matchCtrl : SingleMatchController!
-    var counterForAttack : Int!
+    var matchCtrl : SingleMatchController?
+    var counterForAttack : Int = 0
     
     var userLeavesApplication = false
     
@@ -80,7 +80,11 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
         shipCtrl = ShipController()
         shipPosCtrl = ShipPositionController()
         cellCtrl = CellController()
-        cellCtrl.setup(shipPos: shipPosCtrl)
+        
+        if let shipPosCtrl = shipPosCtrl {
+            cellCtrl?.setup(shipPos: shipPosCtrl)
+        }
+        
         navigationItem.title = difficultyTitle
         
         setupLabels()
@@ -110,12 +114,19 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
             fieldView.layoutIfNeeded()
 
             layoutCalledOnce = true
+            
+            
             fieldCtrl = FieldController(view: view, field: fieldView)
+            
+            guard let shipPosCtrl = shipPosCtrl, let fieldCtrl = fieldCtrl, let shipCtrl = shipCtrl else {
+                return
+            }
+            
             fieldCtrl.setup(shipPosCtrl: shipPosCtrl)
             
             fieldCtrl.populateField()
             shipCtrl.createShips(cellWidth: fieldCtrl.width, mainView: view, field: fieldView)
-            cellCtrl.shipCellsLeft = shipCtrl.cellsLeft
+            cellCtrl?.shipCellsLeft = shipCtrl.cellsLeft
             
             lifeLabel.text = "\(shipCtrl.cellsLeft)"
             shipsLeftLabel.text = "\(shipCtrl.ships.count)"
@@ -132,12 +143,8 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
     override func viewWillDisappear(_ animated: Bool) {
         
         // If the popups are currently displayed and this view controllers gets terminated
-        if optionsScreen != nil {
-            optionsScreen.dismiss(animated: false, completion: nil)
-        }
-        if timerScreen != nil {
-            timerScreen.dismiss(animated: false, completion: nil)
-        }
+        optionsScreen?.dismiss(animated: false, completion: nil)
+        timerScreen?.dismiss(animated: false, completion: nil)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -171,15 +178,13 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
         
         for touch in touches {
             
-            for ship in shipCtrl.ships {
+            for ship in shipCtrl?.ships ?? [] {
                 
                 if ship.frame.contains(touch.location(in: view)) {
                     
-                    let ship = touch.view as? Ship
-                    
-                    // Ship always in center of the touch
-                    if ship != nil {
-                        ship!.center = touch.location(in: view)
+                    if let ship = touch.view as? Ship {
+                        // Ship always in center of the touch
+                        ship.center = touch.location(in: view)
                     }
                 }
             }
@@ -191,16 +196,16 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
         
         for touch in touches {
             
-            for ship in shipCtrl.ships {
+            for ship in shipCtrl?.ships ?? [] {
                 
                 if ship.frame.contains(touch.location(in: view)) {
                     
-                    let ship = touch.view as? Ship
+                    guard let ship = touch.view as? Ship else {
+                        return
+                    }
                     
                     //Ships can be snapped to the position
-                    if ship != nil {
-                        fieldCtrl.checkSnapPosition(touchedShip: ship!)
-                    }
+                    fieldCtrl?.checkSnapPosition(touchedShip: ship)
                 }
             }
         }
@@ -212,7 +217,7 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
         returned = true
         startPlacingTimer()
         
-        audioPlayer.playHorn()
+        audioPlayer?.playHorn()
         
         timerScreen = nil
         ctrl.dismiss(animated: true, completion: nil)
@@ -220,7 +225,7 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
     
     /** Starts to play the theme for a battle */
     fileprivate func startBattleMusic() {
-        audioPlayer.playBattle()
+        audioPlayer?.playBattle()
     }
     
     /** Delegate of the SPAttackViewController */
@@ -234,7 +239,7 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
     func backFromSPAttackScreen(ctrl: SPAttackViewController, message: String) {
         
         ctrl.navigationController?.popViewController(animated: false)
-        delegate!.backFromSPPlacingScreen(ctrl: self, message: message)
+        delegate?.backFromSPPlacingScreen(ctrl: self, message: message)
     }
     
     /** Delegate of the OptionsViewController */
@@ -243,7 +248,7 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
         optionsScreen = nil
         
         // Returns to the menu
-        delegate!.backFromSPPlacingScreen(ctrl: self, message: "concede")
+        delegate?.backFromSPPlacingScreen(ctrl: self, message: "concede")
     }
     
     /** Delegate of the OptionsViewController */
@@ -270,15 +275,19 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
         }
         
         //Player did place all ships, host starts his attack
-        if placingCounter == 0 && shipCtrl.checkIfShipsPlaced() {
+        guard let checkShipsPlayer = shipCtrl?.checkIfShipsPlaced() else {
+            return
+        }
+        
+        if placingCounter == 0 && checkShipsPlayer{
             
-            mTimer.invalidate()
+            mTimer?.invalidate()
             
             //Match with AI will be created
             createMatch()
             
             //Ships cant be dragged after the placing time
-            shipCtrl.removeGestureRecognizer()
+            shipCtrl?.removeGestureRecognizer()
             self.view.isUserInteractionEnabled = false
             
             // Displays the attack screen
@@ -290,7 +299,7 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
             // Player did not place all ships, match gets cancelled
         else if placingCounter == 0 {
             
-            delegate!.backFromSPPlacingScreen(ctrl: self, message: "notPlaced")
+            delegate?.backFromSPPlacingScreen(ctrl: self, message: "notPlaced")
         }
             
             // Timer ticks
@@ -301,15 +310,15 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
     
     /** Creates Match with AI */
     fileprivate func createMatch() {
-        let playerShips = shipPosCtrl.getcellShipKeys()
+        guard let playerShips = shipPosCtrl?.getcellShipKeys() else {
+            return
+        }
         matchCtrl = SingleMatchController(difficulty: difficultyTitle, playerShipKeys: playerShips)
-        matchCtrl.createMatch()
+        matchCtrl?.createMatch()
     }
     
     fileprivate func stopTimer() {
-        if mTimer != nil {
-            mTimer.invalidate()
-        }
+        mTimer?.invalidate()
     }
     
     /** Timer for waiting for opponent's attacks */
@@ -320,7 +329,7 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
         mTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(handleWaitingTimer), userInfo: nil, repeats: true)
         
         //Generate random number for starting the ai attack
-        counterForAttack = matchCtrl.getCounterForAttack()
+        counterForAttack = matchCtrl?.getCounterForAttack() ?? 0
     }
     
     /** Timer for waiting for opponent's attacks */
@@ -328,7 +337,7 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
         mTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(handleWaitingTimer), userInfo: nil, repeats: true)
         
         //Generate random number for starting the ai attack
-        counterForAttack = matchCtrl.getCounterForAttack()
+        counterForAttack = matchCtrl?.getCounterForAttack() ?? 0
     }
     
     @objc func handleWaitingTimer() {
@@ -337,8 +346,8 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
         
         if counterForAttack == waitingCounter {
             //New turn -> first attack
-            matchCtrl.setFirstAttackInTurn(firstAttack: true)
-            matchCtrl.attackPlayer(wait: false)
+            matchCtrl?.setFirstAttackInTurn(firstAttack: true)
+            matchCtrl?.attackPlayer(wait: false)
         }
         
         if waitingCounter <= 5 {
@@ -346,7 +355,7 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
         }
         
         if waitingCounter == 0 {
-            mTimer.invalidate()
+            mTimer?.invalidate()
             
             // Back to placing screen again
             performSegue(withIdentifier: "spPlacingVC2spAttackVC", sender: nil)
@@ -362,32 +371,35 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
         // Get the key of the attacked cell
         let cellKey = ExtractMessage().extractKey(notification: notification, keyword: "aiAttacked")
         // Check if there is a ship upon the attacked cell
-        let cell = fieldCtrl.cellGotAttacked(key: cellKey)
-        let isAttack = matchCtrl.checkAIAttack(cellKey: cellKey)
+        let cell = fieldCtrl?.cellGotAttacked(key: cellKey)
+        
+        guard let isAttack = matchCtrl?.checkAIAttack(cellKey: cellKey) else {
+            return
+        }
         
         // Ship got attacked
         if isAttack {
             
-            matchCtrl.removeAttackedKeyFromAIPlayerKeysArray(key: cellKey)
+            matchCtrl?.removeAttackedKeyFromAIPlayerKeysArray(key: cellKey)
             
             //Reduce lp
             //lifeLabel.text = "\(Int(lifeLabel.text!)! - 1)"
-            lifeLabel.text = "\(matchCtrl.getPlayerCellsLeft())"
+            lifeLabel.text = "\(matchCtrl?.getPlayerCellsLeft())"
             
-            audioPlayer.playFire()
+            audioPlayer?.playFire()
             
             //Sets the correct appearance for the cell
-            cell.shipOnCellAttackedDefender()
+            cell?.shipOnCellAttackedDefender()
             
             infoLabel.text = "Opponent Hit A Ship!"
             checkForMatchResult()
         }
             // No ship got attacked
         else {
-            audioPlayer.playMissed()
+            audioPlayer?.playMissed()
             
             //Sets the correct appearance for the cell
-            cell.noShipOnCellAttackedDefender()
+            cell?.noShipOnCellAttackedDefender()
             
             infoLabel.text = "Opponent Missed!"
             stopTimer()
@@ -398,7 +410,7 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
     /** Gets called when the ai attacks a ship cell of the player */
     @objc func handleShipsLeft(notification: NSNotification) {
         //shipsLeftLabel.text = "\(Int(shipsLeftLabel.text!)! - 1)"
-        shipsLeftLabel.text = "\(matchCtrl.getPlayerShipsLeft())"
+        shipsLeftLabel.text = "\(matchCtrl?.getPlayerShipsLeft())"
     }
     
     fileprivate func startDelay2Attack() {
@@ -412,31 +424,31 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
         
         if delayCount == 0 {
             delayCount = 3
-            mTimer.invalidate()
+            mTimer?.invalidate()
             performSegue(withIdentifier: "spPlacingVC2spAttackVC", sender: nil)
         }
     }
     
     /** Pauses the match and shows the pause screen */
     fileprivate func pauseMatch() {
-        mTimer.invalidate()
-        audioPlayer.pauseResumeBattlePlayer(pause: true)
+        mTimer?.invalidate()
+        audioPlayer?.pauseResumeBattlePlayer(pause: true)
         
         if state == .waiting {
-            matchCtrl.pauseResumeAI(pause: true)
+            matchCtrl?.pauseResumeAI(pause: true)
         }
     }
     
     func backFromPauseScreen(ctrl: PauseViewController) {
         ctrl.dismiss(animated: true, completion: nil)
-        audioPlayer.pauseResumeBattlePlayer(pause: false)
+        audioPlayer?.pauseResumeBattlePlayer(pause: false)
         
         if state == .placing {
             startPlacingTimer()
         }
         if state == .waiting {
             resumeWaitingTimer()
-            matchCtrl.pauseResumeAI(pause: false)
+            matchCtrl?.pauseResumeAI(pause: false)
         }
         if state == .delay {
             startDelay2Attack()
@@ -446,20 +458,24 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
     /** Checks if player lost the match */
     fileprivate func checkForMatchResult() {
         
-        if matchCtrl.checkForAIWin() {
+        guard let aiWin = matchCtrl?.checkForAIWin() else {
+            return
+        }
+        
+        if  aiWin {
             
-            mTimer.invalidate()
+            mTimer?.invalidate()
             
             //Fades out the battle theme
-            audioPlayer.volumeToZeroBattleTheme()
-            audioPlayer.playDefeat()
+            audioPlayer?.volumeToZeroBattleTheme()
+            audioPlayer?.playDefeat()
             showAlertSP(title: "Defeat", message: "You lose")
         }
         // AI attacks again, because player has not lost yet and the last attack hit a ship
         else {
             //AI wont attack again if only 3 seconds or less left
-            matchCtrl.setWaitingCounter(counter: waitingCounter)
-            matchCtrl.attackPlayer(wait: true)
+            matchCtrl?.setWaitingCounter(counter: waitingCounter)
+            matchCtrl?.attackPlayer(wait: true)
         }
     }
     
@@ -469,7 +485,7 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
         let alertSheetController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         let continueAction = UIAlertAction(title: "Continue", style: .default) { action -> Void in
-            self.delegate!.backFromSPPlacingScreen(ctrl: self, message: "loss")
+            self.delegate?.backFromSPPlacingScreen(ctrl: self, message: "loss")
         }
         alertSheetController.addAction(continueAction)
         
@@ -481,33 +497,33 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
         
         if segue.identifier == "spPlacingVC2popUpTimerVC" {
             
-            let destVC = segue.destination as! PopUpTimerViewController
+            let destVC = segue.destination as? PopUpTimerViewController
             timerScreen = destVC
-            destVC.delegate = self
+            destVC?.delegate = self
         }
         
         if segue.identifier == "spPlacingVC2spAttackVC" {
             
-            let destVC = segue.destination as! SPAttackViewController
+            let destVC = segue.destination as? SPAttackViewController
             
-            destVC.delegate = self
-            destVC.matchCtrl = matchCtrl
-            destVC.changedCells = changedCells
-            destVC.audioPlayer = audioPlayer
-            destVC.difficultyTitle = difficultyTitle
+            destVC?.delegate = self
+            destVC?.matchCtrl = matchCtrl
+            destVC?.changedCells = changedCells
+            destVC?.audioPlayer = audioPlayer
+            destVC?.difficultyTitle = difficultyTitle
         }
         
         if segue.identifier == "spPlacingVC2popUpOptionsVC" {
             
-            let destVC = segue.destination as! PopUpOptionsViewController
+            let destVC = segue.destination as? PopUpOptionsViewController
             optionsScreen = destVC
-            destVC.delegate = self
+            destVC?.delegate = self
         }
         
         if segue.identifier == "spPlacingVC2pauseVC" {
             
-            let destVC = segue.destination as! PauseViewController
-            destVC.delegate = self
+            let destVC = segue.destination as? PauseViewController
+            destVC?.delegate = self
             pauseMatch()
         }
     }

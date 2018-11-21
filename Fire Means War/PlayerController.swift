@@ -10,24 +10,24 @@ import UIKit
 
 class PlayerController: NSObject {
     
-    var player : SinglePlayer!
+    var player : SinglePlayer?
     lazy var shipPositionsTMP = [[String]]()
     
     func setup(shipPosKeys: [(Ship, [String])]) {
         player = SinglePlayer()
-        player.shipPosKeysPlayer = shipPosKeys
+        player?.shipPosKeysPlayer = shipPosKeys
         fillShipPositionsTMP(shipPos: shipPosKeys)
-        player.setup()
+        player?.setup()
     }
     
     //Checks the ai's attack
     func checkAIAttack(cellKey: String) -> Bool {
         
-        for ship in player.shipPosKeysPlayer {
+        for ship in player?.shipPosKeysPlayer ?? [] {
             
             //Ai attacks a cell which is contained in the player ship cells
             if ship.1.contains(cellKey) {
-                player.cellsLeft -= 1
+                player?.cellsLeft -= 1
                 removeKeyFromTMPPositions(key: cellKey)
                 return true
             }
@@ -37,7 +37,7 @@ class PlayerController: NSObject {
     
     //Checks if ai has won
     func checkForAIWin() -> Bool {
-        return player.cellsLeft == 0
+        return player?.cellsLeft == 0
     }
     
     fileprivate func removeKeyFromTMPPositions(key: String) {
@@ -50,7 +50,10 @@ class PlayerController: NSObject {
             
             if shipPositionsTMP[i].contains(key) {
                 shipIndex = i
-                keyIndex = shipPositionsTMP[i].index(of: key)!
+                guard let index = shipPositionsTMP[i].index(of: key) else {
+                    return
+                }
+                keyIndex = index
             }
         }
         
@@ -59,7 +62,7 @@ class PlayerController: NSObject {
         
         //If ship array is empty -> ship is completely destroyed -> reduce value of shipsLeft
         if shipPositionsTMP[shipIndex].isEmpty {
-            player.shipsLeft -= 1
+            player?.shipsLeft -= 1
             
             let nc = NotificationCenter.default
             nc.post(name: NSNotification.Name("shipsLeftOwn"), object: nil, userInfo: nil)

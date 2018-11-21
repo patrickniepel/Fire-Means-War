@@ -10,8 +10,8 @@ import UIKit
 
 class SingleplayerTest: NSObject {
     
-    var shipKeys : [(Ship, [String])]!
-    var noShipKeys : [String]!
+    var shipKeys : [(Ship, [String])]?
+    var noShipKeys : [String]?
     
     var shipsLeft : Int = 0
     var cellsLeft : Int = 0

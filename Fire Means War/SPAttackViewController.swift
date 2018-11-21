@@ -21,11 +21,11 @@ protocol SPAttackSegueDelegate {
 class SPAttackViewController: UIViewController, OptionsDelegate, PauseSegueDelegate {
     
     // Timer for attacking a cell
-    var mTimer : Timer!
+    var mTimer : Timer?
     var attackCounter = 20
     
-    var shipCtrl : ShipController!
-    var fieldCtrl : FieldController!
+    var shipCtrl : ShipController?
+    var fieldCtrl : FieldController?
     
     // Layout already done
     var layoutCalledOnce = false
@@ -33,11 +33,11 @@ class SPAttackViewController: UIViewController, OptionsDelegate, PauseSegueDeleg
     // Time between the end of an attack the the transition to the placing screen
     var delayCount = 3
     
-    var gestureRecognizer : UITapGestureRecognizer!
+    var gestureRecognizer : UITapGestureRecognizer?
     
-    var audioPlayer : AudioPlayer!
+    var audioPlayer : AudioPlayer?
     
-    var optionsScreen : PopUpOptionsViewController!
+    var optionsScreen : PopUpOptionsViewController?
     
     var difficultyTitle = "Easy"
     
@@ -46,7 +46,7 @@ class SPAttackViewController: UIViewController, OptionsDelegate, PauseSegueDeleg
     
     var delegate : SPAttackSegueDelegate? = nil
     
-    var matchCtrl : SingleMatchController!
+    var matchCtrl : SingleMatchController?
     
     var state : AttackState = .attack
 
@@ -72,7 +72,10 @@ class SPAttackViewController: UIViewController, OptionsDelegate, PauseSegueDeleg
         
         // For selecting a cell as a target
         gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-        fieldView.addGestureRecognizer(gestureRecognizer)
+        
+        if let gestureRecognizer = gestureRecognizer {
+            fieldView.addGestureRecognizer(gestureRecognizer)
+        }
         
         setupLabels()
         
@@ -93,8 +96,8 @@ class SPAttackViewController: UIViewController, OptionsDelegate, PauseSegueDeleg
         
         if !layoutCalledOnce {
             fieldCtrl = FieldController(view: view, field: fieldView)
-            fieldCtrl.populateField()
-            fieldCtrl.updateField(changedCells: changedCells)
+            fieldCtrl?.populateField()
+            fieldCtrl?.updateField(changedCells: changedCells)
             layoutCalledOnce = true
         }
     }
@@ -102,10 +105,7 @@ class SPAttackViewController: UIViewController, OptionsDelegate, PauseSegueDeleg
     override func viewWillDisappear(_ animated: Bool) {
         
         // If optionsScreen is currently presenting when this viewController gets terminated
-        if optionsScreen != nil {
-            optionsScreen.dismiss(animated: false, completion: nil)
-        }
-
+        optionsScreen?.dismiss(animated: false, completion: nil)
     }
     
     // Stops the attacking timer when viewController gets popped from the stack
@@ -117,8 +117,8 @@ class SPAttackViewController: UIViewController, OptionsDelegate, PauseSegueDeleg
         timerLabel.numberOfLines = 0
         infoLabel.numberOfLines = 0
         infoLabel.text = "Choose A Target!"
-        lifeLabel.text = "\(matchCtrl.getAICellsLeft())"
-        shipsLeftLabel.text = "\(matchCtrl.getAIShipsLeft())"
+        lifeLabel.text = "\(matchCtrl?.getAICellsLeft() ?? -1)"
+        shipsLeftLabel.text = "\(matchCtrl?.getAIShipsLeft() ?? -1)"
         topIV.layer.borderWidth = 2
         topIV.layer.borderColor = UIColor.white.cgColor
     }
@@ -128,7 +128,7 @@ class SPAttackViewController: UIViewController, OptionsDelegate, PauseSegueDeleg
         ctrl.dismiss(animated: false, completion: nil)
         optionsScreen = nil
         
-        delegate!.backFromSPAttackScreen(ctrl: self, message: "concede")
+        delegate?.backFromSPAttackScreen(ctrl: self, message: "concede")
     }
     
     /** Delegate of the OptionsViewController */
@@ -143,7 +143,7 @@ class SPAttackViewController: UIViewController, OptionsDelegate, PauseSegueDeleg
     }
     
     fileprivate func stopTimer() {
-        mTimer.invalidate()
+        mTimer?.invalidate()
     }
     
     @objc func handleTimer(timer: Timer) {
@@ -154,8 +154,8 @@ class SPAttackViewController: UIViewController, OptionsDelegate, PauseSegueDeleg
             timerLabel.textColor = .red
         }
         if attackCounter == 0 {
-            mTimer.invalidate()
-            delegate!.backFromSPAttackScreen(ctrl: self, changedCellsFromAttack: changedCells)
+            mTimer?.invalidate()
+            delegate?.backFromSPAttackScreen(ctrl: self, changedCellsFromAttack: changedCells)
         }
         else {
             timerLabel.text = "\(attackCounter) s"
@@ -171,10 +171,10 @@ class SPAttackViewController: UIViewController, OptionsDelegate, PauseSegueDeleg
         if location.x < 0 || location.y < 0 {
             return
         }
-        fieldCtrl.manageTargetGesture(location: location, changedCells: changedCells)
+        fieldCtrl?.manageTargetGesture(location: location, changedCells: changedCells)
         
         //If there is a correct cell that was selected (e.g. not correct, if player selects a cell that was already attacked)
-        if fieldCtrl.selectedCell != nil {
+        if fieldCtrl?.selectedCell != nil {
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 
                 // Fire button gets active and player can interact
@@ -186,37 +186,45 @@ class SPAttackViewController: UIViewController, OptionsDelegate, PauseSegueDeleg
     @IBAction func firePressed(_ sender: UIButton) {
         
         // If there is currently no other cell selected
-        if fieldCtrl.selectedCell == nil {
+        if fieldCtrl?.selectedCell == nil {
             infoLabel.textColor = .red
             infoLabel.text = "Choose A Target!"
         }
         else {
             // Fire was pressed an interaction gets disabled until the message of the opponent arrives (if a ship was attacked the interaction gets enabled again)
-            fieldView.removeGestureRecognizer(gestureRecognizer)
+            if let gestureRecognizer = gestureRecognizer {
+                fieldView?.removeGestureRecognizer(gestureRecognizer)
+            }
+            
             sender.isEnabled = false
             
             // Gets the key for the attacked cell
-            let key = CellController().getKeyForCell(cell: fieldCtrl.selectedCell!)
+            guard let selectedCell = fieldCtrl?.selectedCell else {
+                return
+            }
+            let key = CellController().getKeyForCell(cell: selectedCell)
             attackAI(cellKey: key)
         }
     }
     
     fileprivate func attackAI(cellKey: String) {
         
-        let successfullAttack = matchCtrl.checkPlayerAttack(cellKey: cellKey)
+        guard let successfullAttack = matchCtrl?.checkPlayerAttack(cellKey: cellKey) else {
+            return
+        }
         
         infoLabel.textColor = .white
         
         if successfullAttack {
             
             //lifeLabel.text = "\(Int(lifeLabel.text!)! - 1)"
-            lifeLabel.text = "\(matchCtrl.getAICellsLeft())"
+            lifeLabel.text = "\(matchCtrl?.getAICellsLeft() ?? -1)"
             
             // Plays sound for a successfully attacked cell
-            audioPlayer.playFire()
+            audioPlayer?.playFire()
             
             // Sets the correct occurence for the attacked cell
-            fieldCtrl.selectedCell?.shipOnCellAttackedOffender()
+            fieldCtrl?.selectedCell?.shipOnCellAttackedOffender()
             
             // Appends the cell to the set. Set will be assigned to a variable in the SPPlacingViewController to cache the progress
             changedCells.append((cellKey, true))
@@ -224,33 +232,40 @@ class SPAttackViewController: UIViewController, OptionsDelegate, PauseSegueDeleg
             infoLabel.text = "Nice! Do That Again!"
             
             // Player can choose another cell
-            fieldView.addGestureRecognizer(gestureRecognizer)
-            fieldCtrl.updateField(changedCells: changedCells)
+            if let gestureRecognizer = gestureRecognizer {
+                fieldView?.addGestureRecognizer(gestureRecognizer)
+            }
+            
+            fieldCtrl?.updateField(changedCells: changedCells)
             btnFire.isEnabled = true
             
             // Resets selected cell
-            fieldCtrl.selectedCell = nil
+            fieldCtrl?.selectedCell = nil
             
             //After player attacks it will be checked if he wins
-            if matchCtrl.checkForPlayerWin() {
+            guard let playerWin = matchCtrl?.checkForPlayerWin() else {
+                return
+            }
+            
+            if playerWin {
                 
-                mTimer.invalidate()
+                mTimer?.invalidate()
                 
                 //Fades out the battle theme
-                audioPlayer.volumeToZeroBattleTheme()
-                audioPlayer.playVictory()
+                audioPlayer?.volumeToZeroBattleTheme()
+                audioPlayer?.playVictory()
                 showAlertSP(title: "Victory", message: "You Win")
             }
         }
         else {
             
             // Plays the sound that a ship was missed
-            audioPlayer.playMissed()
+            audioPlayer?.playMissed()
             
             stopTimer()
             
             // Sets the correct occurence for the attacked cell
-            fieldCtrl.selectedCell?.noShipOnCellAttackedOffender()
+            fieldCtrl?.selectedCell?.noShipOnCellAttackedOffender()
             
             // Appends the cell to the set. Set will be assigned to a variable in the placingViewController to cache the progress
             changedCells.append((cellKey, false))
@@ -264,7 +279,7 @@ class SPAttackViewController: UIViewController, OptionsDelegate, PauseSegueDeleg
     /** Gets called when the player attacks a ship cell of the ai */
     @objc func handleShipsLeft(notification: NSNotification) {
         //shipsLeftLabel.text = "\(Int(shipsLeftLabel.text!)! - 1)"
-        shipsLeftLabel.text = "\(matchCtrl.getAIShipsLeft())"
+        shipsLeftLabel.text = "\(matchCtrl?.getAIShipsLeft() ?? -1)"
     }
     
     fileprivate func startDelay2Place() {
@@ -278,21 +293,21 @@ class SPAttackViewController: UIViewController, OptionsDelegate, PauseSegueDeleg
         delayCount -= 1
         
         if delayCount == 0 {
-            mTimer.invalidate()
+            mTimer?.invalidate()
 
-            delegate!.backFromSPAttackScreen(ctrl: self, changedCellsFromAttack: changedCells)
+            delegate?.backFromSPAttackScreen(ctrl: self, changedCellsFromAttack: changedCells)
         }
     }
     
     /** Pauses the match and shows the pause screen */
     fileprivate func pauseMatch() {
-        mTimer.invalidate()
-        audioPlayer.pauseResumeBattlePlayer(pause: true)
+        mTimer?.invalidate()
+        audioPlayer?.pauseResumeBattlePlayer(pause: true)
     }
     
     func backFromPauseScreen(ctrl: PauseViewController) {
         ctrl.dismiss(animated: true, completion: nil)
-        audioPlayer.pauseResumeBattlePlayer(pause: false)
+        audioPlayer?.pauseResumeBattlePlayer(pause: false)
         
         if state == .attack {
             startTimer()
@@ -308,7 +323,7 @@ class SPAttackViewController: UIViewController, OptionsDelegate, PauseSegueDeleg
         let alertSheetController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         let continueAction = UIAlertAction(title: "Continue", style: .default) { action -> Void in
-            self.delegate!.backFromSPAttackScreen(ctrl: self, message: "win")
+            self.delegate?.backFromSPAttackScreen(ctrl: self, message: "win")
         }
         alertSheetController.addAction(continueAction)
         
@@ -320,15 +335,15 @@ class SPAttackViewController: UIViewController, OptionsDelegate, PauseSegueDeleg
         
         if segue.identifier == "spAttackVC2popUpOptionsVC" {
             
-            let destVC = segue.destination as! PopUpOptionsViewController
+            let destVC = segue.destination as? PopUpOptionsViewController
             optionsScreen = destVC
-            destVC.delegate = self
+            destVC?.delegate = self
         }
         
         if segue.identifier == "spAttackVC2pauseVC" {
             
-            let destVC = segue.destination as! PauseViewController
-            destVC.delegate = self
+            let destVC = segue.destination as? PauseViewController
+            destVC?.delegate = self
             pauseMatch()
         }
     }

@@ -13,9 +13,9 @@ class SinglePlayer: NSObject {
     var cellsLeft = 0
     
     //All ship keys if player
-    var shipPosKeysPlayer : [(Ship, [String])]! {
+    var shipPosKeysPlayer : [(Ship, [String])]? {
         didSet {
-            shipsLeft = shipPosKeysPlayer.count
+            shipsLeft = shipPosKeysPlayer?.count ?? -1
         }
     }
     var allPlayerKeys = [String]()
@@ -32,7 +32,7 @@ class SinglePlayer: NSObject {
         
         var counter = 0
         
-        for shipKeys in shipPosKeysPlayer {
+        for shipKeys in shipPosKeysPlayer ?? [] {
             counter += shipKeys.1.count
         }
         
@@ -42,7 +42,7 @@ class SinglePlayer: NSObject {
     //Appends all keys of the player's ships to one single list to get better access
     fileprivate func setupPlayerKeys() {
         
-        for ship in shipPosKeysPlayer {
+        for ship in shipPosKeysPlayer ?? [] {
             for key in ship.1 {
                 allPlayerKeys.append(key)
             }

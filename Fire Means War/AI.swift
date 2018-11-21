@@ -8,24 +8,24 @@
 
 import UIKit
 
-class AI: NSObject {
+class AI {
     
-    var difficulty : String!
+    var difficulty : String?
     
     //All available keys of the gamefield / (x,y)
     var allKeys = [(Int, Int)]()
     var allKeysString = [String]()
     
     //All ship keys of ai
-    var shipPosKeys : [[String]]! {
+    var shipPosKeys : [[String]]? {
         didSet {
-            shipsLeft = shipPosKeys.count
+            shipsLeft = shipPosKeys?.count ?? -1
         }
     }
     var shipsLeft : Int = 0
     
     //All ship keys if player
-    var shipPosKeysPlayer : [(Ship, [String])]!
+    var shipPosKeysPlayer : [(Ship, [String])]?
     var allPlayerKeys = [String]()
     
     //When 0, player wins
@@ -62,7 +62,7 @@ class AI: NSObject {
         
         var counter = 0
         
-        for shipKeys in shipPosKeysPlayer {
+        for shipKeys in shipPosKeysPlayer ?? [] {
             counter += shipKeys.1.count
         }
         
@@ -72,7 +72,7 @@ class AI: NSObject {
     /** Appends all keys of the player's ships to a single list to get better access */
     fileprivate func setupPlayerKeys() {
         
-        for ship in shipPosKeysPlayer {
+        for ship in shipPosKeysPlayer ?? [] {
             for key in ship.1 {
                 allPlayerKeys.append(key)
             }

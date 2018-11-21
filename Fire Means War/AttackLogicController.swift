@@ -10,13 +10,18 @@ import UIKit
 
 class AttackLogicController: NSObject {
     
-    var ai : AITest!
+    var ai : AITest?
     var lastAttackKey = ""
     var lastAttackWasHit = false
     
     func getKeyToAttack(aiOpponent: AITest, aLastAttackKey: String, firstAttackInTurn: Bool) -> (String, Bool) {
         
         ai = aiOpponent
+        
+        guard let ai = ai else {
+            return ("", false)
+        }
+        
         lastAttackKey = aLastAttackKey
         
         var keyToAttack = ""
@@ -57,21 +62,29 @@ class AttackLogicController: NSObject {
     /** Returns the key for a successfull attack for the first attack of the turn */
     fileprivate func getHitKey() -> String {
         
-        var randomIndex = 0
-        
-        while randomIndex >= ai.shipKeysPlayerString.count {
-            randomIndex = generateRandomAttackKey(value: ai.shipKeysPlayer.count)
+        guard let ai = ai else {
+            return ""
         }
         
-        return ai.shipKeysPlayerString[randomIndex]
+        var randomIndex = 0
+        
+        while randomIndex >= ai.shipKeysPlayerString?.count ?? 0 {
+            randomIndex = generateRandomAttackKey(value: ai.shipKeysPlayer?.count ?? 0)
+        }
+        
+        return ai.shipKeysPlayerString?[randomIndex] ?? ""
     }
     
     /** Returns the for a another succesfull attack (used when ai attacks multiple times) */
     fileprivate func getHitAgainKey() -> String {
         
+        guard let ai = ai else {
+            return ""
+        }
+        
         var keysToChoose = [String]()
         
-        for ship in ai.shipKeysPlayer {
+        for ship in ai.shipKeysPlayer ?? [] {
             
             for key in ship.1 {
                 //Search for latest attacked ship of the player
@@ -84,7 +97,7 @@ class AttackLogicController: NSObject {
         for key in keysToChoose {
             
             //If there are more keys of this ship available -> ship is not totally destroyed yet
-            if key != lastAttackKey && ai.shipKeysPlayerString.contains(key) {
+            if key != lastAttackKey && ai.shipKeysPlayerString?.contains(key) ?? false {
                 return key
             }
         }
@@ -97,7 +110,9 @@ class AttackLogicController: NSObject {
         
         //Last attack was a hit, so the 'no hit' should be somewhere around
         if lastAttackWasHit {
-            let indexOfHit = ai.allKeys.index(of: lastAttackKey)!
+            guard let indexOfHit = ai?.allKeys?.index(of: lastAttackKey), let ai = ai else {
+                return ""
+            }
             
             for i in 1..<99 {
                 
@@ -105,13 +120,15 @@ class AttackLogicController: NSObject {
                 let newIndex = indexOfHit % 99 + i
                 
                 //z.B letzter Index war 93 (zufällig letzter Eintrag im array) -> erster Durchlauf newIndex = 94 -> Index out of range exception
-                if newIndex >= ai.allKeys.count {
+                if newIndex >= ai.allKeys?.count ?? 0 {
                     continue
                 }
                 
-                let keyToAttack = ai.allKeys[newIndex]
+                guard let keyToAttack = ai.allKeys?[newIndex], let shipKeysPlayerString = ai.shipKeysPlayerString else {
+                    return ""
+                }
                 
-                if !ai.shipKeysPlayerString.contains(keyToAttack) && generateNoHitKeysPlayer().contains(keyToAttack) {
+                if !shipKeysPlayerString.contains(keyToAttack) && generateNoHitKeysPlayer().contains(keyToAttack) {
                     return keyToAttack
                 }
             }
@@ -125,8 +142,8 @@ class AttackLogicController: NSObject {
     
     fileprivate func generateNoHitKeysPlayer() -> [String] {
         
-        let allKeysSet = Set(ai.allKeys)
-        let hitKeysSet = Set(ai.shipKeysPlayerString)
+        let allKeysSet = Set(ai?.allKeys ?? [])
+        let hitKeysSet = Set(ai?.shipKeysPlayerString ?? [])
         //All keys that won't lead to hits
         let noHitKeysSet = allKeysSet.subtracting(hitKeysSet)
         

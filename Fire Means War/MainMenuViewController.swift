@@ -13,14 +13,14 @@ import StoreKit
 //View-Controller for the Main Menu
 class MainMenuViewController: UIViewController, PlacingDelegate, DifficultySegueDelegate {
     
-    var mpcHandler : MPCHandler!
+    var mpcHandler : MPCHandler?
     var selfDidNotPlaceAllShips = false
     
     //Required to set the navigation bar
     var browserVCOpen = false
     
-    var alertCtrl : AlertController!
-    var alert : UIAlertController!
+    var alertCtrl : AlertController?
+    var alert : UIAlertController?
     
     var audioPlayer = AudioPlayer()
     
@@ -51,7 +51,7 @@ class MainMenuViewController: UIViewController, PlacingDelegate, DifficultySegue
         
         //Initialises the Framework
         mpcHandler = MPCHandler()
-        mpcHandler.startSetup(vc: self)
+        mpcHandler?.startSetup(vc: self)
         
         alertCtrl = AlertController()
         
@@ -124,7 +124,9 @@ class MainMenuViewController: UIViewController, PlacingDelegate, DifficultySegue
         navigationController?.popToRootViewController(animated: false)
         
         if alertToShow {
-            alert = alertCtrl.showAlert(title: "Defeat", message: "You concede")
+            guard let alert = alertCtrl?.showAlert(title: "Defeat", message: "You concede") else {
+                return
+            }
             present(alert, animated: false)
         }
     }
@@ -132,7 +134,9 @@ class MainMenuViewController: UIViewController, PlacingDelegate, DifficultySegue
     /** Second Delegate of PlacingViewController. Gets called when player lost the match */
     func backFromPlacingScreenLosing() {
         navigationController?.popToRootViewController(animated: false)
-        let alert = alertCtrl.showAlert(title: "Defeat", message: "You lose")
+        guard let alert = alertCtrl?.showAlert(title: "Defeat", message: "You lose") else {
+            return
+        }
         self.present(alert, animated: true) {}
     }
     
@@ -143,18 +147,22 @@ class MainMenuViewController: UIViewController, PlacingDelegate, DifficultySegue
         audioPlayer.playMain()
         
         if message == "concede" {
-            alert = alertCtrl.showAlert(title: "Defeat", message: "You concede")
+            guard let alert = alertCtrl?.showAlert(title: "Defeat", message: "You concede") else {
+                return
+            }
             self.present(alert, animated: true)
         }
         if message == "notPlaced" {
-            alert = alertCtrl.showAlert(title: "Match canceled", message: "You Did Not Place Every Single Ship")
+            guard let alert = alertCtrl?.showAlert(title: "Match canceled", message: "You Did Not Place Every Single Ship") else {
+                return
+            }
             self.present(alert, animated: true)
         }
     }
     
     /** Host Match Button */
     @IBAction func hostGame(_ sender: UIButton) {
-        mpcHandler.startSearchingForPeer()
+        mpcHandler?.startSearchingForPeer()
     }
     
     /** When Player did not place all of his ships */
@@ -173,8 +181,8 @@ class MainMenuViewController: UIViewController, PlacingDelegate, DifficultySegue
         case MCSessionState.connecting.rawValue:
             
             // When connecting with a peer, other peers that want to connect get kicked out
-            if mpcHandler.session.mSession.connectedPeers.count == 1 {
-                mpcHandler.session.mSession.cancelConnectPeer(peer)
+            if mpcHandler?.session.mSession.connectedPeers.count == 1 {
+                mpcHandler?.session.mSession.cancelConnectPeer(peer)
             }
             
         case MCSessionState.connected.rawValue:
@@ -184,13 +192,13 @@ class MainMenuViewController: UIViewController, PlacingDelegate, DifficultySegue
             perform(#selector(stopPlayer), with: nil, afterDelay: 2)
             
             // When screen for choosing the opponent is on top
-            if mpcHandler.browser.mBrowser != nil {
-                mpcHandler.browser.stopBrowsingForPeers()
-                mpcHandler.browser.mBrowser.dismiss(animated: false, completion: nil)
+            if mpcHandler?.browser.mBrowser != nil {
+                mpcHandler?.browser.stopBrowsingForPeers()
+                mpcHandler?.browser.mBrowser.dismiss(animated: false, completion: nil)
             }
             
             // Stops advertising cause match is currently running
-            mpcHandler.advertiser.advertiseSelf(advertise: false)
+            mpcHandler?.advertiser.advertiseSelf(advertise: false)
             isPlaying = true
             
             // Display placing screen
@@ -204,20 +212,27 @@ class MainMenuViewController: UIViewController, PlacingDelegate, DifficultySegue
                 self.navigationController?.popToViewController(self, animated: false)
                 
                 // Connection lost. None of player did disconnect intentionally
-                if !mpcHandler.opponentSelfDisconnected  {
-                    alert = alertCtrl.showAlert(title: "Match canceled", message: "Connection Lost")
+                if !mpcHandler!.opponentSelfDisconnected {
+                    guard let alert = alertCtrl?.showAlert(title: "Match canceled", message: "Connection Lost") else {
+                        return
+                    }
                     self.present(alert, animated: true)
                 }
                 
                 // Player did not place all of his ships
                 if selfDidNotPlaceAllShips {
-                    alert = alertCtrl.showAlert(title: "Match canceled", message: "Not Every Single Ship Was Placed Correctly")
+                    guard let alert = alertCtrl?.showAlert(title: "Match canceled", message: "Not Every Single Ship Was Placed Correctly") else {
+                        return
+                    }
                     self.present(alert, animated: true)
                     selfDidNotPlaceAllShips = false
                 }
                 
                 // There is another alert that has to be shown
                 if alertToShow {
+                    guard let alert = alert else {
+                        return
+                    }
                     self.present(alert, animated: true) {}
                     alertToShow = false
                 }
@@ -229,7 +244,7 @@ class MainMenuViewController: UIViewController, PlacingDelegate, DifficultySegue
             isPlaying = false
             
             // Stop session
-            mpcHandler.disconnect()
+            mpcHandler?.disconnect()
             
         default: break
             
@@ -249,15 +264,15 @@ class MainMenuViewController: UIViewController, PlacingDelegate, DifficultySegue
         switch(key) {
             
             case "winner":
-                alert = alertCtrl.showAlert(title: "Victory", message: "You win")
+                alert = alertCtrl?.showAlert(title: "Victory", message: "You win")
             
             case "didNotPlace":
 
-                alert = alertCtrl.showAlert(title: "Match canceled", message: "Not Every Single Ship Was Placed Correctly")
+                alert = alertCtrl?.showAlert(title: "Match canceled", message: "Not Every Single Ship Was Placed Correctly")
                 selfDidNotPlaceAllShips = false
             
             case "concede":
-                alert = alertCtrl.showAlert(title: "Victory", message: "Your opponent concedes")
+                alert = alertCtrl?.showAlert(title: "Victory", message: "Your opponent concedes")
             
             default: break
         }
@@ -265,7 +280,7 @@ class MainMenuViewController: UIViewController, PlacingDelegate, DifficultySegue
         alertToShow = true
         
         // Session gets terminated because match is over
-        mpcHandler.disconnect()
+        mpcHandler?.disconnect()
     }
     
     // MARK: - Navigation
@@ -277,22 +292,22 @@ class MainMenuViewController: UIViewController, PlacingDelegate, DifficultySegue
         }
         if segue.identifier == "mainMenuVC2placingVC" {
             
-            let destVC = segue.destination as! PlacingViewController
-            destVC.delegate = self
-            destVC.mpcHandler = mpcHandler
-            destVC.audioPlayer = audioPlayer
+            let destVC = segue.destination as? PlacingViewController
+            destVC?.delegate = self
+            destVC?.mpcHandler = mpcHandler
+            destVC?.audioPlayer = audioPlayer
         }
         if segue.identifier == "mainMenuVC2settingsTVC" {
             
-            let destVC = segue.destination as! SettingsTableViewController
-            destVC.audioPlayer = audioPlayer
+            let destVC = segue.destination as? SettingsTableViewController
+            destVC?.audioPlayer = audioPlayer
         }
         if segue.identifier == "mainMenuVC2difficultyVC" {
             
-            let destVC = segue.destination as! DifficultyViewController
+            let destVC = segue.destination as? DifficultyViewController
             
-            destVC.delegate = self
-            destVC.audioPlayer = audioPlayer
+            destVC?.delegate = self
+            destVC?.audioPlayer = audioPlayer
         }
     }
     

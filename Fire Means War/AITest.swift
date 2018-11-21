@@ -8,17 +8,17 @@
 
 import UIKit
 
-class AITest: NSObject {
+class AITest {
     
-    var shipKeys : [[String]]!
-    var noShipKeys : [String]!
+    var shipKeys : [[String]]?
+    var noShipKeys : [String]?
     
-    var allKeys : [String]!
+    var allKeys : [String]?
     
-    var shipKeysPlayerString : [String]!
-    var shipKeysPlayer : [(Ship, [String])]!
+    var shipKeysPlayerString : [String]?
+    var shipKeysPlayer : [(Ship, [String])]?
     
-    var difficulty : String!
+    var difficulty : String?
     
     var shipsLeft : Int = 0
     var cellsLeft : Int = 0

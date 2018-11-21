@@ -16,7 +16,7 @@ class DifficultyViewController: UIViewController, SPPlacingSegueDelegate {
     
     @IBOutlet var buttons: [UIButton]!
     
-    var audioPlayer : AudioPlayer!
+    var audioPlayer : AudioPlayer?
     var delegate : DifficultySegueDelegate? = nil
 
     @IBOutlet weak var backgroundImage: UIImageView!
@@ -45,7 +45,7 @@ class DifficultyViewController: UIViewController, SPPlacingSegueDelegate {
         let difficulty = sender.tag % 100
         
         // Stop main theme
-        audioPlayer.volumeToZero()
+        audioPlayer?.volumeToZero()
         perform(#selector(stopPlayer), with: nil, afterDelay: 2)
         
         performSegue(withIdentifier: "difficultyVC2spPlacingVC", sender: difficulty)
@@ -53,7 +53,7 @@ class DifficultyViewController: UIViewController, SPPlacingSegueDelegate {
     
     /** Stops the main theme */
     @objc func stopPlayer() {
-        audioPlayer.stop()
+        audioPlayer?.stop()
     }
     
     fileprivate func getDifficultyString(difficulty: Int) -> String {
@@ -71,7 +71,7 @@ class DifficultyViewController: UIViewController, SPPlacingSegueDelegate {
     
     func backFromSPPlacingScreen(ctrl: SPPlacingViewController, message: String) {
         ctrl.navigationController?.popViewController(animated: false)
-        delegate!.backFromDifficultyScreen(ctrl: self, message: message)
+        delegate?.backFromDifficultyScreen(ctrl: self, message: message)
     }
     
     // MARK: - Navigation
@@ -79,14 +79,14 @@ class DifficultyViewController: UIViewController, SPPlacingSegueDelegate {
         
         if segue.identifier == "difficultyVC2spPlacingVC" {
             
-            let destVC = segue.destination as! SPPlacingViewController
+            let destVC = segue.destination as? SPPlacingViewController
             
-            let difficulty = sender as! Int
+            let difficulty = sender as? Int ?? 0
             
-            destVC.delegate = self
-            destVC.difficulty = difficulty
-            destVC.difficultyTitle = getDifficultyString(difficulty: difficulty)
-            destVC.audioPlayer = audioPlayer
+            destVC?.delegate = self
+            destVC?.difficulty = difficulty
+            destVC?.difficultyTitle = getDifficultyString(difficulty: difficulty)
+            destVC?.audioPlayer = audioPlayer
         }
     }
 }
