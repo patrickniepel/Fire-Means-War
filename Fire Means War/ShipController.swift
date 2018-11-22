@@ -21,9 +21,8 @@ class ShipController: NSObject {
     // When 0 -> match lost
     var cellsLeft = 0
     
-    var gesture : UITapGestureRecognizer!
-    
-    var snapCtrl : SnapController!
+    var gesture : UITapGestureRecognizer?
+    var snapCtrl : SnapController?
     
     func setup(snapController: SnapController) {
         snapCtrl = snapController
@@ -31,6 +30,8 @@ class ShipController: NSObject {
     
     /** Creates the ships with its attributes */
     func createShips(cellWidth: CGFloat, mainView: UIView, field: Field) {
+        
+       
         
         let startX = field.getOriginX()
         
@@ -41,6 +42,11 @@ class ShipController: NSObject {
             
             // 2 taps for rotating
             gesture = UITapGestureRecognizer(target: self, action: #selector(handleRotation))
+            
+            guard let gesture = gesture else {
+                return
+            }
+            
             gesture.numberOfTapsRequired = 2
             
             // Starting position of x and y
@@ -65,13 +71,16 @@ class ShipController: NSObject {
     }
     
     // Adds the ships as subviews to the main view
-    fileprivate func addToView(view: UIView) {
+    private func addToView(view: UIView) {
         for ship in ships {
             view.addSubview(ship)
         }
     }
     
     func removeGestureRecognizer() {
+        guard let gesture = gesture else {
+            return
+        }
         for ship in ships {
             ship.removeGestureRecognizer(gesture)
         }
@@ -79,9 +88,11 @@ class ShipController: NSObject {
     
     // Gets the ships that is supposed to be rotated
     @objc func handleRotation(gesture: UITapGestureRecognizer) {
-        let ship = gesture.view as! Ship
+        guard let ship = gesture.view as? Ship else {
+            return
+        }
         ship.rotate()
-        snapCtrl.handleSnapPosition(ship: ship)
+        snapCtrl?.handleSnapPosition(ship: ship)
     }
     
     /** If all ships are placed correctly -> matchs goes on

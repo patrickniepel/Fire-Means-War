@@ -15,18 +15,22 @@ import MultipeerConnectivity
 class MPCAdvertiser: NSObject, MCAdvertiserAssistantDelegate {
     
     var mAdvertiser : MCAdvertiserAssistant? = nil
-    var session : MCSession!
+    var session : MCSession?
     
     /** Starts or stops the advertisement */
     func advertiseSelf(advertise: Bool) {
         
+        guard let session = session else {
+            return
+        }
+        
         if advertise {
             mAdvertiser = MCAdvertiserAssistant(serviceType: "FireMeansWar", discoveryInfo: nil, session: session)
-            mAdvertiser!.delegate = self
-            mAdvertiser!.start()
+            mAdvertiser?.delegate = self
+            mAdvertiser?.start()
         }
         else {
-            mAdvertiser!.stop()
+            mAdvertiser?.stop()
             mAdvertiser = nil
         }
     }

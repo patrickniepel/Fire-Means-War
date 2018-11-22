@@ -130,8 +130,12 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
             
             lifeLabel.text = "\(shipCtrl.cellsLeft)"
             shipsLeftLabel.text = "\(shipCtrl.ships.count)"
+            
+            guard let snapCtrl = fieldCtrl.snapCtrl else {
+                return
+            }
     
-            shipCtrl.setup(snapController: fieldCtrl.snapCtrl)
+            shipCtrl.setup(snapController: snapCtrl)
         }
         
         //Starts the 5sec timer before the match really starts
@@ -151,7 +155,7 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
         stopTimer()
     }
     
-    fileprivate func setupLabels() {
+    private func setupLabels() {
         timerLabel.numberOfLines = 0
         infoLabel.numberOfLines = 0
         infoLabel.text = "Place Your Ships, Captain!"
@@ -159,14 +163,14 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
         topIV.layer.borderColor = UIColor.white.cgColor
     }
     
-    fileprivate func hideHUD() {
+    private func hideHUD() {
         shipLeftIV.isHidden = true
         shipsLeftLabel.isHidden = true
         lifeIV.isHidden = true
         lifeLabel.isHidden = true
     }
     
-    fileprivate func showHUD() {
+    private func showHUD() {
         shipLeftIV.isHidden = false
         shipsLeftLabel.isHidden = false
         lifeIV.isHidden = false
@@ -224,7 +228,7 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
     }
     
     /** Starts to play the theme for a battle */
-    fileprivate func startBattleMusic() {
+    private func startBattleMusic() {
         audioPlayer?.playBattle()
     }
     
@@ -258,7 +262,7 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
     }
     
     /** Timer for placing the ships */
-    fileprivate func startPlacingTimer() {
+    private func startPlacingTimer() {
         mTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(handlePlacingTimer), userInfo: nil, repeats: true)
     }
     
@@ -309,7 +313,7 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
     }
     
     /** Creates Match with AI */
-    fileprivate func createMatch() {
+    private func createMatch() {
         guard let playerShips = shipPosCtrl?.getcellShipKeys() else {
             return
         }
@@ -317,12 +321,12 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
         matchCtrl?.createMatch()
     }
     
-    fileprivate func stopTimer() {
+    private func stopTimer() {
         mTimer?.invalidate()
     }
     
     /** Timer for waiting for opponent's attacks */
-    fileprivate func startWaitingTimer() {
+    private func startWaitingTimer() {
         waitingCounter = 20
         timerLabel.textColor = .white
         timerLabel.text = "\(waitingCounter)"
@@ -333,7 +337,7 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
     }
     
     /** Timer for waiting for opponent's attacks */
-    fileprivate func resumeWaitingTimer() {
+    private func resumeWaitingTimer() {
         mTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(handleWaitingTimer), userInfo: nil, repeats: true)
         
         //Generate random number for starting the ai attack
@@ -369,7 +373,9 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
     @objc func handleAttack(notification: NSNotification) {
         
         // Get the key of the attacked cell
-        let cellKey = ExtractMessage().extractKey(notification: notification, keyword: "aiAttacked")
+        guard let cellKey = ExtractMessage().extractKey(notification: notification, keyword: "aiAttacked") else {
+            return
+        }
         // Check if there is a ship upon the attacked cell
         let cell = fieldCtrl?.cellGotAttacked(key: cellKey)
         
@@ -384,7 +390,7 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
             
             //Reduce lp
             //lifeLabel.text = "\(Int(lifeLabel.text!)! - 1)"
-            lifeLabel.text = "\(matchCtrl?.getPlayerCellsLeft())"
+            lifeLabel.text = "\(matchCtrl?.getPlayerCellsLeft() ?? -1)"
             
             audioPlayer?.playFire()
             
@@ -410,10 +416,10 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
     /** Gets called when the ai attacks a ship cell of the player */
     @objc func handleShipsLeft(notification: NSNotification) {
         //shipsLeftLabel.text = "\(Int(shipsLeftLabel.text!)! - 1)"
-        shipsLeftLabel.text = "\(matchCtrl?.getPlayerShipsLeft())"
+        shipsLeftLabel.text = "\(matchCtrl?.getPlayerShipsLeft() ?? -1)"
     }
     
-    fileprivate func startDelay2Attack() {
+    private func startDelay2Attack() {
         state = .delay
         mTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(handleDelay), userInfo: nil, repeats: true)
     }
@@ -430,7 +436,7 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
     }
     
     /** Pauses the match and shows the pause screen */
-    fileprivate func pauseMatch() {
+    private func pauseMatch() {
         mTimer?.invalidate()
         audioPlayer?.pauseResumeBattlePlayer(pause: true)
         
@@ -456,7 +462,7 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
     }
     
     /** Checks if player lost the match */
-    fileprivate func checkForMatchResult() {
+    private func checkForMatchResult() {
         
         guard let aiWin = matchCtrl?.checkForAIWin() else {
             return
@@ -480,7 +486,7 @@ class SPPlacingViewController: UIViewController, PopUpTimerDelegate, OptionsDele
     }
     
     /** Alert function used for singleplayer mode, player wins */
-    fileprivate func showAlertSP(title: String, message: String) {
+    private func showAlertSP(title: String, message: String) {
         
         let alertSheetController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         

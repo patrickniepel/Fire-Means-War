@@ -12,12 +12,12 @@ import MultipeerConnectivity
 /** Model for a player */
 class Player : NSObject {
     
-    var name : String!
-    var peerID : MCPeerID!
+    var name : String?
+    var peerID : MCPeerID?
     var isHost = false
     
     //Number the gets generated for determining the host
-    var hostNumber : Int!
+    var hostNumber : Int?
     
     // var didPlaceAllShips = false
     

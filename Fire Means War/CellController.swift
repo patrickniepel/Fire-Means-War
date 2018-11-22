@@ -13,8 +13,8 @@ class CellController: NSObject {
     
     //Cells that are left for getting attacked
     var shipCellsLeft = 0
-    var shipPosCtrl : ShipPositionController!
-    var mpcHandler : MPCHandler!
+    var shipPosCtrl : ShipPositionController?
+    var mpcHandler : MPCHandler?
     lazy var shipPositionsTMP = [[String]]()
     
     func setup(shipPos: ShipPositionController) {
@@ -28,11 +28,11 @@ class CellController: NSObject {
     /** Checks if a ship lies on the given cell
         Returns true when a ship cell got attacked
      */
-    func shipCellGotAttacked(cell: Cell, fieldView: Field) -> Bool {
+    func shipCellGotAttacked(cell: Cell, fieldView: Field) -> Bool? {
         
         // Field positionof the cell (e.g "0|1")
-        let x = cell.fieldPosition["x"]!
-        let y = cell.fieldPosition["y"]!
+        let x = cell.fieldPosition["x"]
+        let y = cell.fieldPosition["y"]
         
         let xKey = String(describing: x)
         let yKey = String(describing: y)
@@ -40,7 +40,9 @@ class CellController: NSObject {
         let cellKey = "\(xKey)|\(yKey)"
         
         // Checks if the cell with the specified key got attacked
-        let gotAttacked = shipPosCtrl.checkForAttack(cellKey: cellKey)
+        guard let gotAttacked = shipPosCtrl?.checkForAttack(cellKey: cellKey) else {
+            return nil
+        }
         
         //let mpcHandler = MPCHandler.sharedInstance
         
@@ -56,7 +58,7 @@ class CellController: NSObject {
             fieldView.bringSubviewToFront(cell)
             
             // Sends a message to the opponent that the he attacked a cell on which one of the ships is placed
-            mpcHandler.sendMessage(key: "hit", additionalData: "")
+            mpcHandler?.sendMessage(key: "hit", additionalData: "")
             
             return true
         }
@@ -66,13 +68,13 @@ class CellController: NSObject {
             cell.noShipOnCellAttackedDefender()
             
             // Sends a message to the opponent that he missed the ship
-            mpcHandler.sendMessage(key: "noHit", additionalData: "")
+            mpcHandler?.sendMessage(key: "noHit", additionalData: "")
             return false
         }
     }
     
     // Decreases the number of available cells to hit, when 0 -> Match lost
-    fileprivate func shipCellGotAttacked() {
+    private func shipCellGotAttacked() {
         shipCellsLeft -= 1
     }
     
@@ -88,7 +90,7 @@ class CellController: NSObject {
         return false
     }
     
-    fileprivate func removeKeyFromTMPPositions(key: String) {
+    private func removeKeyFromTMPPositions(key: String) {
         
         var shipIndex = 0
         var keyIndex = 0
@@ -98,7 +100,10 @@ class CellController: NSObject {
             
             if shipPositionsTMP[i].contains(key) {
                 shipIndex = i
-                keyIndex = shipPositionsTMP[i].index(of: key)!
+                guard let index = shipPositionsTMP[i].index(of: key) else {
+                    return
+                }
+                keyIndex = index
             }
         }
         
@@ -110,12 +115,12 @@ class CellController: NSObject {
             
             let nc = NotificationCenter.default
             nc.post(name: NSNotification.Name("shipsLeftOwn"), object: nil, userInfo: nil)
-            mpcHandler.sendMessage(key: "reduceShipsLeft", additionalData: "")
+            mpcHandler?.sendMessage(key: "reduceShipsLeft", additionalData: "")
         }
     }
     
     /** Fills the temporary array, works like a copy to be able to do changes */
-    fileprivate func fillShipPositionsTMP(shipPos: [(Ship, [String])]) {
+    private func fillShipPositionsTMP(shipPos: [(Ship, [String])]) {
         
         for shipPositions in shipPos {
             shipPositionsTMP.append(shipPositions.1)
@@ -125,8 +130,8 @@ class CellController: NSObject {
     /** Returns the position-key of the cell in the game field */
     func getKeyForCell(cell: Cell) -> String {
         
-        let x = cell.fieldPosition["x"]!
-        let y = cell.fieldPosition["y"]!
+        let x = cell.fieldPosition["x"]
+        let y = cell.fieldPosition["y"]
         
         let xKey = String(describing: x)
         let yKey = String(describing: y)

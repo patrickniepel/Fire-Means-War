@@ -16,8 +16,8 @@ class SettingsTableViewController: UITableViewController {
     
     var chosenShip = 0
     
-    var audioPlayer : AudioPlayer!
-    var volume : Float!
+    var audioPlayer : AudioPlayer?
+    var volume : Float = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,14 +27,14 @@ class SettingsTableViewController: UITableViewController {
         loadLayout()
         
         // Sets the current volume of the audioPlayer
-        volume = audioPlayer.audioPlayer!.volume
+        volume = audioPlayer?.audioPlayer?.volume ?? 0
         
         slider.value = volume
     }
 
     @IBAction func volumeDragged(_ sender: UISlider) {
         volume = sender.value
-        audioPlayer.setVolume(vol: volume)
+        audioPlayer?.setVolume(vol: volume)
     }
     
     @IBAction func layoutTapped(_ sender: UIButton) {
@@ -48,17 +48,17 @@ class SettingsTableViewController: UITableViewController {
         
         sender.layer.borderColor = UIColor.blue.cgColor
         sender.layer.borderWidth = 2
-        chosenShip = shipButtons.index(of: sender)!
+        chosenShip = shipButtons.index(of: sender) ?? 0
         saveLayout()
     }
     
-    fileprivate func loadLayout() {
+    private func loadLayout() {
         
         chosenShip = UserDefaults.standard.integer(forKey: "shipLayout")
         setLayout()
     }
     
-    fileprivate func setLayout() {
+    private func setLayout() {
         
         for button in shipButtons {
             
@@ -76,7 +76,7 @@ class SettingsTableViewController: UITableViewController {
     // Save volume
     // If player sets the volume to 0 -> value of -1 gets saved
     // 0 would be the default value when there is no value saved in the UserDefaults
-    fileprivate func saveVolume() {
+    private func saveVolume() {
         if volume == 0 {
             UserDefaults.standard.set(-1, forKey: "volume")
         }
@@ -85,7 +85,7 @@ class SettingsTableViewController: UITableViewController {
         }
     }
     
-    fileprivate func saveLayout() {
+    private func saveLayout() {
         UserDefaults.standard.set(chosenShip, forKey: "shipLayout")
     }
 }

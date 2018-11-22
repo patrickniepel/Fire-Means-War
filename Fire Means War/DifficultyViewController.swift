@@ -30,7 +30,7 @@ class DifficultyViewController: UIViewController, SPPlacingSegueDelegate {
         setupButtons()
     }
     
-    fileprivate func setupButtons() {
+    private func setupButtons() {
     
         for button in buttons {
             button.layer.cornerRadius = 10
@@ -56,7 +56,7 @@ class DifficultyViewController: UIViewController, SPPlacingSegueDelegate {
         audioPlayer?.stop()
     }
     
-    fileprivate func getDifficultyString(difficulty: Int) -> String {
+    private func getDifficultyString(difficulty: Int) -> String {
         
         if difficulty == 0 {
             return "Easy"

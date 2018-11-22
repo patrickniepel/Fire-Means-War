@@ -60,7 +60,7 @@ class AttackLogicController: NSObject {
     }
     
     /** Returns the key for a successfull attack for the first attack of the turn */
-    fileprivate func getHitKey() -> String {
+    private func getHitKey() -> String {
         
         guard let ai = ai else {
             return ""
@@ -76,7 +76,7 @@ class AttackLogicController: NSObject {
     }
     
     /** Returns the for a another succesfull attack (used when ai attacks multiple times) */
-    fileprivate func getHitAgainKey() -> String {
+    private func getHitAgainKey() -> String {
         
         guard let ai = ai else {
             return ""
@@ -106,7 +106,7 @@ class AttackLogicController: NSObject {
     }
     
     /** Selects a key from the available keys that won't lead to a hit */
-    fileprivate func getNoHitKey() -> String {
+    private func getNoHitKey() -> String {
         
         //Last attack was a hit, so the 'no hit' should be somewhere around
         if lastAttackWasHit {
@@ -140,7 +140,7 @@ class AttackLogicController: NSObject {
         return noHitKeys[randomIndex]
     }
     
-    fileprivate func generateNoHitKeysPlayer() -> [String] {
+    private func generateNoHitKeysPlayer() -> [String] {
         
         let allKeysSet = Set(ai?.allKeys ?? [])
         let hitKeysSet = Set(ai?.shipKeysPlayerString ?? [])
@@ -151,12 +151,12 @@ class AttackLogicController: NSObject {
     }
     
     /** Chooses a random index for a no hit key */
-    fileprivate func generateRandomAttackKey(value: Int) -> Int {
+    private func generateRandomAttackKey(value: Int) -> Int {
         return Int(arc4random_uniform(UInt32(value)))
     }
     
     /** Returns a random number between 1 and 100 */
-    fileprivate func generatePercentageToAttack() -> Int {
+    private func generatePercentageToAttack() -> Int {
         return Int(arc4random_uniform(UInt32(100))) + 1
     }
 }

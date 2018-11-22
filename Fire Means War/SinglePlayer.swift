@@ -28,7 +28,7 @@ class SinglePlayer: NSObject {
     }
     
     //Sets the player life according to the number of existing keys of the player's ships
-    fileprivate func setupLife() {
+    private func setupLife() {
         
         var counter = 0
         
@@ -40,7 +40,7 @@ class SinglePlayer: NSObject {
     }
     
     //Appends all keys of the player's ships to one single list to get better access
-    fileprivate func setupPlayerKeys() {
+    private func setupPlayerKeys() {
         
         for ship in shipPosKeysPlayer ?? [] {
             for key in ship.1 {

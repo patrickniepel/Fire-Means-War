@@ -86,7 +86,7 @@ class AIControllerTest: NSObject {
     }
     
     /* Gets the key that will be attacked and sends a notification */
-    fileprivate func attack() {
+    private func attack() {
         
         //Before every attack the chances to hit/not hit a ship will be calculated to provide variety
         setNewChanceValue()

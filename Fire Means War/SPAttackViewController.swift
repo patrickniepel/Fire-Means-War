@@ -113,7 +113,7 @@ class SPAttackViewController: UIViewController, OptionsDelegate, PauseSegueDeleg
         stopTimer()
     }
     
-    fileprivate func setupLabels() {
+    private func setupLabels() {
         timerLabel.numberOfLines = 0
         infoLabel.numberOfLines = 0
         infoLabel.text = "Choose A Target!"
@@ -138,11 +138,11 @@ class SPAttackViewController: UIViewController, OptionsDelegate, PauseSegueDeleg
     }
     
     /** Timer for attacking */
-    fileprivate func startTimer() {
+    private func startTimer() {
         mTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(handleTimer), userInfo: nil, repeats: true)
     }
     
-    fileprivate func stopTimer() {
+    private func stopTimer() {
         mTimer?.invalidate()
     }
     
@@ -207,7 +207,7 @@ class SPAttackViewController: UIViewController, OptionsDelegate, PauseSegueDeleg
         }
     }
     
-    fileprivate func attackAI(cellKey: String) {
+    private func attackAI(cellKey: String) {
         
         guard let successfullAttack = matchCtrl?.checkPlayerAttack(cellKey: cellKey) else {
             return
@@ -282,7 +282,7 @@ class SPAttackViewController: UIViewController, OptionsDelegate, PauseSegueDeleg
         shipsLeftLabel.text = "\(matchCtrl?.getAIShipsLeft() ?? -1)"
     }
     
-    fileprivate func startDelay2Place() {
+    private func startDelay2Place() {
         state = .delay
         mTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(handleDelay), userInfo: nil, repeats: true)
     }
@@ -300,7 +300,7 @@ class SPAttackViewController: UIViewController, OptionsDelegate, PauseSegueDeleg
     }
     
     /** Pauses the match and shows the pause screen */
-    fileprivate func pauseMatch() {
+    private func pauseMatch() {
         mTimer?.invalidate()
         audioPlayer?.pauseResumeBattlePlayer(pause: true)
     }
@@ -318,7 +318,7 @@ class SPAttackViewController: UIViewController, OptionsDelegate, PauseSegueDeleg
     }
     
     /** Alert function used for singleplayer mode, player wins */
-    fileprivate func showAlertSP(title: String, message: String) {
+    private func showAlertSP(title: String, message: String) {
         
         let alertSheetController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         

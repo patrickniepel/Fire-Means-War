@@ -40,7 +40,7 @@ class AIController: NSObject {
         logicCtrl = AttackLogicController()
     }
     
-    fileprivate func setup(difficulty: String) {
+    private func setup(difficulty: String) {
         
         ai?.difficulty = difficulty
         
@@ -49,7 +49,7 @@ class AIController: NSObject {
         //shipPositionsTMP = positions
     }
     
-    fileprivate func startTimer() {
+    private func startTimer() {
         mTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(handleTimer), userInfo: nil, repeats: true)
     }
     
@@ -85,7 +85,7 @@ class AIController: NSObject {
     }
     
     /* Gets the key that will be attacked and sends a notification */
-    fileprivate func attackPlayer() {
+    private func attackPlayer() {
         
         //Before every attack the chances to hit/not hit a ship will be calculated to provide variety
         setNewChanceValue()
@@ -131,7 +131,7 @@ class AIController: NSObject {
     }
     
     /** Sets the chances to hit a ship to a new value before every attack */
-    fileprivate func setNewChanceValue() {
+    private func setNewChanceValue() {
         
         guard let ai = ai,
                 let difficulty = ai.difficulty,
@@ -163,7 +163,7 @@ class AIController: NSObject {
         return false
     }
     
-    fileprivate func removeKeyFromTMPPositions(key: String) {
+    private func removeKeyFromTMPPositions(key: String) {
         
         var shipIndex = 0
         var keyIndex = 0
@@ -173,7 +173,11 @@ class AIController: NSObject {
             
             if shipPositionsTMP[i].contains(key) {
                 shipIndex = i
-                keyIndex = shipPositionsTMP[i].index(of: key)!
+                
+                guard let index = shipPositionsTMP[i].index(of: key) else {
+                    return
+                }
+                keyIndex = index
             }
         }
         

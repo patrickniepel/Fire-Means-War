@@ -19,7 +19,7 @@ class PopUpTimerViewController: UIViewController {
     @IBOutlet weak var ivWood: UIImageView!
     
     var count = 5
-    var mTimer : Timer!
+    var mTimer : Timer?
     
     var delegate : PopUpTimerDelegate? = nil
     
@@ -36,7 +36,7 @@ class PopUpTimerViewController: UIViewController {
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        mTimer.invalidate()
+        mTimer?.invalidate()
     }
     
     /** 5secs timer before the match really starts */
@@ -45,8 +45,8 @@ class PopUpTimerViewController: UIViewController {
         count -= 1
         
         if count == 0 {
-            mTimer.invalidate()
-            delegate!.backFromPopUpView(ctrl: self)
+            mTimer?.invalidate()
+            delegate?.backFromPopUpView(ctrl: self)
         }
         else {
             timerLabel.text = String(count)

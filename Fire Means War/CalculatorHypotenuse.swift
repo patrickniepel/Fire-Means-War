@@ -12,15 +12,16 @@ import UIKit
 class CalculatorHypotenuse: NSObject {
     
     /** Returns the calculated hypotenus between a ship and a cell */
-    func getHypotenuse(ship: Ship, cell: Cell) -> CGFloat {
+    func getHypotenuse(ship: Ship, cell: Cell) -> CGFloat? {
         return calculateHypotenuse(ship: ship, cell: cell)
     }
 
-    fileprivate func calculateHypotenuse(ship: Ship, cell: Cell) -> CGFloat {
+    private func calculateHypotenuse(ship: Ship, cell: Cell) -> CGFloat? {
         
         //Absolute size of the cell
-        let xCell = cell.absolutePositon["x"]!
-        let yCell = cell.absolutePositon["y"]!
+        guard let xCell = cell.absolutePositon["x"], let yCell = cell.absolutePositon["y"] else {
+            return nil
+        }
         
         //Pythagorean theorem
         let a = pow(Double(ship.getOriginX() - xCell), 2)

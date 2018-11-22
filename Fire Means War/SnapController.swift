@@ -11,11 +11,11 @@ import UIKit
 //Manages the Snapping Behavior of the ships
 class SnapController: NSObject {
     
-    var snap : UISnapBehavior!
-    var animator : UIDynamicAnimator!
-    var calcSnap : CalculatorSnapPosition!
-    var field : Field!
-    var shipPosCtrl : ShipPositionController!
+    var snap : UISnapBehavior?
+    var animator : UIDynamicAnimator?
+    var calcSnap : CalculatorSnapPosition?
+    var field : Field?
+    var shipPosCtrl : ShipPositionController?
     
     func setup(view: UIView, fieldView: Field, shipPos: ShipPositionController) {
         animator = UIDynamicAnimator(referenceView: view)
@@ -26,14 +26,17 @@ class SnapController: NSObject {
     
     /** Sets the snap position */
     func handleSnapPosition(ship: Ship) {
-        animator.removeAllBehaviors()
+        animator?.removeAllBehaviors()
         
         //Ship not placed yet; set when ship gets moved by the player
         ship.isPlaced = false
         ship.setWarning()
         
-        var snapPoint : CGPoint!
         let calcHypo = CalculatorHypotenuse()
+        
+        guard let field = field else {
+            return
+        }
         
         // When ship is in distance of this value, it will snap
         let distance = field.frame.width / CGFloat(field.cellsPerRow) / 2
@@ -65,14 +68,20 @@ class SnapController: NSObject {
             for i in 0..<x {
                 
                 let key = "\(i)|\(j)"
-                let cell = field.cells[key]!
+                guard let cell = field.cells[key] else {
+                    return
+                }
                 
                 //Get current hypotenuse
-                let hypo = calcHypo.getHypotenuse(ship: ship, cell: cell)
+                guard let hypo = calcHypo.getHypotenuse(ship: ship, cell: cell) else {
+                    return
+                }
                 
                 if hypo <= distance {
                     
-                    snapPoint = calcSnap.getSnapPoint(field: field, ship: ship, cell: cell)
+                    guard let snapPoint = calcSnap?.getSnapPoint(field: field, ship: ship, cell: cell) else {
+                        return
+                    }
                     setSnapPosition(point: snapPoint, ship: ship)
                     setShipPosition(ship: ship, snappingCell: cell)
                     
@@ -85,9 +94,9 @@ class SnapController: NSObject {
         }
     }
     
-    fileprivate func setSnapPosition(point: CGPoint, ship: Ship) {
-        snap = UISnapBehavior(item: ship, snapTo: point)
-        animator.addBehavior(snap)
+    private func setSnapPosition(point: CGPoint, ship: Ship) {
+        let snap = UISnapBehavior(item: ship, snapTo: point)
+        animator?.addBehavior(snap)
         
         // Ship is successfully placed after snapping to a position
         ship.isPlaced = true
@@ -95,17 +104,17 @@ class SnapController: NSObject {
     }
     
     /** Delegates to ShipPositionController for setting the correct position of each ship */
-    fileprivate func setShipPosition(ship: Ship, snappingCell: Cell) {
-        shipPosCtrl.setShipPosition(ship: ship, snappingCell: snappingCell)
+    private func setShipPosition(ship: Ship, snappingCell: Cell) {
+        shipPosCtrl?.setShipPosition(ship: ship, snappingCell: snappingCell)
     }
     
-    fileprivate func isOverlapping(ship: Ship) -> Bool {
-        return shipPosCtrl.isOverlapping(currentShip: ship)
+    private func isOverlapping(ship: Ship) -> Bool {
+        return shipPosCtrl?.isOverlapping(currentShip: ship) ?? false
     }
     
     /** Snaps the ship to its starting position */
     func snapToStartingPosition(ship: Ship) {
-        animator.removeAllBehaviors()
+        animator?.removeAllBehaviors()
         
         // Starting positions means vertical positioning
         if ship.horizontal {
@@ -113,11 +122,15 @@ class SnapController: NSObject {
         }
         
         //Clears all positions that got set
-        shipPosCtrl.resetPositions(ship: ship)
+        shipPosCtrl?.resetPositions(ship: ship)
         
-        let point = calcSnap.getSnapPointStartingPosition(ship: ship)
-        snap = UISnapBehavior(item: ship, snapTo: point)
-        animator.addBehavior(snap)
+        guard let point = calcSnap?.getSnapPointStartingPosition(ship: ship) else {
+            return
+        }
+    
+        let snap = UISnapBehavior(item: ship, snapTo: point)
+        
+        animator?.addBehavior(snap)
         
         // Ship is not placed
         ship.setWarning()

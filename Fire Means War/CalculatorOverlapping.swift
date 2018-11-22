@@ -15,9 +15,9 @@ class CalculatorOverlapping: NSObject {
     func getOverlappingKeys(ship: Ship, cell: Cell) -> [String] {
         
         if ship.horizontal {
-            return horizontalPositions(shipLength: ship.mLength, cell: cell)
+            return horizontalPositions(shipLength: ship.mLength, cell: cell) ?? []
         }
-        return verticalPositions(shipLength: ship.mLength, cell: cell)
+        return verticalPositions(shipLength: ship.mLength, cell: cell) ?? []
     }
     
     /*
@@ -25,11 +25,12 @@ class CalculatorOverlapping: NSObject {
      * Between each ship has to be a space of 1 cell
      */
     
-    fileprivate func horizontalPositions(shipLength: Int, cell: Cell) -> [String] {
+    private func horizontalPositions(shipLength: Int, cell: Cell) -> [String]? {
         
         // Position of the cell in the field (e.g "0|2")
-        let xCell = cell.fieldPosition["x"]!
-        let yCell = cell.fieldPosition["y"]!
+        guard let xCell = cell.fieldPosition["x"], let yCell = cell.fieldPosition["y"] else {
+            return nil
+        }
         
         var overlappingKeys = [String]()
         
@@ -51,10 +52,11 @@ class CalculatorOverlapping: NSObject {
         return overlappingKeys
     }
     
-    fileprivate func verticalPositions(shipLength: Int, cell: Cell) -> [String] {
+    private func verticalPositions(shipLength: Int, cell: Cell) -> [String]? {
         
-        let xCell = cell.fieldPosition["x"]!
-        let yCell = cell.fieldPosition["y"]!
+        guard let xCell = cell.fieldPosition["x"], let yCell = cell.fieldPosition["y"] else {
+            return nil
+        }
         
         var overlappingKeys = [String]()
         

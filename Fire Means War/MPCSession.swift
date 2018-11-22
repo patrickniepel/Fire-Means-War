@@ -12,10 +12,10 @@ import MultipeerConnectivity
 //* Handles the session of the connected players */
 class MPCSession: NSObject {
     
-    var mPeerID : MCPeerID!
-    var mSession : MCSession!
+    var mPeerID : MCPeerID?
+    var mSession : MCSession?
     
-    var delegate : MPCSessionDelegate!
+    var delegate : MPCSessionDelegate?
     
     /** Initialising peer */
     func setupPeerWithDisplayName(displayName: String) {
@@ -24,15 +24,19 @@ class MPCSession: NSObject {
     
     /** Starts the session */
     func setupSession() {
-        mSession = MCSession(peer: mPeerID, securityIdentity: nil, encryptionPreference: MCEncryptionPreference.none)
+        
+        guard let peerID = mPeerID else {
+            return
+        }
+        mSession = MCSession(peer: peerID, securityIdentity: nil, encryptionPreference: MCEncryptionPreference.none)
         setupDelegate()
     }
     
     // Initializes the delegate of the session */
-    fileprivate func setupDelegate() {
+    private func setupDelegate() {
         delegate = MPCSessionDelegate()
-        mSession.delegate = delegate
-        delegate.peerID = mPeerID
+        mSession?.delegate = delegate
+        delegate?.peerID = mPeerID
     }
     
     /** Sends a message to the opponent with the given key and data */
@@ -46,9 +50,11 @@ class MPCSession: NSObject {
         }
         
         // Opponent
-        let peers = mSession.connectedPeers
+        guard let peers = mSession?.connectedPeers else {
+            return
+        }
 
-        guard ((try? mSession.send(messageData, toPeers: peers, with: MCSessionSendDataMode.reliable)) != nil)
+        guard ((try? mSession?.send(messageData, toPeers: peers, with: MCSessionSendDataMode.reliable)) != nil)
             else {
                 return
         }
@@ -56,9 +62,9 @@ class MPCSession: NSObject {
     
     /** Returns the display name of the opponent */
     func getOpponentName() -> String {
-        let name = mSession.connectedPeers[0].displayName
+        let name = mSession?.connectedPeers[0].displayName
         
-        return name
+        return name ?? "Default Name"
     }
     
 

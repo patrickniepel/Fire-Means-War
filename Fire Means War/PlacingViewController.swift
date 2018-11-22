@@ -22,15 +22,15 @@ protocol PlacingDelegate {
 
 class PlacingViewController: UIViewController, PopUpTimerDelegate, AttackDelegate, OptionsDelegate {
     
-    var fieldCtrl : FieldController!
-    var shipCtrl : ShipController!
-    var cellCtrl : CellController!
-    var shipPosCtrl : ShipPositionController!
+    var fieldCtrl : FieldController?
+    var shipCtrl : ShipController?
+    var cellCtrl : CellController?
+    var shipPosCtrl : ShipPositionController?
     
     // Timer for waiting for opponent's attacks
     // Timer between the end of an opponent's attack the the transition to the attack screen
     // Timer for placing the ships
-    var mTimer : Timer!
+    var mTimer : Timer?
     var waitingCounter = 20
     var placingCounter = 30
     var delayCount = 3
@@ -41,17 +41,17 @@ class PlacingViewController: UIViewController, PopUpTimerDelegate, AttackDelegat
     //Back to placing screen
     var returned = false
     
-    var mpcHandler : MPCHandler!
+    var mpcHandler : MPCHandler?
     
     //Cells that have changed after attack; Only for storing the data in between the transtions of the view controllers
     var changedCells = [(String, Bool)]()
     
     var delegate : PlacingDelegate? = nil
     
-    var audioPlayer : AudioPlayer!
+    var audioPlayer : AudioPlayer?
     
-    var optionsScreen : PopUpOptionsViewController!
-    var timerScreen : PopUpTimerViewController!
+    var optionsScreen : PopUpOptionsViewController?
+    var timerScreen : PopUpTimerViewController?
     
     var opponentShipsLeft = 0
     var opponentLifeLeft = 0
@@ -76,8 +76,11 @@ class PlacingViewController: UIViewController, PopUpTimerDelegate, AttackDelegat
         shipCtrl = ShipController()
         shipPosCtrl = ShipPositionController()
         cellCtrl = CellController()
-        cellCtrl.mpcHandler = mpcHandler
-        cellCtrl.setup(shipPos: shipPosCtrl)
+        cellCtrl?.mpcHandler = mpcHandler
+        
+        if let shipPosCtrl = shipPosCtrl {
+            cellCtrl?.setup(shipPos: shipPosCtrl)
+        }
         
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(handleAlert), name: NSNotification.Name("receivedAlert"), object: nil)
@@ -85,7 +88,7 @@ class PlacingViewController: UIViewController, PopUpTimerDelegate, AttackDelegat
         nc.addObserver(self, selector: #selector(handleShipsLeft), name: NSNotification.Name("shipsLeftOwn"), object: nil)
         
         //mpcHandler = MPCHandler.sharedInstance
-        navigationItem.title = "vs \(mpcHandler.session.getOpponentName())"
+        navigationItem.title = "vs \(mpcHandler?.session?.getOpponentName() ?? "Default Name")"
         
         //Sends a message to the opponent with the generated random number
         setHost()
@@ -113,6 +116,13 @@ class PlacingViewController: UIViewController, PopUpTimerDelegate, AttackDelegat
             
             layoutCalledOnce = true
             fieldCtrl = FieldController(view: view, field: fieldView)
+            
+            guard let shipPosCtrl = shipPosCtrl,
+                let fieldCtrl = fieldCtrl,
+                let cellCtrl = cellCtrl,
+                let shipCtrl = shipCtrl else {
+                return
+            }
             fieldCtrl.setup(shipPosCtrl: shipPosCtrl)
             
             fieldCtrl.populateField()
@@ -125,7 +135,9 @@ class PlacingViewController: UIViewController, PopUpTimerDelegate, AttackDelegat
             opponentShipsLeft = shipCtrl.ships.count
             opponentLifeLeft = shipCtrl.cellsLeft
             
-            shipCtrl.setup(snapController: fieldCtrl.snapCtrl)
+            if let snapCtrl = fieldCtrl.snapCtrl {
+                shipCtrl.setup(snapController: snapCtrl)
+            }
         }
         
         //Starts the 5sec timer before the match really starts
@@ -137,19 +149,15 @@ class PlacingViewController: UIViewController, PopUpTimerDelegate, AttackDelegat
     override func viewWillDisappear(_ animated: Bool) {
         
         // If the popups are currently displayed and this view controllers gets terminated
-        if optionsScreen != nil {
-            optionsScreen.dismiss(animated: false, completion: nil)
-        }
-        if timerScreen != nil {
-            timerScreen.dismiss(animated: false, completion: nil)
-        }
+        optionsScreen?.dismiss(animated: false, completion: nil)
+        timerScreen?.dismiss(animated: false, completion: nil)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         stopTimer()
     }
     
-    fileprivate func setupLabels() {
+    private func setupLabels() {
         timerLabel.numberOfLines = 0
         infoLabel.numberOfLines = 0
         infoLabel.text = "Place Your Ships, Captain!"
@@ -157,22 +165,22 @@ class PlacingViewController: UIViewController, PopUpTimerDelegate, AttackDelegat
         topIV.layer.borderColor = UIColor.white.cgColor
     }
     
-    fileprivate func hideHUD() {
+    private func hideHUD() {
         shipsLeftIV.isHidden = true
         shipsLeftLabel.isHidden = true
         lifeIV.isHidden = true
         lifeLabel.isHidden = true
     }
     
-    fileprivate func showHUD() {
+    private func showHUD() {
         shipsLeftIV.isHidden = false
         shipsLeftLabel.isHidden = false
         lifeIV.isHidden = false
         lifeLabel.isHidden = false
     }
     
-    fileprivate func setHost() {
-        mpcHandler.sendHostMessage()
+    private func setHost() {
+        mpcHandler?.sendHostMessage()
     }
     
     // Player drags the ships
@@ -180,15 +188,13 @@ class PlacingViewController: UIViewController, PopUpTimerDelegate, AttackDelegat
         
         for touch in touches {
             
-            for ship in shipCtrl.ships {
+            for ship in shipCtrl?.ships ?? [] {
                 
                 if ship.frame.contains(touch.location(in: view)) {
                     
-                    let ship = touch.view as? Ship
-                    
-                    // Ship always in center of the touch
-                    if ship != nil {
-                        ship!.center = touch.location(in: view)
+                    if let ship = touch.view as? Ship {
+                        // Ship always in center of the touch
+                        ship.center = touch.location(in: view)
                     }
                 }
             }
@@ -200,15 +206,13 @@ class PlacingViewController: UIViewController, PopUpTimerDelegate, AttackDelegat
         
         for touch in touches {
             
-            for ship in shipCtrl.ships {
+            for ship in shipCtrl?.ships ?? [] {
                 
                 if ship.frame.contains(touch.location(in: view)) {
                     
-                    let ship = touch.view as? Ship
-                    
-                    //Ships can be snapped to the position
-                    if ship != nil {
-                        fieldCtrl.checkSnapPosition(touchedShip: ship!)
+                    if let ship = touch.view as? Ship {
+                        //Ships can be snapped to the position
+                        fieldCtrl?.checkSnapPosition(touchedShip: ship)
                     }
                 }
             }
@@ -221,7 +225,7 @@ class PlacingViewController: UIViewController, PopUpTimerDelegate, AttackDelegat
         returned = true
         startPlacingTimer()
         
-        audioPlayer.playHorn()
+        audioPlayer?.playHorn()
         perform(#selector(startBattleMusic), with: nil, afterDelay: 7)
         
         timerScreen = nil
@@ -230,7 +234,7 @@ class PlacingViewController: UIViewController, PopUpTimerDelegate, AttackDelegat
     
     /** Starts to play the theme for a battle */
     @objc func startBattleMusic() {
-        audioPlayer.playBattle()
+        audioPlayer?.playBattle()
     }
     
     /** Delegate of the AttackViewController */
@@ -249,10 +253,10 @@ class PlacingViewController: UIViewController, PopUpTimerDelegate, AttackDelegat
         optionsScreen = nil
         
         // Player concedes so opponent will disconnect the session intentionally
-        mpcHandler.opponentSelfDisconnected = true
+        mpcHandler?.opponentSelfDisconnected = true
         
         // Send a message to the opponent that player will concede
-        mpcHandler.sendMessage(key: "concede", additionalData: "")
+        mpcHandler?.sendMessage(key: "concede", additionalData: "")
         
         // Returns to the menu
         backToMainScreen(alertToShow: true)
@@ -265,7 +269,7 @@ class PlacingViewController: UIViewController, PopUpTimerDelegate, AttackDelegat
     }
     
     /** Timer for placing the ships */
-    fileprivate func startPlacingTimer() {
+    private func startPlacingTimer() {
         mTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(handlePlacingTimer), userInfo: nil, repeats: true)
     }
     
@@ -278,20 +282,24 @@ class PlacingViewController: UIViewController, PopUpTimerDelegate, AttackDelegat
         }
         
         //Player did place all ships, host starts his attack
-        if placingCounter == 0 && shipCtrl.checkIfShipsPlaced() {
+        if placingCounter == 0 && shipCtrl?.checkIfShipsPlaced() ?? false {
             
-            mTimer.invalidate()
+            mTimer?.invalidate()
             
-            cellCtrl.setupShipPositionsTMP(shipPos: shipPosCtrl.getcellShipKeys())
+            cellCtrl?.setupShipPositionsTMP(shipPos: shipPosCtrl?.getcellShipKeys() ?? [])
             
             //Ships cant be dragged after the placing time
-            shipCtrl.removeGestureRecognizer()
+            shipCtrl?.removeGestureRecognizer()
             self.view.isUserInteractionEnabled = false
             
             showHUD()
             
             // Displays the attack screen if the player is the host
-            if mpcHandler.player.isHost {
+            
+            guard let playIsHost = mpcHandler?.player?.isHost else {
+                return
+            }
+            if playIsHost {
                 performSegue(withIdentifier: "placingVC2attackVC", sender: nil)
             }
             else {
@@ -302,12 +310,12 @@ class PlacingViewController: UIViewController, PopUpTimerDelegate, AttackDelegat
         
         // Player did not place all ships, match gets cancelled
         else if placingCounter == 0 {
-            mpcHandler.opponentSelfDisconnected = true
+            mpcHandler?.opponentSelfDisconnected = true
 
-            delegate!.didNotPlaceAllShips()
+            delegate?.didNotPlaceAllShips()
             
             // Sends a message to the opponent that player did not place all of his ships
-            mpcHandler.sendMessage(key: "didNotPlace", additionalData: "")
+            mpcHandler?.sendMessage(key: "didNotPlace", additionalData: "")
             backToMainScreen(alertToShow: false)
         }
             
@@ -317,14 +325,12 @@ class PlacingViewController: UIViewController, PopUpTimerDelegate, AttackDelegat
         }
     }
     
-    fileprivate func stopTimer() {
-        if mTimer != nil {
-            mTimer.invalidate()
-        }
+    private func stopTimer() {
+        mTimer?.invalidate()
     }
     
     /** Timer for waiting for opponent's attacks */
-    fileprivate func startWaitingTimer() {
+    private func startWaitingTimer() {
         waitingCounter = 20
         timerLabel.textColor = .white
         timerLabel.text = "\(waitingCounter)"
@@ -340,7 +346,7 @@ class PlacingViewController: UIViewController, PopUpTimerDelegate, AttackDelegat
         }
         
         if waitingCounter == 0 {
-            mTimer.invalidate()
+            mTimer?.invalidate()
             
             // Back to placing screen again
             performSegue(withIdentifier: "placingVC2attackVC", sender: nil)
@@ -360,24 +366,31 @@ class PlacingViewController: UIViewController, PopUpTimerDelegate, AttackDelegat
     @objc func handleAttack(notification: NSNotification) {
         
         // Get the key of the attacked cell
-        let cellKey = ExtractMessage().extractKey(notification: notification, keyword: "additionalData")
+        guard let cellKey = ExtractMessage().extractKey(notification: notification, keyword: "additionalData") else {
+            return
+        }
         
         // Check if there is a ship upon the attacked cell
-        let cell = fieldCtrl.cellGotAttacked(key: cellKey)
-        let isAttack = cellCtrl.shipCellGotAttacked(cell: cell, fieldView: fieldView)
+        guard let cell = fieldCtrl?.cellGotAttacked(key: cellKey) else {
+            return
+        }
+        
+        guard let isAttack = cellCtrl?.shipCellGotAttacked(cell: cell, fieldView: fieldView) else {
+            return
+        }
         
         // Ship got attacked
         if isAttack {
             //Reduce lp
-            lifeLabel.text = "\(Int(lifeLabel.text!)! - 1)"
+            lifeLabel.text = "\(Int(lifeLabel?.text ?? "") ?? 0 - 1)"
             
-            audioPlayer.playFire()
+            audioPlayer?.playFire()
             infoLabel.text = "Opponent Hit A Ship!"
             checkForMatchResult()
         }
         // No ship got attacked
         else {
-            audioPlayer.playMissed()
+            audioPlayer?.playMissed()
             infoLabel.text = "Opponent Missed!"
             stopTimer()
             startDelay2Attack()
@@ -386,10 +399,10 @@ class PlacingViewController: UIViewController, PopUpTimerDelegate, AttackDelegat
     
     /** Gets called when opponent hits a ship cell of the player */
     @objc func handleShipsLeft(notification: NSNotification) {
-        shipsLeftLabel.text = "\(Int(shipsLeftLabel.text!)! - 1)"
+        shipsLeftLabel.text = "\(Int(shipsLeftLabel?.text ?? "") ?? 0 - 1)"
     }
     
-    fileprivate func startDelay2Attack() {
+    private func startDelay2Attack() {
         mTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(handleDelay), userInfo: nil, repeats: true)
     }
     
@@ -399,26 +412,26 @@ class PlacingViewController: UIViewController, PopUpTimerDelegate, AttackDelegat
         
         if delayCount == 0 {
             delayCount = 3
-            mTimer.invalidate()
+            mTimer?.invalidate()
             performSegue(withIdentifier: "placingVC2attackVC", sender: nil)
         }
     }
     
     /** Checks if player lost the match */
-    fileprivate func checkForMatchResult() {
+    private func checkForMatchResult() {
         
-        if cellCtrl.checkForDefeat() {
-            mpcHandler.opponentSelfDisconnected = true
+        if cellCtrl?.checkForDefeat() ?? false {
+            mpcHandler?.opponentSelfDisconnected = true
             
             // Player lost the game. Sends a message to the opponent that he won the match
-            mpcHandler.sendMessage(key: "winner", additionalData: "")
+            mpcHandler?.sendMessage(key: "winner", additionalData: "")
             
-            delegate!.backFromPlacingScreenLosing()
+            delegate?.backFromPlacingScreenLosing()
         }
     }
     
-    fileprivate func backToMainScreen(alertToShow: Bool) {
-        delegate!.backFromPlacingScreen(alertToShow: alertToShow)
+    private func backToMainScreen(alertToShow: Bool) {
+        delegate?.backFromPlacingScreen(alertToShow: alertToShow)
     }
     
     // MARK: - Navigation
@@ -426,28 +439,28 @@ class PlacingViewController: UIViewController, PopUpTimerDelegate, AttackDelegat
         
         if segue.identifier == "placingVC2popUpTimerVC" {
             
-            let destVC = segue.destination as! PopUpTimerViewController
+            let destVC = segue.destination as? PopUpTimerViewController
             timerScreen = destVC
-            destVC.delegate = self
+            destVC?.delegate = self
         }
         
         if segue.identifier == "placingVC2attackVC" {
             
-            let destVC = segue.destination as! AttackViewController
-            destVC.delegate = self
-            destVC.mpcHandler = mpcHandler
-            destVC.audioPlayer = audioPlayer
-            destVC.changedCells = changedCells
-            destVC.shipCtrl = shipCtrl
-            destVC.shipsLeftOpponent = opponentShipsLeft
-            destVC.lifeLeftOpponent = opponentLifeLeft
+            let destVC = segue.destination as? AttackViewController
+            destVC?.delegate = self
+            destVC?.mpcHandler = mpcHandler
+            destVC?.audioPlayer = audioPlayer
+            destVC?.changedCells = changedCells
+            destVC?.shipCtrl = shipCtrl
+            destVC?.shipsLeftOpponent = opponentShipsLeft
+            destVC?.lifeLeftOpponent = opponentLifeLeft
         }
         
         if segue.identifier == "placingVC2popUpOptionsVC" {
             
-            let destVC = segue.destination as! PopUpOptionsViewController
+            let destVC = segue.destination as? PopUpOptionsViewController
             optionsScreen = destVC
-            destVC.delegate = self
+            destVC?.delegate = self
         }
     }
     

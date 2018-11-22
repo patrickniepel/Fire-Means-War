@@ -15,9 +15,9 @@ class TestPlacingViewController: UIViewController {
     var cells = [String : Cell]()
     var selectedCell : UIView?
     
-    var fieldCtrl : FieldController!
-    var shipCtrl : ShipController!
-    var shipPosCtrl : ShipPositionController!
+    var fieldCtrl : FieldController?
+    var shipCtrl : ShipController?
+    var shipPosCtrl : ShipPositionController?
 
 
     @IBOutlet weak var fieldView: Field!
@@ -46,10 +46,21 @@ class TestPlacingViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         fieldCtrl = FieldController(view: view, field: fieldView)
+        
+        guard let shipPosCtrl = shipPosCtrl, let fieldCtrl = fieldCtrl else {
+            return
+        }
+        
         fieldCtrl.setup(shipPosCtrl: shipPosCtrl)
         fieldCtrl.populateField()
+        
         shipCtrl = ShipController()
-        shipCtrl.setup(snapController: fieldCtrl.snapCtrl)
+        
+        guard let snapCtrl = fieldCtrl.snapCtrl, let shipCtrl = shipCtrl else {
+            return
+        }
+        
+        shipCtrl.setup(snapController: snapCtrl)
         shipCtrl.createShips(cellWidth: fieldCtrl.width, mainView: view, field: fieldView)
     }
     
@@ -92,17 +103,14 @@ class TestPlacingViewController: UIViewController {
         
         for touch in touches {
             
-            for ship in shipCtrl.ships {
+            for ship in shipCtrl?.ships ?? [] {
                 
                 if ship.frame.contains(touch.location(in: view)) {
                     
                     //MARK: Manchmal absturz wenn touch.view = cell
-                    let ship = touch.view as? Ship
-                    
-                    if ship != nil {
-                        ship!.center = touch.location(in: view)
+                    if let ship = touch.view as? Ship {
+                        ship.center = touch.location(in: view)
                     }
-                    
                 }
             }
         }
@@ -112,16 +120,14 @@ class TestPlacingViewController: UIViewController {
         
         for touch in touches {
             
-            for ship in shipCtrl.ships {
+            for ship in shipCtrl?.ships ?? [] {
                 
                 if ship.frame.contains(touch.location(in: view)) {
                     
-                    let ship = touch.view as? Ship
-                    
-                    if ship != nil {
-                        fieldCtrl.checkSnapPosition(touchedShip: ship!)
-//                        shipCtrl.checkForOverlapping(currentShip: ship!)
-//                        shipCtrl.checkAnotherTimer()
+                    if let ship = touch.view as? Ship {
+                        fieldCtrl?.checkSnapPosition(touchedShip: ship)
+                        //                        shipCtrl.checkForOverlapping(currentShip: ship!)
+                        //                        shipCtrl.checkAnotherTimer()
                     }
                 }
             }

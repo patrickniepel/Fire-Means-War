@@ -14,7 +14,7 @@ class AICalculator: NSObject {
     var availableKeysString = [String]()
     
     /** Transforms the Integer set into a string set */
-    fileprivate func changeDataTypeAvailableKeys() {
+    private func changeDataTypeAvailableKeys() {
     
         for keyElement in availableKeys {
     
@@ -122,7 +122,7 @@ class AICalculator: NSObject {
     }
     
     /** Removes the used string keys from all keys */
-    fileprivate func removeStringKeys(shipKeys: [String], overlappingKeys: [String]) {
+    private func removeStringKeys(shipKeys: [String], overlappingKeys: [String]) {
         
         //Remove ship keys
         for i in 0..<shipKeys.count {
@@ -136,7 +136,7 @@ class AICalculator: NSObject {
     }
     
     /** Calculates the area(cells) in which the ship is located */
-    fileprivate func calculateShipKeys(area: [(Int, Int)]) -> [String] {
+    private func calculateShipKeys(area: [(Int, Int)]) -> [String] {
         
         var shipKeys = [String]()
         
@@ -169,7 +169,7 @@ class AICalculator: NSObject {
     }
     
     /** Calculates the overlapping keys for each ship */
-    fileprivate func calculateOverlappingKeys(area: [(Int, Int)], shipKeys: [String]) -> [String] {
+    private func calculateOverlappingKeys(area: [(Int, Int)], shipKeys: [String]) -> [String] {
         
         var xStart = area[0].0
         var yStart = area[0].1
@@ -219,7 +219,7 @@ class AICalculator: NSObject {
     }
     
     /** Checks if the overlapping Keys are available for use */
-    fileprivate func checkIfOverlappingKeysAvailable(overlappingKeys: [String], positions: [[String]]) -> Bool {
+    private func checkIfOverlappingKeysAvailable(overlappingKeys: [String], positions: [[String]]) -> Bool {
         
 //        let allKeysSet = Set(availableKeysString)
 //        let overlappingKeysSet = Set(overlappingKeys)
@@ -248,7 +248,7 @@ class AICalculator: NSObject {
     }
     
     /** Checks if the calculated keys for a ship are available for use */
-    fileprivate func checkIfShipKeysAvailable(shipKeys: [String]) -> Bool {
+    private func checkIfShipKeysAvailable(shipKeys: [String]) -> Bool {
         
         let allKeysSet = Set(availableKeysString)
         let shipKeysSet = Set(shipKeys)
@@ -264,7 +264,7 @@ class AICalculator: NSObject {
         return false
     }
     
-    fileprivate func generateRandomKeyIndex(keysAvailable: Int) -> Int {
+    private func generateRandomKeyIndex(keysAvailable: Int) -> Int {
         return Int(arc4random_uniform(UInt32(keysAvailable)))
     }
     
@@ -290,7 +290,7 @@ class AICalculator: NSObject {
     }
     
     //0 up, 1 right, 2 down, 3 left
-    fileprivate func generateRandomDirection() -> Int {
+    private func generateRandomDirection() -> Int {
         return Int(arc4random_uniform(UInt32(4)))
     }
     

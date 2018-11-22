@@ -40,7 +40,7 @@ class PlayerController: NSObject {
         return player?.cellsLeft == 0
     }
     
-    fileprivate func removeKeyFromTMPPositions(key: String) {
+    private func removeKeyFromTMPPositions(key: String) {
         
         var shipIndex = 0
         var keyIndex = 0
@@ -70,7 +70,7 @@ class PlayerController: NSObject {
     }
     
     /** Fills the temporary array, works like a copy to be able to do changes */
-    fileprivate func fillShipPositionsTMP(shipPos: [(Ship, [String])]) {
+    private func fillShipPositionsTMP(shipPos: [(Ship, [String])]) {
     
         for shipPositions in shipPos {
             shipPositionsTMP.append(shipPositions.1)

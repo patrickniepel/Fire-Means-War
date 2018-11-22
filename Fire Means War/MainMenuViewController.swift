@@ -83,7 +83,7 @@ class MainMenuViewController: UIViewController, PlacingDelegate, DifficultySegue
         }
     }
     
-    fileprivate func setupButtons() {
+    private func setupButtons() {
         
         for button in buttons {
             button.layer.cornerRadius = 10
@@ -92,7 +92,7 @@ class MainMenuViewController: UIViewController, PlacingDelegate, DifficultySegue
         }
     }
     
-    fileprivate func infoReviewApplication() {
+    private func infoReviewApplication() {
         
         let wasShown = UserDefaults.standard.bool(forKey: "info")
         
@@ -174,15 +174,17 @@ class MainMenuViewController: UIViewController, PlacingDelegate, DifficultySegue
     @objc func handlePeerChangedState(notification: NSNotification) {
         
         let state = ExtractMessage().extractState(notification: notification)
-        let peer = ExtractMessage().extractPeerID(notification: notification)
+        guard let peer = ExtractMessage().extractPeerID(notification: notification) else {
+            return
+        }
         
         switch(state) {
             
         case MCSessionState.connecting.rawValue:
             
             // When connecting with a peer, other peers that want to connect get kicked out
-            if mpcHandler?.session.mSession.connectedPeers.count == 1 {
-                mpcHandler?.session.mSession.cancelConnectPeer(peer)
+            if mpcHandler?.session?.mSession?.connectedPeers.count == 1 {
+                mpcHandler?.session?.mSession?.cancelConnectPeer(peer)
             }
             
         case MCSessionState.connected.rawValue:
@@ -192,13 +194,11 @@ class MainMenuViewController: UIViewController, PlacingDelegate, DifficultySegue
             perform(#selector(stopPlayer), with: nil, afterDelay: 2)
             
             // When screen for choosing the opponent is on top
-            if mpcHandler?.browser.mBrowser != nil {
-                mpcHandler?.browser.stopBrowsingForPeers()
-                mpcHandler?.browser.mBrowser.dismiss(animated: false, completion: nil)
-            }
+            mpcHandler?.browser?.stopBrowsingForPeers()
+            mpcHandler?.browser?.mBrowser?.dismiss(animated: false, completion: nil)
             
             // Stops advertising cause match is currently running
-            mpcHandler?.advertiser.advertiseSelf(advertise: false)
+            mpcHandler?.advertiser?.advertiseSelf(advertise: false)
             isPlaying = true
             
             // Display placing screen
@@ -211,13 +211,17 @@ class MainMenuViewController: UIViewController, PlacingDelegate, DifficultySegue
                 
                 self.navigationController?.popToViewController(self, animated: false)
                 
-                // Connection lost. None of player did disconnect intentionally
-                if !mpcHandler!.opponentSelfDisconnected {
-                    guard let alert = alertCtrl?.showAlert(title: "Match canceled", message: "Connection Lost") else {
-                        return
+                if let opponentSelfDisconnected = mpcHandler?.opponentSelfDisconnected {
+                    
+                    if !opponentSelfDisconnected {
+                        guard let alert = alertCtrl?.showAlert(title: "Match canceled", message: "Connection Lost") else {
+                            return
+                        }
+                        self.present(alert, animated: true)
                     }
-                    self.present(alert, animated: true)
                 }
+                // Connection lost. None of player did disconnect intentionally
+                
                 
                 // Player did not place all of his ships
                 if selfDidNotPlaceAllShips {

@@ -12,7 +12,7 @@ import MultipeerConnectivity
 /** Delegate of the session class */
 class MPCSessionDelegate: NSObject, MCSessionDelegate {
     
-    var peerID : MCPeerID!
+    var peerID : MCPeerID?
     
     /** Sends a notification when the state of a peer (opponent) changes */
     func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
@@ -28,7 +28,10 @@ class MPCSessionDelegate: NSObject, MCSessionDelegate {
         
         let extractCtrl = ExtractMessage()
         let dataDict = extractCtrl.extract(data: data)
-        let key = dataDict["key"]!
+        
+        guard let key = dataDict["key"] else {
+            return
+        }
         
         let keyDict = ["key" : key]
         

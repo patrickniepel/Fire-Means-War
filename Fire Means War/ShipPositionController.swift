@@ -12,10 +12,10 @@ import UIKit
 class ShipPositionController: NSObject {
     
     // Each ship has array with PositionKeys
-    fileprivate var cellShipKeys = [(Ship, [String])]()
+    private var cellShipKeys = [(Ship, [String])]()
     
     // Keys of cells that must no overlap with other cells
-    fileprivate var cellOverlappingKeys = [(Ship, [String])]()
+    private var cellOverlappingKeys = [(Ship, [String])]()
     
     func getcellShipKeys() -> [(Ship, [String])] {
         return cellShipKeys
@@ -74,7 +74,7 @@ class ShipPositionController: NSObject {
     }
     
     // Sets the keys of the cells that must not overlap with other cells
-    fileprivate func setOverlappingKeys(ship: Ship, snappingCell: Cell) {
+    private func setOverlappingKeys(ship: Ship, snappingCell: Cell) {
         
         let calcOverlap = CalculatorOverlapping()
         

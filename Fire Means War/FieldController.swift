@@ -12,11 +12,11 @@ import UIKit
 class FieldController: NSObject {
     
     var width : CGFloat = 0
-    var snapCtrl : SnapController!
+    var snapCtrl : SnapController?
     
     // View in which the field is a subview of
-    var topView : UIView!
-    var fieldView : Field!
+    var topView : UIView?
+    var fieldView : Field?
     
     //Cell that gets selected when in Attack Screen
     var selectedCell : Cell?
@@ -28,11 +28,18 @@ class FieldController: NSObject {
     
     func setup(shipPosCtrl: ShipPositionController) {
         snapCtrl = SnapController()
-        snapCtrl.setup(view: topView, fieldView: fieldView, shipPos: shipPosCtrl)
+        
+        if let topView = topView, let fieldView = fieldView {
+            snapCtrl?.setup(view: topView, fieldView: fieldView, shipPos: shipPosCtrl)
+        }
     }
     
     /** Fills the game field with cells */
     func populateField() {
+        
+        guard let fieldView = fieldView else {
+            return
+        }
         
         let cellsPerRow = fieldView.cellsPerRow
         width = fieldView.frame.size.width / CGFloat(cellsPerRow)
@@ -60,6 +67,10 @@ class FieldController: NSObject {
     
     /** Updates the field for the offender, so he sees which cells he has already attacked */
     func updateField(changedCells: [(String, Bool)]) {
+        
+        guard let fieldView = fieldView else {
+            return
+        }
     
         for i in 0..<changedCells.count {
             
@@ -67,12 +78,12 @@ class FieldController: NSObject {
 
             //If true == successfully attacked -> fire image, else missed image
             if changedCells[i].1 {
-                let cell = fieldView.cells[key]!
-                cell.shipOnCellAttackedOffender()
+                let cell = fieldView.cells[key]
+                cell?.shipOnCellAttackedOffender()
             }
             else {
-                let cell = fieldView.cells[key]!
-                cell.noShipOnCellAttackedOffender()
+                let cell = fieldView.cells[key]
+                cell?.noShipOnCellAttackedOffender()
             }
         }
     }
@@ -80,13 +91,19 @@ class FieldController: NSObject {
     /** Increases width and height when cell is selected (for choosing the target) */
     func manageTargetGesture(location: CGPoint, changedCells: [(String, Bool)]) {
         
+        guard let fieldView = fieldView else {
+            return
+        }
+        
         let cellsPerRow = fieldView.cellsPerRow
         let width = fieldView.frame.width / CGFloat(cellsPerRow)
         let i = Int(location.x / width)
         let j = Int(location.y / width)
         
         let key = "\(i)|\(j)"
-        let cell = fieldView.cells[key]!
+        guard let cell = fieldView.cells[key] else {
+            return
+        }
         
         // If selected Cell is a cell that got changed (already attacked) nothing happens and it cannot be attacked anymore
         for i in 0..<changedCells.count {
@@ -116,12 +133,14 @@ class FieldController: NSObject {
     
     /** Delegates the handling of the snap position to the SnapController */
     func checkSnapPosition(touchedShip: Ship) {
-        snapCtrl.handleSnapPosition(ship: touchedShip)
+        snapCtrl?.handleSnapPosition(ship: touchedShip)
     }
     
     /** Returns the cell that got attacked */
-    func cellGotAttacked(key: String) -> Cell {
-        let cell = fieldView.cells[key]
-        return cell!
+    func cellGotAttacked(key: String) -> Cell? {
+        if let cell = fieldView?.cells[key] {
+            return cell
+        }
+        return nil
     }
 }

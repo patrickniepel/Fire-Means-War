@@ -30,11 +30,11 @@ class PopUpOptionsViewController: UIViewController {
     
     // Concede button gets tapped
     @IBAction func concede(_ sender: UIButton) {
-        delegate!.concedeFromOptionsView(ctrl: self)
+        delegate?.concedeFromOptionsView(ctrl: self)
     }
     
     // Continue button gets tapped
     @IBAction func continueMatch(_ sender: UIButton) {
-        delegate!.continueFromOptionsView(ctrl: self)
+        delegate?.continueFromOptionsView(ctrl: self)
     }
 }

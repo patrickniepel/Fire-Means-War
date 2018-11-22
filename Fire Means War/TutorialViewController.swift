@@ -12,12 +12,12 @@ class TutorialViewController: UIViewController {
 
     var currentPage = 0
     var totalPages = 0
-    var tutorialCtrl : TutorialController!
+    var tutorialCtrl : TutorialController?
     
-    var dataSource : TutorialDataSource!
-    var delegate : TutorialDelegateFlowLayout!
-    var leftSwipe : UISwipeGestureRecognizer!
-    var rightSwipe : UISwipeGestureRecognizer!
+    var dataSource : TutorialDataSource?
+    var delegate : TutorialDelegateFlowLayout?
+    var leftSwipe : UISwipeGestureRecognizer?
+    var rightSwipe : UISwipeGestureRecognizer?
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var pageControl: UIPageControl!
@@ -29,18 +29,24 @@ class TutorialViewController: UIViewController {
         
         tutorialCtrl = TutorialController()
         
-        totalPages = tutorialCtrl.getNumberOfTutorialPages()
+        totalPages = tutorialCtrl?.getNumberOfTutorialPages() ?? 0
         
         dataSource = TutorialDataSource()
         delegate = TutorialDelegateFlowLayout()
         
-        dataSource.tutorialCtrl = tutorialCtrl
-        delegate.tutorialCtrl = tutorialCtrl
+        dataSource?.tutorialCtrl = tutorialCtrl
+        delegate?.tutorialCtrl = tutorialCtrl
         collectionView?.dataSource = dataSource
         collectionView?.delegate = delegate
         
         leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe))
         rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe))
+        
+        updatePageControl(page: 0)
+        
+        guard let leftSwipe = leftSwipe, let rightSwipe = rightSwipe else {
+            return
+        }
         
         leftSwipe.direction = .left
         rightSwipe.direction = .right
@@ -48,7 +54,7 @@ class TutorialViewController: UIViewController {
         collectionView.addGestureRecognizer(leftSwipe)
         collectionView.addGestureRecognizer(rightSwipe)
         
-        updatePageControl(page: 0)
+        
     }
     
     func updatePageControl(page: Int) {

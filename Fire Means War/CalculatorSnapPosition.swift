@@ -21,7 +21,7 @@ class CalculatorSnapPosition: NSObject {
         return calculateHorizontal(field: field, ship: ship, cell: cell)
     }
     
-    fileprivate func calculateHorizontal(field: Field, ship: Ship, cell: Cell) -> CGPoint {
+    private func calculateHorizontal(field: Field, ship: Ship, cell: Cell) -> CGPoint {
         
         let width = cell.frame.width
         let x = field.getOriginX() + cell.getOriginX() + (ship.frame.width / 2)
@@ -35,7 +35,7 @@ class CalculatorSnapPosition: NSObject {
         return calculateVertical(field: field, ship: ship, cell: cell)
     }
     
-    fileprivate func calculateVertical(field: Field, ship: Ship, cell: Cell) -> CGPoint {
+    private func calculateVertical(field: Field, ship: Ship, cell: Cell) -> CGPoint {
         
         let width = cell.frame.width
         let x = field.getOriginX() + cell.getOriginX() + (width / 2)
@@ -47,8 +47,13 @@ class CalculatorSnapPosition: NSObject {
     /** Calculates the snap point for snapping the ship to its starting position */
     func getSnapPointStartingPosition(ship: Ship) -> CGPoint {
         
-        let x = ship.startingPosition.x + ship.frame.width / 2
-        let y = ship.startingPosition.y + ship.frame.height / 2
+        guard let xStart = ship.startingPosition?.x,
+                let yStart = ship.startingPosition?.y else {
+            return CGPoint(x: 0, y: 0)
+        }
+        
+        let x = xStart + ship.frame.width / 2
+        let y = yStart + ship.frame.height / 2
         
         return CGPoint(x: x, y: y)
     }

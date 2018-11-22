@@ -18,7 +18,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         //Changes font of all bar button items
-        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UINavigationBar.classForCoder() as! UIAppearanceContainer.Type]).setTitleTextAttributes([NSAttributedString.Key.font : UIFont.init(name: "Philosopher-Bold", size: 19)!], for: .normal)
+        
+        if let appearance = UINavigationBar.classForCoder() as? UIAppearanceContainer.Type,
+            let font = UIFont.init(name: "Philosopher-Bold", size: 19) {
+            
+            UIBarButtonItem.appearance(whenContainedInInstancesOf: [appearance]).setTitleTextAttributes([NSAttributedString.Key.font : font], for: .normal)
+        }
+        
         
         return true
     }

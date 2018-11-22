@@ -14,12 +14,12 @@ class MPCHandler: NSObject {
     
     //static let sharedInstance = MPCHandler()
     
-    var session : MPCSession!
-    var advertiser : MPCAdvertiser!
-    var browser : MPCBrowser!
-    var player : Player!
+    var session : MPCSession?
+    var advertiser : MPCAdvertiser?
+    var browser : MPCBrowser?
+    var player : Player?
     
-    var mainVC : MainMenuViewController!
+    var mainVC : MainMenuViewController?
     
     //False when opponent lost connection
     //True when opponent disconnects intentionally
@@ -29,11 +29,11 @@ class MPCHandler: NSObject {
     func startSetup(vc: MainMenuViewController) {
         initialise(vc: vc)
         
-        session.setupPeerWithDisplayName(displayName: UIDevice.current.name)
-        session.setupSession()
+        session?.setupPeerWithDisplayName(displayName: UIDevice.current.name)
+        session?.setupSession()
         
-        advertiser.session = session.mSession
-        advertiser.advertiseSelf(advertise: true)
+        advertiser?.session = session?.mSession
+        advertiser?.advertiseSelf(advertise: true)
         
         initialisePlayer()
         
@@ -45,18 +45,21 @@ class MPCHandler: NSObject {
     /** Displays the Connecting-Screen */
     func startSearchingForPeer() {
         
-        let mcSession = session.mSession
+        guard let mcSession = session?.mSession, let browser = browser else {
+            return
+        }
         
-        if mcSession != nil {
-            browser.setupBrowser(session: mcSession!)
-            
-            // Browser screen gets presented (for (de)activating navigation bar)
-            mainVC.browserVCOpen = true
-            mainVC.present(browser.mBrowser, animated: true, completion: nil)
+        browser.setupBrowser(session: mcSession)
+        
+        // Browser screen gets presented (for (de)activating navigation bar)
+        mainVC?.browserVCOpen = true
+        
+        if let browser = browser.mBrowser {
+            mainVC?.present(browser, animated: true, completion: nil)
         }
     }
     
-    fileprivate func initialise(vc: MainMenuViewController) {
+    private func initialise(vc: MainMenuViewController) {
         mainVC = vc
         session = MPCSession()
         advertiser = MPCAdvertiser()
@@ -64,33 +67,33 @@ class MPCHandler: NSObject {
     }
     
 
-    fileprivate func initialisePlayer() {
+    private func initialisePlayer() {
         player = Player()
-        player.name = UIDevice.current.name
-        player.peerID = session.mPeerID
+        player?.name = UIDevice.current.name
+        player?.peerID = session?.mPeerID
     }
     
     func sendMessage(key : String, additionalData : String) {
-        session.sendMessage(key: key, additionalData: additionalData)
+        session?.sendMessage(key: key, additionalData: additionalData)
     }
     
     /** Will be called if player disconnects session intentionally */
     func disconnect() {
         
         // If still connected -> noone lost connection -> inform opponent that player did not lost connection, but disconnectd intentionally
-        if session.mSession.connectedPeers.count == 1 {
-            session.sendMessage(key: "selfDisconnected", additionalData: "")
+        if session?.mSession?.connectedPeers.count == 1 {
+            session?.sendMessage(key: "selfDisconnected", additionalData: "")
         }
         
         // Opponent will disconnect session intentionally
         opponentSelfDisconnected = true
-        session.mSession.disconnect()
+        session?.mSession?.disconnect()
         
         // Stops timer if player is in placing-screen
         NotificationCenter.default.post(name: NSNotification.Name("receivedAlert"), object: nil)
         
         // Match is over, advertise again to be found by other players
-        advertiser.advertiseSelf(advertise: true)
+        advertiser?.advertiseSelf(advertise: true)
     }
     
     // When opponent sends "selfDisconnected"-Message
@@ -101,15 +104,19 @@ class MPCHandler: NSObject {
     // Handles the decision of setting the host
     @objc func handleHost(notification: NSNotification) {
         
-        let opponentNumber = ExtractMessage().extractKey(notification: notification, keyword: "additionalData")
+        guard let opponentNumber = ExtractMessage().extractKey(notification: notification, keyword: "additionalData"),
+            let player = player,
+            let hostNumber = player.hostNumber,
+            let number = Int(opponentNumber) else {
+            return
+        }
         
-        let number = Int(opponentNumber)!
         
-        if player.hostNumber > number {
+        if hostNumber > number {
             player.isHost = true
         }
             
-        else if number > player.hostNumber {
+        else if number > hostNumber {
             player.isHost = false
         }
             
@@ -121,9 +128,9 @@ class MPCHandler: NSObject {
     
     /** Sends the message with the generated number for deciding who will be the host */
     func sendHostMessage() {
-        player.generateRandomNumber()
-        let myNumber = String(describing: player.hostNumber!)
-        session.sendMessage(key: "host", additionalData: myNumber)
+        player?.generateRandomNumber()
+        let myNumber = String(describing: player?.hostNumber)
+        session?.sendMessage(key: "host", additionalData: myNumber)
     }
     
     deinit {

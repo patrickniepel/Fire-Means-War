@@ -12,20 +12,25 @@ import MultipeerConnectivity
 /** Handles the screen for choosing a peer */
 class MPCBrowser: NSObject {
     
-    var mBrowser : MCBrowserViewController!
-    var delegate : MPCBrowserDelegate!
-    var currentSession : MCSession!
+    var mBrowser : MCBrowserViewController?
+    var delegate : MPCBrowserDelegate?
+    var currentSession : MCSession?
     
     /** Initializes the browser */
     func setupBrowser(session: MCSession) {
         
         currentSession = session
+        
+        guard let currentSession = currentSession else {
+            return
+        }
+        
         mBrowser = MCBrowserViewController(serviceType: "FireMeansWar", session: currentSession)
         delegate = MPCBrowserDelegate()
-        mBrowser.delegate = delegate
+        mBrowser?.delegate = delegate
     }
     
     func stopBrowsingForPeers() {
-        mBrowser.browser!.stopBrowsingForPeers()
+        mBrowser?.browser?.stopBrowsingForPeers()
     }
 }

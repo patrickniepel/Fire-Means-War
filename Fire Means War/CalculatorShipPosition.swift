@@ -15,20 +15,21 @@ class CalculatorShipPosition: NSObject {
     func getShipPosition(ship: Ship, cell: Cell) -> [String] {
         
         if ship.horizontal {
-            return horizontalPosition(shipLength: ship.mLength, cell: cell)
+            return horizontalPosition(shipLength: ship.mLength, cell: cell) ?? []
         }
-        return verticalPosition(shipLength: ship.mLength, cell: cell)
+        return verticalPosition(shipLength: ship.mLength, cell: cell) ?? []
     }
     
     /*
      * The functions below calculate all the keys of the cells on which the ship is placed
     */
     
-    fileprivate func horizontalPosition(shipLength: Int, cell: Cell) -> [String] {
+    private func horizontalPosition(shipLength: Int, cell: Cell) -> [String]? {
         
         // Position of the cell in the field (e.g "0|2")
-        let xCell = cell.fieldPosition["x"]!
-        let yCell = cell.fieldPosition["y"]!
+        guard let xCell = cell.fieldPosition["x"], let yCell = cell.fieldPosition["y"] else {
+            return nil
+        }
         
         var shipPositions = [String]()
         
@@ -44,10 +45,11 @@ class CalculatorShipPosition: NSObject {
     }
     
     // Similar to the function above
-    fileprivate func verticalPosition(shipLength: Int, cell: Cell) -> [String] {
+    private func verticalPosition(shipLength: Int, cell: Cell) -> [String]? {
         
-        let xCell = cell.fieldPosition["x"]!
-        let yCell = cell.fieldPosition["y"]!
+        guard let xCell = cell.fieldPosition["x"], let yCell = cell.fieldPosition["y"] else {
+            return nil
+        }
         
         var shipPositions = [String]()
         

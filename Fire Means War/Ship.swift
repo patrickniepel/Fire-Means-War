@@ -15,10 +15,10 @@ class Ship: UIImageView {
     var mLength = 0
     var isPlaced = false
     var horizontal = false
-    var startingPosition : CGPoint!
+    var startingPosition : CGPoint?
     
-    var imageV : UIImage!
-    var imageH : UIImage!
+    var imageV : UIImage?
+    var imageH : UIImage?
     
     //Keys of the cells on which the ship is placed
     var positionKeys = [String]()
@@ -82,7 +82,7 @@ class Ship: UIImageView {
         self.layer.borderWidth = 0
     }
     
-    fileprivate func loadShipLayout() {
+    private func loadShipLayout() {
         let shipLayoutNumber = UserDefaults.standard.integer(forKey: "shipLayout")
         
         if shipLayoutNumber == 0 {

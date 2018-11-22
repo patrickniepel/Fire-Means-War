@@ -42,7 +42,7 @@ class AI {
     }
     
     /** Generates all keys of the game field */
-    fileprivate func setupAllKeys() {
+    private func setupAllKeys() {
         
         let field = Field()
         
@@ -58,7 +58,7 @@ class AI {
     }
     
     /** Sets the ai life according to the number of existing keys of the player's ships */
-    fileprivate func setupLife() {
+    private func setupLife() {
         
         var counter = 0
         
@@ -70,7 +70,7 @@ class AI {
     }
     
     /** Appends all keys of the player's ships to a single list to get better access */
-    fileprivate func setupPlayerKeys() {
+    private func setupPlayerKeys() {
         
         for ship in shipPosKeysPlayer ?? [] {
             for key in ship.1 {
