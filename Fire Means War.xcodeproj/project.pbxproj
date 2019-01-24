@@ -198,66 +198,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A318EF631F8403C6009D7AE4 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				A3A7F0BF1F6ACA0B008CACD2 /* DifficultyViewController.swift */,
-				A3A7F0BB1F6AC89B008CACD2 /* SPPlacingViewController.swift */,
-				A3A7F0BD1F6AC8AA008CACD2 /* SPAttackViewController.swift */,
-				A30A47B51F8F98230078F713 /* PauseViewController.swift */,
-			);
-			name = View;
-			sourceTree = "<group>";
-		};
-		A318EF641F8403E3009D7AE4 /* Model/old */ = {
-			isa = PBXGroup;
-			children = (
-				A3A7F0C11F6ADBFB008CACD2 /* AI.swift */,
-				A347B54D1F6D5D1800A303BE /* SinglePlayer.swift */,
-			);
-			name = Model/old;
-			sourceTree = "<group>";
-		};
-		A318EF651F8403FB009D7AE4 /* Controller/Old */ = {
-			isa = PBXGroup;
-			children = (
-				A347B54F1F6D5DC600A303BE /* PlayerController.swift */,
-				A3A7F0C31F6ADC0B008CACD2 /* AIController.swift */,
-			);
-			name = Controller/Old;
-			sourceTree = "<group>";
-		};
-		A348998F1EDAD83A00A7E80A /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				A31A92311F86BF91008FD0EC /* defeat.mp3 */,
-				A31A92321F86BF91008FD0EC /* victory.mp3 */,
-				A3EA76AA1EED920A00AE45D4 /* battle.wav */,
-				A344D2EF1EE6F32700519B65 /* horn.mp3 */,
-				A349A70A1EE492750080634B /* fire.mp3 */,
-				A349A70B1EE492750080634B /* missed.mp3 */,
-				A31622BA1EE33F2100ABC44A /* main.wav */,
-				A3FCB6B41F87F99A00AA8EEE /* Philosopher-Bold.ttf */,
-				A3FCB6B51F87F99B00AA8EEE /* Philosopher-Regular.ttf */,
-				A3505EA81EE006D900A54891 /* Treamd.ttf */,
-				A348998D1EDAD81800A7E80A /* WeekendWarrior.ttf */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
-		A3721DAF20089F6D00E50DCD /*  Controller */ = {
-			isa = PBXGroup;
-			children = (
-				A3721DB420089F9400E50DCD /* AIControllerTest.swift */,
-				A3721DB620089FA700E50DCD /* SinglePlayerControllerTest.swift */,
-				A3721DB820089FB500E50DCD /* SingleMatchController.swift */,
-				A3B783CA200937D100D70631 /* ShipKeyController.swift */,
-				A3B34EE41F867EB60031A90F /* AttackLogicController.swift */,
-				A3B44E861F6C334C004DF619 /* AICalculator.swift */,
-			);
-			name = " Controller";
-			sourceTree = "<group>";
-		};
 		A37B000D1EBA355900EB4776 /* Fire Means WarTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -274,14 +214,6 @@
 				A37B001B1EBA355900EB4776 /* Info.plist */,
 			);
 			path = "Fire Means WarUITests";
-			sourceTree = "<group>";
-		};
-		A37B00371EBA3BAA00EB4776 /* TestScreens */ = {
-			isa = PBXGroup;
-			children = (
-				A37B00381EBA3BC100EB4776 /* TestPlacingViewController.swift */,
-			);
-			name = TestScreens;
 			sourceTree = "<group>";
 		};
 		A37BFFED1EBA355900EB4776 = {
@@ -307,12 +239,12 @@
 		A37BFFF81EBA355900EB4776 /* Fire Means War */ = {
 			isa = PBXGroup;
 			children = (
-				A3A7F0BA1F6AC777008CACD2 /* Singleplayer */,
-				A37F256E1EE9AA0F00000755 /* View / Multiplayer */,
-				A37F256F1EE9AA1500000755 /* Controller / Multiplayer */,
-				A37F25701EE9AA2400000755 /* Model / Multiplayer */,
-				A37B00371EBA3BAA00EB4776 /* TestScreens */,
-				A348998F1EDAD83A00A7E80A /* Resources */,
+				A3D5693921F9E61500330FF5 /* Singleplayer */,
+				A3D5693E21F9E64900330FF5 /* View_Multiplayer */,
+				A3D5693D21F9E64000330FF5 /* Controller_Multiplayer */,
+				A3D5693C21F9E63200330FF5 /* Model_Multiplayer */,
+				A3D5693B21F9E62C00330FF5 /* TestScreens */,
+				A3D5693A21F9E62600330FF5 /* Resources */,
 				A37BFFF91EBA355900EB4776 /* AppDelegate.swift */,
 				A37BFFFD1EBA355900EB4776 /* Main.storyboard */,
 				A37B00021EBA355900EB4776 /* LaunchScreen.storyboard */,
@@ -322,114 +254,176 @@
 			path = "Fire Means War";
 			sourceTree = "<group>";
 		};
-		A37F256E1EE9AA0F00000755 /* View / Multiplayer */ = {
+		A3D5693321F9E5AF00330FF5 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				A37F25811EE9ABD000000755 /* Home */,
-				A37F257F1EE9ABB500000755 /* Placing */,
-				A37F25801EE9ABBF00000755 /* Attacking */,
-				A37F25821EE9ABF800000755 /* PopUpViews */,
-				A3FCB6B21F87D5A100AA8EEE /* ViewControllerExtension.swift */,
+				A3721DB420089F9400E50DCD /* AIControllerTest.swift */,
+				A3721DB620089FA700E50DCD /* SinglePlayerControllerTest.swift */,
+				A3721DB820089FB500E50DCD /* SingleMatchController.swift */,
+				A3B783CA200937D100D70631 /* ShipKeyController.swift */,
+				A3B34EE41F867EB60031A90F /* AttackLogicController.swift */,
+				A3B44E861F6C334C004DF619 /* AICalculator.swift */,
 			);
-			name = "View / Multiplayer";
+			path = Controller;
 			sourceTree = "<group>";
 		};
-		A37F256F1EE9AA1500000755 /* Controller / Multiplayer */ = {
+		A3D5693421F9E5C200330FF5 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				A37F257E1EE9AB5A00000755 /* Field */,
-				A37F257D1EE9AB5400000755 /* Cell */,
-				A37F257C1EE9AB4A00000755 /* Ship */,
-				A37F257B1EE9AB3700000755 /* Audio */,
-				A37F257A1EE9AB2E00000755 /* MPC */,
-				A37F25791EE9AB2400000755 /* Calculators */,
+				A3721DB020089F8000E50DCD /* AITest.swift */,
+				A3721DB220089F8A00E50DCD /* SingleplayerTest.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A3D5693521F9E5C700330FF5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A3A7F0BF1F6ACA0B008CACD2 /* DifficultyViewController.swift */,
+				A3A7F0BB1F6AC89B008CACD2 /* SPPlacingViewController.swift */,
+				A3A7F0BD1F6AC8AA008CACD2 /* SPAttackViewController.swift */,
+				A30A47B51F8F98230078F713 /* PauseViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A3D5693621F9E5CD00330FF5 /* Controller_Old */ = {
+			isa = PBXGroup;
+			children = (
+				A347B54F1F6D5DC600A303BE /* PlayerController.swift */,
+				A3A7F0C31F6ADC0B008CACD2 /* AIController.swift */,
+			);
+			path = Controller_Old;
+			sourceTree = "<group>";
+		};
+		A3D5693721F9E5F600330FF5 /* Model_Old */ = {
+			isa = PBXGroup;
+			children = (
+				A3A7F0C11F6ADBFB008CACD2 /* AI.swift */,
+				A347B54D1F6D5D1800A303BE /* SinglePlayer.swift */,
+			);
+			path = Model_Old;
+			sourceTree = "<group>";
+		};
+		A3D5693921F9E61500330FF5 /* Singleplayer */ = {
+			isa = PBXGroup;
+			children = (
+				A3D5693721F9E5F600330FF5 /* Model_Old */,
+				A3D5693621F9E5CD00330FF5 /* Controller_Old */,
+				A3D5693521F9E5C700330FF5 /* View */,
+				A3D5693421F9E5C200330FF5 /* Model */,
+				A3D5693321F9E5AF00330FF5 /* Controller */,
+			);
+			path = Singleplayer;
+			sourceTree = "<group>";
+		};
+		A3D5693A21F9E62600330FF5 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A31A92311F86BF91008FD0EC /* defeat.mp3 */,
+				A31A92321F86BF91008FD0EC /* victory.mp3 */,
+				A3EA76AA1EED920A00AE45D4 /* battle.wav */,
+				A344D2EF1EE6F32700519B65 /* horn.mp3 */,
+				A349A70A1EE492750080634B /* fire.mp3 */,
+				A349A70B1EE492750080634B /* missed.mp3 */,
+				A31622BA1EE33F2100ABC44A /* main.wav */,
+				A3FCB6B41F87F99A00AA8EEE /* Philosopher-Bold.ttf */,
+				A3FCB6B51F87F99B00AA8EEE /* Philosopher-Regular.ttf */,
+				A3505EA81EE006D900A54891 /* Treamd.ttf */,
+				A348998D1EDAD81800A7E80A /* WeekendWarrior.ttf */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		A3D5693B21F9E62C00330FF5 /* TestScreens */ = {
+			isa = PBXGroup;
+			children = (
+				A37B00381EBA3BC100EB4776 /* TestPlacingViewController.swift */,
+			);
+			path = TestScreens;
+			sourceTree = "<group>";
+		};
+		A3D5693C21F9E63200330FF5 /* Model_Multiplayer */ = {
+			isa = PBXGroup;
+			children = (
+				A3D5694821F9E73500330FF5 /* MPC */,
+				A3D5694721F9E73000330FF5 /* Ship */,
+				A3D5694621F9E72B00330FF5 /* Cell */,
+				A3D5694521F9E72800330FF5 /* Field */,
+			);
+			path = Model_Multiplayer;
+			sourceTree = "<group>";
+		};
+		A3D5693D21F9E64000330FF5 /* Controller_Multiplayer */ = {
+			isa = PBXGroup;
+			children = (
+				A3D5694421F9E6E300330FF5 /* Calculators */,
+				A3D5694321F9E6DC00330FF5 /* MPC */,
+				A3D5694221F9E6D800330FF5 /* Audio */,
+				A3D5694121F9E6D200330FF5 /* Ship */,
+				A3D5694021F9E6CC00330FF5 /* Cell */,
+				A3D5693F21F9E6C200330FF5 /* Field */,
 				A32D7E291ED1B86F00C75864 /* AlertController.swift */,
 				A32D7E2B1ED1B93800C75864 /* ExtractMessage.swift */,
 			);
-			name = "Controller / Multiplayer";
+			path = Controller_Multiplayer;
 			sourceTree = "<group>";
 		};
-		A37F25701EE9AA2400000755 /* Model / Multiplayer */ = {
+		A3D5693E21F9E64900330FF5 /* View_Multiplayer */ = {
 			isa = PBXGroup;
 			children = (
-				A37F25711EE9AA3E00000755 /* Field */,
-				A37F25731EE9AA4900000755 /* Cell */,
-				A37F25721EE9AA4400000755 /* Ship */,
-				A37F25741EE9AA5A00000755 /* MPC */,
+				A3D5695021F9E79000330FF5 /* PopUpViews */,
+				A3D5694F21F9E78900330FF5 /* Attacking */,
+				A3D5694E21F9E78400330FF5 /* Placing */,
+				A3D5694D21F9E78000330FF5 /* Home */,
+				A3FCB6B21F87D5A100AA8EEE /* ViewControllerExtension.swift */,
 			);
-			name = "Model / Multiplayer";
+			path = View_Multiplayer;
 			sourceTree = "<group>";
 		};
-		A37F25711EE9AA3E00000755 /* Field */ = {
+		A3D5693F21F9E6C200330FF5 /* Field */ = {
 			isa = PBXGroup;
 			children = (
-				A399A6B81EBE21CA00569909 /* Field.swift */,
+				A399A6BA1EBE21D700569909 /* FieldController.swift */,
+				A35904BF1EBF452F00938B4F /* SnapController.swift */,
 			);
-			name = Field;
+			path = Field;
 			sourceTree = "<group>";
 		};
-		A37F25721EE9AA4400000755 /* Ship */ = {
+		A3D5694021F9E6CC00330FF5 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				A399A6AF1EBE1ACF00569909 /* Ship.swift */,
+				A3364D681ED483DF00BE399F /* CellController.swift */,
 			);
-			name = Ship;
+			path = Cell;
 			sourceTree = "<group>";
 		};
-		A37F25731EE9AA4900000755 /* Cell */ = {
+		A3D5694121F9E6D200330FF5 /* Ship */ = {
 			isa = PBXGroup;
 			children = (
-				A399A6BC1EBE250200569909 /* Cell.swift */,
+				A35904C11EBF4B9200938B4F /* ShipController.swift */,
+				A3364D651ED47C8700BE399F /* ShipPositionController.swift */,
 			);
-			name = Cell;
+			path = Ship;
 			sourceTree = "<group>";
 		};
-		A37F25741EE9AA5A00000755 /* MPC */ = {
+		A3D5694221F9E6D800330FF5 /* Audio */ = {
 			isa = PBXGroup;
 			children = (
-				A37F25751EE9AA8400000755 /* Player */,
-				A37F25761EE9AAA200000755 /* Session */,
-				A37F25771EE9AAAB00000755 /* Advertiser */,
-				A37F25781EE9AAB800000755 /* Browser */,
+				A349A70F1EE492CD0080634B /* AudioPlayer.swift */,
 			);
-			name = MPC;
+			path = Audio;
 			sourceTree = "<group>";
 		};
-		A37F25751EE9AA8400000755 /* Player */ = {
+		A3D5694321F9E6DC00330FF5 /* MPC */ = {
 			isa = PBXGroup;
 			children = (
-				A333C3771EC8A43500773202 /* Player.swift */,
+				A374D8F61EBB0C2000005C24 /* MPCHandler.swift */,
 			);
-			name = Player;
+			path = MPC;
 			sourceTree = "<group>";
 		};
-		A37F25761EE9AAA200000755 /* Session */ = {
-			isa = PBXGroup;
-			children = (
-				A374D8F81EBB0C3200005C24 /* MPCSession.swift */,
-				A374D8FE1EBB0CDE00005C24 /* MPCSessionDelegate.swift */,
-			);
-			name = Session;
-			sourceTree = "<group>";
-		};
-		A37F25771EE9AAAB00000755 /* Advertiser */ = {
-			isa = PBXGroup;
-			children = (
-				A374D8FA1EBB0C5900005C24 /* MPCAdvertiser.swift */,
-			);
-			name = Advertiser;
-			sourceTree = "<group>";
-		};
-		A37F25781EE9AAB800000755 /* Browser */ = {
-			isa = PBXGroup;
-			children = (
-				A374D8FC1EBB0C6600005C24 /* MPCBrowser.swift */,
-				A315E4601EBBA1A300CC0B81 /* MPCBrowserDelegate.swift */,
-			);
-			name = Browser;
-			sourceTree = "<group>";
-		};
-		A37F25791EE9AB2400000755 /* Calculators */ = {
+		A3D5694421F9E6E300330FF5 /* Calculators */ = {
 			isa = PBXGroup;
 			children = (
 				A399A6BE1EBE271900569909 /* CalculatorHypotenuse.swift */,
@@ -437,125 +431,115 @@
 				A3364D6A1ED4869E00BE399F /* CalculatorShipPosition.swift */,
 				A349A7081EE4345C0080634B /* CalculatorOverlapping.swift */,
 			);
-			name = Calculators;
+			path = Calculators;
 			sourceTree = "<group>";
 		};
-		A37F257A1EE9AB2E00000755 /* MPC */ = {
+		A3D5694521F9E72800330FF5 /* Field */ = {
 			isa = PBXGroup;
 			children = (
-				A374D8F61EBB0C2000005C24 /* MPCHandler.swift */,
+				A399A6B81EBE21CA00569909 /* Field.swift */,
 			);
-			name = MPC;
+			path = Field;
 			sourceTree = "<group>";
 		};
-		A37F257B1EE9AB3700000755 /* Audio */ = {
+		A3D5694621F9E72B00330FF5 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				A349A70F1EE492CD0080634B /* AudioPlayer.swift */,
+				A399A6BC1EBE250200569909 /* Cell.swift */,
 			);
-			name = Audio;
+			path = Cell;
 			sourceTree = "<group>";
 		};
-		A37F257C1EE9AB4A00000755 /* Ship */ = {
+		A3D5694721F9E73000330FF5 /* Ship */ = {
 			isa = PBXGroup;
 			children = (
-				A35904C11EBF4B9200938B4F /* ShipController.swift */,
-				A3364D651ED47C8700BE399F /* ShipPositionController.swift */,
+				A399A6AF1EBE1ACF00569909 /* Ship.swift */,
 			);
-			name = Ship;
+			path = Ship;
 			sourceTree = "<group>";
 		};
-		A37F257D1EE9AB5400000755 /* Cell */ = {
+		A3D5694821F9E73500330FF5 /* MPC */ = {
 			isa = PBXGroup;
 			children = (
-				A3364D681ED483DF00BE399F /* CellController.swift */,
+				A3D5694C21F9E74900330FF5 /* Browser */,
+				A3D5694B21F9E74300330FF5 /* Advertiser */,
+				A3D5694A21F9E74000330FF5 /* Session */,
+				A3D5694921F9E73B00330FF5 /* Player */,
 			);
-			name = Cell;
+			path = MPC;
 			sourceTree = "<group>";
 		};
-		A37F257E1EE9AB5A00000755 /* Field */ = {
+		A3D5694921F9E73B00330FF5 /* Player */ = {
 			isa = PBXGroup;
 			children = (
-				A399A6BA1EBE21D700569909 /* FieldController.swift */,
-				A35904BF1EBF452F00938B4F /* SnapController.swift */,
+				A333C3771EC8A43500773202 /* Player.swift */,
 			);
-			name = Field;
+			path = Player;
 			sourceTree = "<group>";
 		};
-		A37F257F1EE9ABB500000755 /* Placing */ = {
+		A3D5694A21F9E74000330FF5 /* Session */ = {
+			isa = PBXGroup;
+			children = (
+				A374D8F81EBB0C3200005C24 /* MPCSession.swift */,
+				A374D8FE1EBB0CDE00005C24 /* MPCSessionDelegate.swift */,
+			);
+			path = Session;
+			sourceTree = "<group>";
+		};
+		A3D5694B21F9E74300330FF5 /* Advertiser */ = {
+			isa = PBXGroup;
+			children = (
+				A374D8FA1EBB0C5900005C24 /* MPCAdvertiser.swift */,
+			);
+			path = Advertiser;
+			sourceTree = "<group>";
+		};
+		A3D5694C21F9E74900330FF5 /* Browser */ = {
+			isa = PBXGroup;
+			children = (
+				A374D8FC1EBB0C6600005C24 /* MPCBrowser.swift */,
+				A315E4601EBBA1A300CC0B81 /* MPCBrowserDelegate.swift */,
+			);
+			path = Browser;
+			sourceTree = "<group>";
+		};
+		A3D5694D21F9E78000330FF5 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				A3D5695321F9E7AD00330FF5 /* About */,
+				A3D5695221F9E7A900330FF5 /* Settings */,
+				A3D5695121F9E7A500330FF5 /* Tutorial */,
+				A37B00311EBA38C300EB4776 /* MainMenuViewController.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		A3D5694E21F9E78400330FF5 /* Placing */ = {
 			isa = PBXGroup;
 			children = (
 				A399A6B31EBE211600569909 /* PlacingViewController.swift */,
 			);
-			name = Placing;
+			path = Placing;
 			sourceTree = "<group>";
 		};
-		A37F25801EE9ABBF00000755 /* Attacking */ = {
+		A3D5694F21F9E78900330FF5 /* Attacking */ = {
 			isa = PBXGroup;
 			children = (
 				A399A6B51EBE212700569909 /* AttackViewController.swift */,
 			);
-			name = Attacking;
+			path = Attacking;
 			sourceTree = "<group>";
 		};
-		A37F25811EE9ABD000000755 /* Home */ = {
-			isa = PBXGroup;
-			children = (
-				A37B00311EBA38C300EB4776 /* MainMenuViewController.swift */,
-				A3D48AB61FA3B99600A02558 /* Tutorial */,
-				A37F25831EE9AC1C00000755 /* Settings */,
-				A37F25841EE9AC3400000755 /* About */,
-			);
-			name = Home;
-			sourceTree = "<group>";
-		};
-		A37F25821EE9ABF800000755 /* PopUpViews */ = {
+		A3D5695021F9E79000330FF5 /* PopUpViews */ = {
 			isa = PBXGroup;
 			children = (
 				A367D79E1EC0FDD800C7E067 /* PopUpTimerViewController.swift */,
 				A3A4B9C11ED086DE0093E5D5 /* PopUpOptionsViewController.swift */,
 			);
-			name = PopUpViews;
+			path = PopUpViews;
 			sourceTree = "<group>";
 		};
-		A37F25831EE9AC1C00000755 /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				A30E11E01F8D3EF60044F2E5 /* SettingsTableViewController.swift */,
-			);
-			name = Settings;
-			sourceTree = "<group>";
-		};
-		A37F25841EE9AC3400000755 /* About */ = {
-			isa = PBXGroup;
-			children = (
-				A37B00331EBA395500EB4776 /* AboutViewController.swift */,
-			);
-			name = About;
-			sourceTree = "<group>";
-		};
-		A3A7F0BA1F6AC777008CACD2 /* Singleplayer */ = {
-			isa = PBXGroup;
-			children = (
-				A3721DAF20089F6D00E50DCD /*  Controller */,
-				A3B783CC20096ADF00D70631 /* Model */,
-				A318EF631F8403C6009D7AE4 /* View */,
-				A318EF651F8403FB009D7AE4 /* Controller/Old */,
-				A318EF641F8403E3009D7AE4 /* Model/old */,
-			);
-			name = Singleplayer;
-			sourceTree = "<group>";
-		};
-		A3B783CC20096ADF00D70631 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				A3721DB020089F8000E50DCD /* AITest.swift */,
-				A3721DB220089F8A00E50DCD /* SingleplayerTest.swift */,
-			);
-			name = Model;
-			sourceTree = "<group>";
-		};
-		A3D48AB61FA3B99600A02558 /* Tutorial */ = {
+		A3D5695121F9E7A500330FF5 /* Tutorial */ = {
 			isa = PBXGroup;
 			children = (
 				A3D48AC11FA3BD3800A02558 /* TutorialViewController.swift */,
@@ -564,7 +548,23 @@
 				A3D48ABD1FA3BA2900A02558 /* TutorialCollectionViewCell.swift */,
 				A3D48ABF1FA3BA9F00A02558 /* TutorialController.swift */,
 			);
-			name = Tutorial;
+			path = Tutorial;
+			sourceTree = "<group>";
+		};
+		A3D5695221F9E7A900330FF5 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				A30E11E01F8D3EF60044F2E5 /* SettingsTableViewController.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		A3D5695321F9E7AD00330FF5 /* About */ = {
+			isa = PBXGroup;
+			children = (
+				A37B00331EBA395500EB4776 /* AboutViewController.swift */,
+			);
+			path = About;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -935,12 +935,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6C2B5VUSRK;
 				INFOPLIST_FILE = "Fire Means War/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "de.patrickniepel.Fire-Means-War";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -952,12 +954,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6C2B5VUSRK;
 				INFOPLIST_FILE = "Fire Means War/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "de.patrickniepel.Fire-Means-War";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
